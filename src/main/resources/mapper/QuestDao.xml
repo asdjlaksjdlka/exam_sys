@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qf.examsys.dao.QuestionDao">
+
+    <resultMap id="findAllSubject" type="com.qf.examsys.entity.Subject">
+        <id property="sid" column="s_id"></id>
+        <result property="sName" column="s_name"></result>
+    </resultMap>
+
+    <select id="findAllSubject" resultMap="findAllSubject">
+        select * from t_subject
+    </select>
+
+
+</mapper>

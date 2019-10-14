@@ -13,18 +13,18 @@
 </div>
 
 <div class="layui-form searchDiv">
-    <div class="layui-form-item" style="margin-left: 350px">
+    <div class="layui-form-item" style="margin-left: 550px">
 
         <div class="layui-input-inline">
             <input type="text" class="layui-input" id="questionName" name="questionName" placeholder="题干名称">
         </div>
-        <div class="layui-input-inline">
+<!--        <div class="layui-input-inline">
             <select name="typeId" id="typeId">
                 <option value="">题目类型</option>
             </select>
-        </div>
+        </div>-->
         <div class="layui-input-inline">
-            <select name="courseId" id="courseId">
+            <select name="sid" id="sid">
                 <option value="">科目</option>
             </select>
         </div>
@@ -147,7 +147,6 @@
 
                 // console.log(checkStatus.data); //获取选中行的数据
                 // console.log(checkStatus.data.length); //获取选中行数量，可作为是否有选中行的条件
-
             }
         });
 
@@ -198,7 +197,7 @@
                     ,where: { // 额外需要提交的参数\
                         questionName: $("#questionName").val(),
                         typeId:$("#typeId").val(),
-                        courseId: $("#courseId").val()
+                        sid: $("#sid").val()
                     }
                 });
             }
@@ -234,7 +233,7 @@
 <!--<%&#45;&#45;ajax请求加载页面下拉框内容&#45;&#45;%>-->
 <script type="text/javascript">
     $(function () {
-        $.ajax({
+ /*       $.ajax({
             url: "../questionType/list?page=1&limit=65536",
             dataType: "json",
             type: "post",
@@ -244,19 +243,19 @@
                     $("#typeId").append(html);
                 })
             }
-        });
+        });*/
         $.ajax({
-            url: "../course/list?page=1&limit=65536",
+            url: "../subject/list",
             dataType: "json",
             type: "get",
             success: function(returnData) {
                 $(returnData.data).each(function (index, item) {
-                    var html = "<option value=" + item.courseId + ">" + item.courseName + "</option>";
-                    $("#courseId").append(html);
+                    // alert(item.sid+item.sName)
+                    var html = "<option value=" + item.sid + ">" + item.sName + "</option>";
+                    $("#sid").append(html);
                 })
             }
         });
-
     });
 </script>
 </body>

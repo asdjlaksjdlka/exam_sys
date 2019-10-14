@@ -4,6 +4,14 @@ public class JsonReasult<T> {
     private Integer code;
     private T data;
 
+    public JsonReasult() {
+    }
+
+    public JsonReasult(Integer code, T data) {
+        this.code = code;
+        this.data = data;
+    }
+
     public Integer getCode() {
         return code;
     }
