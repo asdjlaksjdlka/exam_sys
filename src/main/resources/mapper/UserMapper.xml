@@ -5,8 +5,56 @@
 
 <mapper namespace="com.qf.examsys.dao.UserDao">
     <resultMap id="user" type="com.qf.examsys.entity.User">
-
+        <id column="id" property="uid"/>
+        <id column="u_phone" property="uPhone"/>
+        <id column="u_password" property="uPassword"/>
+        <id column="u_name" property="uName"/>
+        <id column="u_status" property="uStatus"/>
     </resultMap>
+    <insert id="insert" parameterType="com.qf.examsys.entity.User">
+        insert into t_user(u_id,u_phone,u_password,u_name) values(#{uid},#{uPhone},#{uPassword},#{uName})
+    </insert>
+    <insert id="insertSelective" parameterType="com.qf.examsys.entity.User" >
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="uid != null" >
+                uid,
+            </if>
+            <if test="uPhone != null" >
+                uPhone,
+            </if>
+            <if test="uPassword != null" >
+                uPassword,
+            </if>
+            <if test="uName != null" >
+                uName,
+            </if>
+            <if test="uStatus != null" >
+                uStatus,
+            </if>
+
+
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="uid != null" >
+                #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="uPhone != null" >
+                #{uPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="uPassword != null" >
+                #{uPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="uName != null" >
+                #{uName,jdbcType=VARCHAR},
+            </if>
+            <if test="uStatus != null" >
+                #{uStatus,jdbcType=INTEGER},
+            </if>
+
+        </trim>
+    </insert>
 
 
 </mapper>
