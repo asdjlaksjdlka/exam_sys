@@ -24,6 +24,7 @@
         <result property="cOptionD" column="c_option_d"></result>
         <result property="cAnswer" column="c_answer"></result>
         <result property="sid" column="s_id"></result>
+        <result property="cScore" column="c_score"></result>
 
         <association property="subject" javaType="com.qf.examsys.entity.Subject">
             <id property="sid" column="s_id"></id>
@@ -32,7 +33,7 @@
     </resultMap>
 
     <select id="findAllChoose" resultMap="findAllChoose1">
-        SELECT tc.c_id,tc.c_title,tc.c_option_a,tc.c_option_b,tc.c_option_c,tc.c_option_d,tc.c_answer,ts.s_name
+        SELECT tc.c_id,tc.c_title,tc.c_option_a,tc.c_option_b,tc.c_option_c,tc.c_option_d,tc.c_answer,tc.c_score,ts.s_name
         from t_choose tc
         LEFT JOIN t_subject ts ON tc.s_id=ts.s_id
         <where>
@@ -45,5 +46,17 @@
             </if>
         </where>
     </select>
+
+
+    <select id="findQuestionById" resultMap="findAllChoose1">
+        select * from t_choose where c_id = #{cid};
+    </select>
+
+
+    <update id="updateQuestionById" parameterType="com.qf.examsys.entity.Choose">
+        update t_choose set
+        c_title= #{cTitle},c_option_a=#{cOptionA},c_option_b=#{cOptionB},c_option_c=#{cOptionC},c_option_d=#{cOptionD},c_answer=#{cAnswer},c_score=#{cScore}
+        where c_id=#{cid}
+    </update>
 
 </mapper>

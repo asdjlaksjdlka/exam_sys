@@ -12,79 +12,60 @@
 
 
 <form class="layui-form" id="add-form" lay-filter="example">
-	<input hidden type="text" name="questionId">
+	<input hidden type="text" name="cid">
+
 	<div class="layui-form-item">
 		<label class="layui-form-label">科目：</label>
 		<div class="layui-input-block">
-			<select name="courseId" id="courseNameHide" class="courseName" lay-filter="aihao" style="width: 300px">
+			<select class="sName" name="sid" lay-filter="aihao" id="sid">
 				<option value="">请选择科目...</option>
-
 			</select>
 		</div>
 	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label">题目类型：</label>
-		<div class="layui-input-block">
-			<select name="typeId" id="typeNameHide" class="typeName" lay-filter="aihao"  style="width: 300px">
-				<option value="">请选择题目类型...</option>
 
-			</select>
-		</div>
-	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">题干：</label>
 		<div class="layui-input-block">
-			<input type="text" name="questionName" lay-verify="title" class="layui-input"  style="width: 300px">
+			<input type="text" name="cTitle" lay-verify="title" class="layui-input"  style="width: 300px">
 		</div>
 	</div>
+
 	<div class="layui-form-item">
 		<label class="layui-form-label">选项A：</label>
 		<div class="layui-input-block">
-			<input type="text" name="optionA" lay-verify="title"  class="layui-input"  style="width: 300px">
+			<input type="text" name="cOptionA" lay-verify="title"  class="layui-input"  style="width: 300px">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">选项B：</label>
 		<div class="layui-input-block">
-			<input type="text" name="optionB" lay-verify="title"  class="layui-input"  style="width: 300px">
+			<input type="text" name="cOptionB" lay-verify="title"  class="layui-input"  style="width: 300px">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">选项C：</label>
 		<div class="layui-input-block">
-			<input type="text" name="optionC" lay-verify="title"  class="layui-input"  style="width: 300px">
+			<input type="text" name="cOptionC" lay-verify="title"  class="layui-input"  style="width: 300px">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">选项D：</label>
 		<div class="layui-input-block">
-			<input type="text" name="optionD" lay-verify="title" class="layui-input"  style="width: 300px">
+			<input type="text" name="cOptionD" lay-verify="title" class="layui-input"  style="width: 300px">
 		</div>
 	</div>
 
 	<div class="layui-form-item">
 		<label class="layui-form-label">答案：</label>
 		<div class="layui-input-block">
-			<input type="text" name="answer" lay-verify="title" class="layui-input"  style="width: 300px">
-		</div>
-	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label">详解：</label>
-		<div class="layui-input-block">
-			<input type="text" name="answerDetail" lay-verify="title"  class="layui-input"  style="width: 300px">
+			<input type="text" name="cAnswer" lay-verify="title" class="layui-input"  style="width: 300px">
 		</div>
 	</div>
 
 	<div class="layui-form-item">
 		<label class="layui-form-label">分数：</label>
 		<div class="layui-input-block">
-			<input type="text" name="score" lay-verify="title" class="layui-input"  style="width: 300px">
-		</div>
-	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label">说明：</label>
-		<div class="layui-input-block">
-			<input type="text" name="remark" lay-verify="title" class="layui-input"  style="width: 300px">
+			<input type="text" name="cScore" lay-verify="title" class="layui-input"  style="width: 300px">
 		</div>
 	</div>
 
@@ -105,30 +86,23 @@
             ,laydate = layui.laydate
             ,$ = layui.jquery;
 
-
 		InitForm();
-		InitTypeForm();
         function InitForm() {
             $.ajax({
                 type: 'post',
-                url: '../course/courseName',
+                url: '../subject/list',
                 dataType: 'json',
-                success: function (map) {
-                    if (map.course.length > 0) {
-                        //加载课程
-                        var courseName = $("#courseNameHide").val();
-                        for (var i = 0; i < map.course.length; i++) {
-                            var title = map.course[i].courseName;
-                            var id = map.course[i].courseId;
-                            if (courseName == title) {
-                                $(".courseName").append('<option value="' + id + '" selected="">' + title + '</option>');
-                            } else {
-                                $(".courseName").append('<option value="' + id + '">' + title + '</option>');
-                            }
-                        }
-                        form.render('select');
-
-                    } else {
+                success: function (data) {
+                	if (data.data.length>0){
+						$(data.data).each(function (index, item) {
+							// alert(item.sid+item.sName)
+							var html = "<option value=" + item.sid + ">" + item.sName + "</option>";
+							// $(".sName").append('<option value="' + item.sid  + '" selected="">' + item.sName + '</option>');
+							$("#sid").append(html);
+						})
+						//更新 lay-filter="test1" 所在容器内的全部表单状态
+						form.render('select');
+					} else {
                         layer.msg("下拉数据加载失败。。。");
                     }
 
@@ -136,36 +110,8 @@
             })
         }
 
-        function InitTypeForm() {
-            $.ajax({
-                type: 'post',
-                url: '../questionType/typeName',
-                dataType: 'json',
-                success: function (map) {
-                    if (map.type.length > 0) {
-                        //加载课程
-                        var typeName = $("#typeNameHide").val();
-                        for (var i = 0; i < map.type.length; i++) {
-                            var title = map.type[i].typeName;
-                            var id = map.type[i].typeId;
-                            if (typeName == title) {
-                                $(".typeName").append('<option value="' + id + '" selected="">' + title + '</option>');
-                            } else {
-                                $(".typeName").append('<option value="' + id + '">' + title + '</option>');
-                            }
-                        }
-                        form.render('select');
-
-                    } else {
-                        layer.msg("下拉数据加载失败。。。");
-                    }
-
-                }
-            })
-        }
-
-
-        function findOne() {
+		findOne();
+		function findOne() {
             $.ajax({
                 type: "get",
                 url: "../question/query" + window.location.search,
@@ -173,7 +119,7 @@
                 success: function (data) {
                     if (data.code == 1) {
                         //表单初始赋值
-                        form.val('example', data.info);
+                        form.val('example', data.data);
                     }
                 }
             })
@@ -187,12 +133,16 @@
                 data: data.field,
                 dataType: "json",
                 success: function (data) {
-                    if (data.code == 1) {
+                	alert(data.num)
+					//data.num为dao层update修改的返回值
+                    if (data.code == 1 && data.num==1) {
                         layer.msg("操作成功", {icon: 6, time: 1500},
                             function () {
-                                var t = parent.layui.table;
+								parent.location.reload();//刷新父页面
+								var t = parent.layui.table;
                                 var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                                 parent.layer.close(index); //再执行关闭
+
                             });
                     } else {
 
@@ -204,10 +154,10 @@
             return false;
         });
 
-
     });
-</script>
 
+
+</script>
 
 </body>
 </html>

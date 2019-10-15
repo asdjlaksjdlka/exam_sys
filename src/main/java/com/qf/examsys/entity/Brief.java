@@ -8,6 +8,15 @@ public class Brief implements Serializable {
     private String bTitle;
     private String bAnswer;
     private Integer sid;
+    private Integer bScore;
+
+    public Integer getbScore() {
+        return bScore;
+    }
+
+    public void setbScore(Integer bScore) {
+        this.bScore = bScore;
+    }
 
     public Integer getBid() {
         return bid;

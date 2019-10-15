@@ -12,6 +12,15 @@ public class Choose implements Serializable {
     private String cOptionD;
     private String cAnswer;
     private Integer sid;
+    private Integer cScore;
+
+    public Integer getcScore() {
+        return cScore;
+    }
+
+    public void setcScore(Integer cScore) {
+        this.cScore = cScore;
+    }
 
     private Subject subject;
 

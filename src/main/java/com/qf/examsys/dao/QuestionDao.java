@@ -11,4 +11,8 @@ public interface QuestionDao {
     public List<Subject> findAllSubject();
 
     public List<Choose> findAllChoose(@Param("cTitle") String cTitle, @Param("sid") Integer sid);
+
+    public Choose findQuestionById(Integer cid);
+
+    public Integer updateQuestionById(Choose choose);
 }

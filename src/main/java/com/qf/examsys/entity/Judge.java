@@ -8,6 +8,15 @@ public class Judge implements Serializable {
     private String jTitle;
     private String jAnswer;
     private Integer sid;
+    private Integer jScore;
+
+    public Integer getjScore() {
+        return jScore;
+    }
+
+    public void setjScore(Integer jScore) {
+        this.jScore = jScore;
+    }
 
     public Integer getJid() {
         return jid;

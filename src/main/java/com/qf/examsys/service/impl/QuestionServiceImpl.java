@@ -30,4 +30,14 @@ public class QuestionServiceImpl implements QuestionService {
         PageHelper.startPage(pageMap.get("page"), pageMap.get("limit"));
         return questionDao.findAllChoose(cTitle,sid);
     }
+
+    @Override
+    public Choose findQuestionById(Integer cid) {
+        return questionDao.findQuestionById(cid);
+    }
+
+    @Override
+    public Integer updateQuestionById(Choose choose) {
+        return questionDao.updateQuestionById(choose);
+    }
 }

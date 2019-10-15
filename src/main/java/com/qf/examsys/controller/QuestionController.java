@@ -7,11 +7,14 @@ import com.qf.examsys.entity.Subject;
 import com.qf.examsys.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.List;
+
+import static java.lang.Character.getType;
 
 
 @Controller
@@ -21,12 +24,11 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
-
     @RequestMapping("/subject/list")
     public JsonReasult findAllSubject(){
 
         List<Subject> list = questionService.findAllSubject();
-//        System.out.println("list"+list);
+        System.out.println("list"+list.size());
 
         return new JsonReasult(1,list);
     }
@@ -42,10 +44,27 @@ public class QuestionController {
 
 //        System.out.println("list"+list);
         long total = ((Page) list).getTotal();
-
-
         return new JsonReasult(0,list,"",total);
     }
 
+    @RequestMapping("/question/query")
+    public JsonReasult findQuestion(Integer cid){
+        Choose question = questionService.findQuestionById(cid);
+
+        return new JsonReasult(1,question);
+    }
+
+    @PostMapping("/question/addOrUpdate")
+    public JsonReasult addOrUpdateQuestion(Choose choose){
+
+        if (choose.getCid()==null || choose.getCid().equals("")){
+
+         return null;
+        }else {
+//            System.out.println("===="+choose.getCid().getClass().getName());
+            Integer num = questionService.updateQuestionById(choose);
+            return new JsonReasult(1,num);
+        }
+    }
 
 }

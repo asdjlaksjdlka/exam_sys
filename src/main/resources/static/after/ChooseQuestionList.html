@@ -18,11 +18,6 @@
         <div class="layui-input-inline">
             <input type="text" class="layui-input" id="cTitle" name="cTitle" placeholder="题干名称">
         </div>
-<!--        <div class="layui-input-inline">
-            <select name="typeId" id="typeId">
-                <option value="">题目类型</option>
-            </select>
-        </div>-->
         <div class="layui-input-inline">
             <select name="sid" id="sid">
                 <option value="">科目</option>
@@ -39,6 +34,10 @@
     </button>
 </div>
 <table class="layui-hide" id="test" lay-filter="test"></table>
+<!--自增序号-->
+<script type="text/html" id="zizeng">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
 
@@ -83,7 +82,7 @@
 
 <script>
     layui.use('table',function(){
-        var table = layui.table;
+            var table = layui.table;
         table.render({
             id: "questionTable"
             ,elem: '#test'
@@ -94,13 +93,14 @@
             ,totalRow: true //开启合计行
             ,cols: [[
                 {type: 'checkbox', fixed: 'left'}
-                ,{field:'cid', title:'题目编号',  width: 100}
+                ,{field:'zizing', title:'题目编号',  width: 100,templet:'#zizeng'}
                 ,{field:'cTitle', title:'题干',  width: 150}
                 ,{field:'cOptionA', title:'选项A', width: 150}
                 ,{field:'cOptionB', title:'选项B',   width: 150}
                 ,{field:'cOptionC', title:'选项C',width: 150}
                 ,{field:'cOptionD', title:'选项D', width: 150}
                 ,{field:'cAnswer', title:'答案', width: 150}
+                ,{field:'cScore', title:'分值', width: 150}
                 ,{field:'sName', title:'科目', width: 100,
              /*       templet: '<div>{{d.subject.sName}}</div>'*/
                     templet:function (data) {
@@ -119,7 +119,6 @@
                 , limit: 8
             }
         });
-
         //头工具栏事件
         table.on('toolbar(test)', function(obj){
             var checkStatus = table.checkStatus(obj.config.id);

@@ -5,6 +5,12 @@ public class JsonReasult<T> {
     private T data;
     private String msg;
     private Long count;
+    private Integer num;
+
+    public JsonReasult(Integer code, Integer num) {
+        this.code = code;
+        this.num = num;
+    }
 
     public JsonReasult() {
     }
@@ -19,6 +25,15 @@ public class JsonReasult<T> {
         this.data = data;
         this.msg = msg;
         this.count = count;
+    }
+
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
     }
 
     public Integer getCode() {
