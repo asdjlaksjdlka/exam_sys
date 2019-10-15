@@ -11,6 +11,25 @@ public class Choose implements Serializable {
     private String cOptionC;
     private String cOptionD;
     private String cAnswer;
+    private Integer sid;
+
+    private Subject subject;
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public Integer getSid() {
+        return sid;
+    }
+
+    public void setSid(Integer sid) {
+        this.sid = sid;
+    }
 
     public Integer getCid() {
         return cid;
@@ -78,6 +97,8 @@ public class Choose implements Serializable {
                 ", cOptionC='" + cOptionC + '\'' +
                 ", cOptionD='" + cOptionD + '\'' +
                 ", cAnswer='" + cAnswer + '\'' +
+                ", sid=" + sid +
+                ", subject=" + subject +
                 '}';
     }
 }

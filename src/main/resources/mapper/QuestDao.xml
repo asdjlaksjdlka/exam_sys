@@ -15,4 +15,35 @@
     </select>
 
 
+    <resultMap id="findAllChoose1" type="com.qf.examsys.entity.Choose">
+        <id property="cid" column="c_id"></id>
+        <result property="cTitle" column="c_title"></result>
+        <result property="cOptionA" column="c_option_a"></result>
+        <result property="cOptionB" column="c_option_b"></result>
+        <result property="cOptionC" column="c_option_c"></result>
+        <result property="cOptionD" column="c_option_d"></result>
+        <result property="cAnswer" column="c_answer"></result>
+        <result property="sid" column="s_id"></result>
+
+        <association property="subject" javaType="com.qf.examsys.entity.Subject">
+            <id property="sid" column="s_id"></id>
+            <result property="sName" column="s_name"></result>
+        </association>
+    </resultMap>
+
+    <select id="findAllChoose" resultMap="findAllChoose1">
+        SELECT tc.c_id,tc.c_title,tc.c_option_a,tc.c_option_b,tc.c_option_c,tc.c_option_d,tc.c_answer,ts.s_name
+        from t_choose tc
+        LEFT JOIN t_subject ts ON tc.s_id=ts.s_id
+        <where>
+            <if test="cTitle != null and cTitle != ''">
+                and tc.c_title like CONCAT('%','${cTitle}','%')
+            </if>
+
+            <if test="sid != null and sid != ''">
+                and ts.s_id=#{sid}
+            </if>
+        </where>
+    </select>
+
 </mapper>
