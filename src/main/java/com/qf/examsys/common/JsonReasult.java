@@ -2,7 +2,7 @@ package com.qf.examsys.common;
 
 public class JsonReasult<T> {
     private Integer code;
-    private T data;
+    private T data;// 1 正常 0 异常
     private String msg;
     private Integer count;
 

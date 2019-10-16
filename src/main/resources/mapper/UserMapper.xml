@@ -4,57 +4,69 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.qf.examsys.dao.UserDao">
-    <resultMap id="user" type="com.qf.examsys.entity.User">
-        <id column="id" property="uid"/>
-        <id column="u_phone" property="uPhone"/>
-        <id column="u_password" property="uPassword"/>
-        <id column="u_name" property="uName"/>
-        <id column="u_status" property="uStatus"/>
+    <resultMap id="userMap" type="com.qf.examsys.entity.User">
+        <id column="u_id" property="uid"/>
+        <result column="u_phone" property="uPhone"/>
+        <result column="u_password" property="uPassword"/>
+        <result column="u_name" property="uName"/>
+        <result column="u_status" property="uStatus"/>
+        <result column="ro_id" property="roId"/>
     </resultMap>
-    <insert id="insert" parameterType="com.qf.examsys.entity.User">
-        insert into t_user(u_id,u_phone,u_password,u_name) values(#{uid},#{uPhone},#{uPassword},#{uName})
+    <insert id="insert">
+        insert into t_user(u_phone,u_password,u_name,ro_id) values(#{uPhone},#{uPassword},#{uName},#{roId})
     </insert>
-    <insert id="insertSelective" parameterType="com.qf.examsys.entity.User" >
-        insert into user
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="uid != null" >
-                uid,
-            </if>
-            <if test="uPhone != null" >
-                uPhone,
-            </if>
-            <if test="uPassword != null" >
-                uPassword,
-            </if>
-            <if test="uName != null" >
-                uName,
-            </if>
-            <if test="uStatus != null" >
-                uStatus,
-            </if>
+    <!--<insert id="insertSelective" parameterType="com.qf.examsys.entity.User" >-->
+        <!--insert into t_user-->
+        <!--<trim prefix="(" suffix=")" suffixOverrides="," >-->
+
+            <!--<if test="u_phone != null" >-->
+                <!--uPhone,-->
+            <!--</if>-->
+            <!--<if test="u_password != null" >-->
+                <!--uPassword,-->
+            <!--</if>-->
+            <!--<if test="u_name != null" >-->
+                <!--uName,-->
+            <!--</if>-->
+            <!--<if test="ro_id != null" >-->
+                <!--roId,-->
+            <!--</if>-->
 
 
 
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="uid != null" >
-                #{uid,jdbcType=INTEGER},
-            </if>
-            <if test="uPhone != null" >
-                #{uPhone,jdbcType=VARCHAR},
-            </if>
-            <if test="uPassword != null" >
-                #{uPassword,jdbcType=VARCHAR},
-            </if>
-            <if test="uName != null" >
-                #{uName,jdbcType=VARCHAR},
-            </if>
-            <if test="uStatus != null" >
-                #{uStatus,jdbcType=INTEGER},
-            </if>
+        <!--</trim>-->
+        <!--<trim prefix="values (" suffix=")" suffixOverrides="," >-->
 
-        </trim>
-    </insert>
+            <!--<if test="u_phone != null" >-->
+                <!--#{uPhone},-->
+            <!--</if>-->
+            <!--<if test="u_password != null" >-->
+                <!--#{uPassword},-->
+            <!--</if>-->
+            <!--<if test="u_name != null" >-->
+                <!--#{uName},-->
+            <!--</if>-->
+            <!--<if test="ro_id != null" >-->
+                <!--#{roId},-->
+            <!--</if>-->
 
+        <!--</trim>-->
+    <!--</insert>-->
+    <select id="login" parameterType="String" resultMap="userMap">
+        select * from t_user where u_phone =#{uphone}
+    </select>
+
+    <select id="findByUserId" resultMap="userMap">
+        select * from t_user where u_id=#{uId}
+    </select>
+
+    <update id="updatePersonPassword" parameterType="com.qf.examsys.entity.User">
+        update t_user set u_password=#{uPassword} where u_id = #{uid}
+    </update>
+
+
+    <select id="selectScoreById" parameterType="com.qf.examsys.entity.Score" resultMap="userMap">
+      select s_total_core from t_score where u_id = #{uid}
+    </select>
 
 </mapper>
