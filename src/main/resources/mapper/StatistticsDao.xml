@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper>
+    <!--用户-->
+    <resultMap id="user" type="com.qf.examsys.entity.User">
+        <id column="u_id" property="uid"></id>
+        <result column="u_name" property="uName"></result>
+    </resultMap>
+
+    <!--科目-->
+    <resultMap id="subject" type="com.qf.examsys.entity.Subject">
+        <id column="s_id" property="sid"></id>
+        <result column="s_name" property="sName"></result>
+    </resultMap>
+
+    <!--考试-->
+    <resultMap id="exam" type="com.qf.examsys.entity.Exam">
+        <id column="e_id" property="uid"></id>
+        <result column="e_name" property="uName"></result>
+        <result column="begin_time" property="uName"></result>
+        <result column="end_time" property="uName"></result>
+    </resultMap>
+
+    <!--成绩-->
+    <resultMap id="score" type="com.qf.examsys.entity.Score">
+        <id column="sc_id" property="scId"></id>
+        <result column="s_choose_score" property="chooseScore"></result>
+        <result column="s_judge_score" property="judgeScore"></result>
+        <result column="s_brief_sore" property="briefScore"></result>
+        <result column="s_total_core" property="totalScore"></result>
+        <collection property="user" resultMap="user"></collection>
+        <collection property="subject" resultMap="subject"></collection>
+        <collection property="exam" resultMap="exam"></collection>
+
+    </resultMap>
+
+    <select id="listPersonalScore" resultMap="score">
+        SELECT
+        t_score.sc_id,
+        t_score.u_id,
+        t_score.s_id,
+        t_score.s_choose_score,
+        t_score.s_judge_score,
+        t_score.s_brief_sore,
+        t_score.s_total_core,
+        t_score.e_id,
+        t_user.u_name,
+        t_subject.s_name,
+        t_exam.e_name
+        FROM
+        t_score ,
+        t_user ,
+        t_subject ,
+        t_exam
+        <where>
+            t_score.u_id = t_user.u_id AND
+            t_score.s_id = t_subject.s_id AND
+            t_score.e_id = t_exam.e_id
+
+            <if test="eId != null and eId != ''">
+                and t_exam.e_id = #{eId}
+            </if>
+            <if test="sid != null and sid != ''">
+                and t_subject.s_id = #{sid}
+            </if>
+            <if test="uid != null and uid != ''">
+                and t_user.u_id = #{uid}
+            </if>
+            ORDER BY t_user.u_id ASC
+        </where>
+    </select>
+</mapper>
+
