@@ -14,6 +14,8 @@ public class Choose implements Serializable {
     private Integer sid;
     private Integer cScore;
 
+    private Subject subject;
+
     public Integer getcScore() {
         return cScore;
     }
@@ -21,8 +23,6 @@ public class Choose implements Serializable {
     public void setcScore(Integer cScore) {
         this.cScore = cScore;
     }
-
-    private Subject subject;
 
     public Subject getSubject() {
         return subject;

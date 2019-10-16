@@ -40,4 +40,19 @@ public class QuestionServiceImpl implements QuestionService {
     public Integer updateQuestionById(Choose choose) {
         return questionDao.updateQuestionById(choose);
     }
+
+    @Override
+    public Integer deleteOneById(Choose choose) {
+        return questionDao.deleteOneById(choose);
+    }
+
+    @Override
+    public Integer deletAlluQestion(Integer[] ids) {
+        return questionDao.deletAlluQestion(ids);
+    }
+
+    @Override
+    public Integer addQuestion(Choose choose) {
+        return questionDao.addQuestion(choose);
+    }
 }

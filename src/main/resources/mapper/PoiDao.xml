@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qf.examsys.dao.PoiDao">
+
+
+    <resultMap id="findAllChoose" type="com.qf.examsys.entity.Choose">
+        <id property="cid" column="c_id"></id>
+        <result property="cTitle" column="c_title"></result>
+        <result property="cOptionA" column="c_option_a"></result>
+        <result property="cOptionB" column="c_option_b"></result>
+        <result property="cOptionC" column="c_option_c"></result>
+        <result property="cOptionD" column="c_option_d"></result>
+        <result property="cAnswer" column="c_answer"></result>
+        <result property="sid" column="s_id"></result>
+        <result property="cScore" column="c_score"></result>
+
+        <association property="subject" javaType="com.qf.examsys.entity.Subject">
+            <id property="sid" column="s_id"></id>
+            <result property="sName" column="s_name"></result>
+        </association>
+    </resultMap>
+
+    <select id="findAllChooseByPoi" resultMap="findAllChoose">
+        SELECT
+        tc.c_id,tc.c_title,tc.c_option_a,tc.c_option_b,tc.c_option_c,tc.c_option_d,tc.c_answer,tc.c_score,ts.s_name
+        from t_choose tc
+        LEFT JOIN t_subject ts ON tc.s_id=ts.s_id
+        <where>
+            <if test="cTitle != null and cTitle != ''">
+                and tc.c_title like CONCAT('%','${cTitle}','%')
+            </if>
+
+            <if test="sid != null and sid != ''">
+                and ts.s_id=#{sid}
+            </if>
+        </where>
+    </select>
+
+
+    <resultMap id="findAllSubject" type="com.qf.examsys.entity.Subject">
+        <id property="sid" column="s_id"></id>
+        <result property="sName" column="s_name"></result>
+    </resultMap>
+
+    <select id="findSubjectByName" resultMap="findAllSubject">
+        select * from t_subject where #{sName}
+    </select>
+
+    <insert id="addChooses" parameterType="com.qf.examsys.entity.Choose">
+        insert into t_choose (c_title,c_option_a,c_option_b,c_option_c,c_option_d,c_answer,s_id,c_score)
+        VALUES
+        <foreach collection="chooses" item="choose" separator=",">
+            (#{choose.cTitle},#{choose.cOptionA},#{choose.cOptionB},#{choose.cOptionC},#{choose.cOptionD},#{choose.cAnswer},#{choose.sid},#{choose.cScore})
+        </foreach>
+    </insert>
+</mapper>

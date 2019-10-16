@@ -33,7 +33,8 @@
     </resultMap>
 
     <select id="findAllChoose" resultMap="findAllChoose1">
-        SELECT tc.c_id,tc.c_title,tc.c_option_a,tc.c_option_b,tc.c_option_c,tc.c_option_d,tc.c_answer,tc.c_score,ts.s_name
+        SELECT
+        tc.c_id,tc.c_title,tc.c_option_a,tc.c_option_b,tc.c_option_c,tc.c_option_d,tc.c_answer,tc.c_score,ts.s_name
         from t_choose tc
         LEFT JOIN t_subject ts ON tc.s_id=ts.s_id
         <where>
@@ -59,4 +60,21 @@
         where c_id=#{cid}
     </update>
 
+    <delete id="deleteOneById" parameterType="com.qf.examsys.entity.Choose">
+        delete from t_choose where c_id=#{cid}
+    </delete>
+
+    <delete id="deletAlluQestion">
+        delete from t_choose where c_id in
+        <foreach collection="array" item="ids" open="(" separator=","
+                 close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <!--添加选择题-->
+    <insert id="addQuestion" parameterType="com.qf.examsys.entity.Choose">
+       insert into t_choose (c_title,c_option_a,c_option_b,c_option_c,c_option_d,c_answer,s_id,c_score)
+        VALUES (#{cTitle},#{cOptionA},#{cOptionB},#{cOptionC},#{cOptionD},#{cAnswer},#{sid},#{cScore})
+    </insert>
 </mapper>

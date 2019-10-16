@@ -15,6 +15,11 @@ public class JsonReasult<T> {
     public JsonReasult() {
     }
 
+    public JsonReasult(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
     public JsonReasult(Integer code, T data) {
         this.code = code;
         this.data = data;
