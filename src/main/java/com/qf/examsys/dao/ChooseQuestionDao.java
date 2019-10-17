@@ -31,9 +31,6 @@ public interface ChooseQuestionDao {
     * 导入导出
     * */
 
-    public List<Choose> findAllChooseByPoi(@Param("cTitle") String cTitle, @Param("sid") Integer sid);
 
     public int addChooses(@Param("chooses") List<Choose> chooses);
-
-    public Subject findSubjectByName(String sName);
 }

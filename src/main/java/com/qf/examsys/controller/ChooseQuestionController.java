@@ -46,7 +46,7 @@ public class ChooseQuestionController {
 
         List<Choose> list = chooseQuestionService.findAllChoose(pageMap, cTitle, sid);
 
-        System.out.println("选择题控制器list==="+list);
+//        System.out.println("选择题控制器list==="+list);
         long total = ((Page) list).getTotal();
         return new JsonReasult(0, list, "", total);
     }
@@ -118,7 +118,5 @@ public class ChooseQuestionController {
         }
         return new JsonReasult(0,"导入失败!");
     }
-
-
 
 }

@@ -22,4 +22,40 @@ public class JudgeQuestionServiceImpl implements JudgeQuestionService {
         List<Judge> allJudge = judgeQuestionDao.findAllJudge(jTitle, sid);
         return allJudge;
     }
+
+    @Override
+    public Judge findJudgeQuestionById(Integer jid) {
+        return judgeQuestionDao.findJudgeQuestionById(jid);
+    }
+
+    @Override
+    public Integer updateJudgeById(Judge judge) {
+        return judgeQuestionDao.updateJudgeById(judge);
+    }
+
+    @Override
+    public Integer addJudge(Judge judge) {
+        return judgeQuestionDao.addJudge(judge);
+    }
+
+    @Override
+    public Integer deleteOneById(Judge judge) {
+        return judgeQuestionDao.deleteOneById(judge);
+    }
+
+    @Override
+    public Integer deletAlljudge(Integer[] ids) {
+        return judgeQuestionDao.deletAlljudge(ids);
+    }
+
+    @Override
+    public List<Judge> findAllBriefByPoi(String jTitle, Integer sid) {
+
+        return judgeQuestionDao.findAllJudge(jTitle,sid);
+    }
+
+    @Override
+    public int addJudges(List<Judge> judges) {
+        return judgeQuestionDao.addJudges(judges);
+    }
 }

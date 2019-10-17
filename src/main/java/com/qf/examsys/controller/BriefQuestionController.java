@@ -55,7 +55,7 @@ public class BriefQuestionController {
     @PostMapping("/briefquestion/addOrUpdate")
     public JsonReasult addOrUpdateQuestion(Brief brief) {
 
-        System.out.println("哈哈"+brief);
+//        System.out.println("哈哈"+brief);
         if (brief.getBid() == null || brief.getBid().equals("")) {
             Integer num = briefQuestionService.addBrief(brief);
             return new JsonReasult(1,num);

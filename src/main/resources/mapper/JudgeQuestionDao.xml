@@ -43,4 +43,44 @@
         </where>
     </select>
 
+    <!--修改回显-->
+    <select id="findJudgeQuestionById" resultMap="findAllJudge">
+        select * from t_judge where j_id = #{jid};
+    </select>
+
+
+    <!--提交修改-->
+    <update id="updateJudgeById" parameterType="com.qf.examsys.entity.Judge">
+        update t_judge set
+        j_title= #{jTitle},j_answer=#{jAnswer},j_score=#{jScore},s_id=#{sid}
+        where j_id=#{jid}
+    </update>
+
+    <!--添加判断题-->
+    <insert id="addJudge" parameterType="com.qf.examsys.entity.Judge">
+       insert into t_judge (j_title,j_answer,s_id,j_score)
+        VALUES (#{jTitle},#{jAnswer},#{sid},#{jScore})
+    </insert>
+
+
+    <delete id="deleteOneById" parameterType="com.qf.examsys.entity.Judge">
+        delete from t_judge where j_id=#{jid}
+    </delete>
+
+    <!--批量删除-->
+    <delete id="deletAlljudge">
+        delete from t_judge where j_id in
+        <foreach collection="array" item="ids" open="(" separator=","
+                 close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <insert id="addJudges" parameterType="com.qf.examsys.entity.Judge">
+        insert into t_judge (j_title,j_answer,s_id,j_score)
+        VALUES
+        <foreach collection="judges" item="judge" separator=",">
+            (#{judge.jTitle},#{judge.jAnswer},#{judge.sid},#{judge.jScore})
+        </foreach>
+    </insert>
 </mapper>

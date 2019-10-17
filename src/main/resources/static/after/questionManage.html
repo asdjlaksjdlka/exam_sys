@@ -7,6 +7,7 @@
 		<title>系统后台</title>
 		<link rel="stylesheet" href="../js/layui/css/layui.css" />
 		<script type="text/javascript" src="../js/index.js" ></script>
+
 	</head>
 
 	<body class="layui-layout-body">
@@ -50,6 +51,34 @@
 				</ul>
 			</div>
 
+
+			<div class="layui-side layui-bg-black">
+				<div class="layui-side-scroll">
+					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+					<ul class="layui-nav layui-nav-tree"  lay-filter="test">
+						<li class="layui-nav-item layui-nav-itemed">
+							<a class="" href="javascript:;">所有商品</a>
+							<dl class="layui-nav-child">
+								<dd><a href="javascript:;">列表一</a></dd>
+								<dd><a href="javascript:;">列表二</a></dd>
+								<dd><a href="javascript:;">列表三</a></dd>
+								<dd><a href="">超链接</a></dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item">
+							<a href="javascript:;">解决方案</a>
+							<dl class="layui-nav-child">
+								<dd><a href="javascript:;">列表一</a></dd>
+								<dd><a href="javascript:;">列表二</a></dd>
+								<dd><a href="">超链接</a></dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item"><a href="">云市场</a></li>
+						<li class="layui-nav-item"><a href="">发布商品</a></li>
+					</ul>
+				</div>
+			</div>
+
 			<div class="layui-side layui-bg-black">
 				<div class="layui-side-scroll">
 					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
@@ -63,6 +92,8 @@
 								<dd><a href="javascript:loadPage('BriefQuestionList.html')">简答题</a></dd>
 							</dl>
 						</li>
+
+
 <!--						<li class="layui-nav-item" ><a href="javascript:loadPage('ChooseQuestionList.html')"  style="height: 80px;padding-top: 30px"><b>试题列表</b></a></li>-->
 						<li class="layui-nav-item"><a href="javascript:loadPage('ChooseQuestionList.html')" style="height: 80px;padding-top: 30px"><b>试题分类</b></a></li>
 					</ul>
@@ -77,40 +108,12 @@
 		<script src="../js/layui/layui.js"></script>
 		<script type="text/javascript" src="../js/jquery-1.12.2.min.js" ></script>
 		<script>
-			//JavaScript代码区域
-			// layui.use('element', function() {
-			// 	var element = layui.element;
-			//
-			// 	$.ajax({
-			// 		type:"get",
-			// 		url:"menu.json",
-			// 		dataType:"json",
-			// 		success:function(data){
-			// 			var html = "";
-			// 			$(data).each(function(){
-			// 				html += '<li class="layui-nav-item layui-nav-itemed">';
-			// 				html += '<a class="" href="javascript:;">' + this.pname + '</a>';
-			// 				html += '<dl class="layui-nav-child">';
-			// 				var cmenus = this.cmenu;
-			// 				$(cmenus).each(function(){
-			// 					html += '<dd>';
-			// 					html += '	<a href="' + this.url + '">' + this.cname + '</a>';
-			// 					html += '</dd>';
-			// 				});
-			//
-			//
-			// 				html += '</dl>';
-			// 				html += '</li>';
-			// 			})
-			// 			$("#menus").append($(html));
-			//
-			// 			// 针对动态绑定的数据，进行初始化操作
-			// 			element.render();
-			// 			//element.init()
-			// 		}
-			// 	})
-			//
-			// });
+			// JavaScript代码区域
+
+			layui.use('element', function(){
+				var element = layui.element;
+
+			});
 		</script>
 	</body>
 

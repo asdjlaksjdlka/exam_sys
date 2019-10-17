@@ -12,7 +12,7 @@
 
 
 <form class="layui-form" id="add-form" lay-filter="example">
-	<input hidden type="text" name="cid">
+	<input hidden type="text" name="jid">
 
 	<div class="layui-form-item">
 		<label class="layui-form-label">科目：</label>
@@ -26,46 +26,22 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">题干：</label>
 		<div class="layui-input-block">
-			<input type="text" name="cTitle" lay-verify="title" class="layui-input"  style="width: 300px">
+			<input type="text" name="jTitle" lay-verify="title" class="layui-input"  style="width: 300px">
 		</div>
 	</div>
 
-	<div class="layui-form-item">
-		<label class="layui-form-label">选项A：</label>
-		<div class="layui-input-block">
-			<input type="text" name="cOptionA" lay-verify="title"  class="layui-input"  style="width: 300px">
-		</div>
-	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label">选项B：</label>
-		<div class="layui-input-block">
-			<input type="text" name="cOptionB" lay-verify="title"  class="layui-input"  style="width: 300px">
-		</div>
-	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label">选项C：</label>
-		<div class="layui-input-block">
-			<input type="text" name="cOptionC" lay-verify="title"  class="layui-input"  style="width: 300px">
-		</div>
-	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label">选项D：</label>
-		<div class="layui-input-block">
-			<input type="text" name="cOptionD" lay-verify="title" class="layui-input"  style="width: 300px">
-		</div>
-	</div>
 
 	<div class="layui-form-item">
 		<label class="layui-form-label">答案：</label>
 		<div class="layui-input-block">
-			<input type="text" name="cAnswer" lay-verify="title" class="layui-input"  style="width: 300px">
+			<input type="text" name="jAnswer" lay-verify="title" class="layui-input"  style="width: 300px">
 		</div>
 	</div>
 
 	<div class="layui-form-item">
 		<label class="layui-form-label">分数：</label>
 		<div class="layui-input-block">
-			<input type="text" name="cScore" lay-verify="title" class="layui-input"  style="width: 300px">
+			<input type="text" name="jScore" lay-verify="title" class="layui-input"  style="width: 300px">
 		</div>
 	</div>
 
@@ -114,7 +90,7 @@
 		function findOne() {
             $.ajax({
                 type: "get",
-                url: "../choosequestion/query" + window.location.search,
+                url: "../judgequestion/query" + window.location.search,
                 dataType: "json",
                 success: function (data) {
                     if (data.code == 1) {
@@ -129,7 +105,7 @@
         form.on('submit(demo1)', function(data){
             $.ajax({
                 type: "post",
-                url: "../choosequestion/addOrUpdate",
+                url: "../judgequestion/addOrUpdate",
                 data: data.field,
                 dataType: "json",
                 success: function (data) {

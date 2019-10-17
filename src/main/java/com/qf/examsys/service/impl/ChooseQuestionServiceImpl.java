@@ -68,7 +68,7 @@ public class ChooseQuestionServiceImpl implements ChooseQuestionService {
 
     @Override
     public List<Choose> findAllChooseByPoi(String cTitle, Integer sid) {
-        return chooseQuestionDao.findAllChooseByPoi(cTitle,sid);
+        return chooseQuestionDao.findAllChoose(cTitle,sid);
     }
 
     @Override

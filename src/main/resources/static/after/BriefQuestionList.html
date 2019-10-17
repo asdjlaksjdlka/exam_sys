@@ -17,7 +17,7 @@
     <div class="layui-form-item" style="margin-left: 550px">
 
         <div class="layui-input-inline">
-            <input type="text" class="layui-input" id="cTitle" name="cTitle" placeholder="题干名称">
+            <input type="text" class="layui-input" id="bTitle" name="bTitle" placeholder="题干名称">
         </div>
         <div class="layui-input-inline">
             <select name="sid" id="sid">
@@ -42,8 +42,8 @@
 
     function exportExcel() {
         var sid = $("#sid").val();//根据自己命名的标签获取值
-        var cTitle = $("#cTitle").val();
-        window.location.href = encodeURI("../briefquestion/exportExcel?sid="+sid+"&cTitle="+cTitle);
+        var bTitle = $("#bTitle").val();
+        window.location.href = encodeURI("../briefquestion/exportExcel?sid="+sid+"&bTitle="+bTitle);
     }
 
 </script>
@@ -223,7 +223,7 @@
                         curr: 1 //重新从第 1 页开始
                     }
                     , where: { // 额外需要提交的参数\
-                        cTitle: $("#cTitle").val(),
+                        bTitle: $("#bTitle").val(),
                         sid: $("#sid").val()
                     }
                 });

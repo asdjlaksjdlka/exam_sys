@@ -48,7 +48,7 @@
     <!--提交修改-->
     <update id="updateBriefById" parameterType="com.qf.examsys.entity.Brief">
         update t_brief set
-        b_title= #{bTitle},b_answer=#{bAnswer},b_score=#{bScore}
+        b_title= #{bTitle},b_answer=#{bAnswer},b_score=#{bScore},s_id=#{sid}
         where b_id=#{bid}
     </update>
 

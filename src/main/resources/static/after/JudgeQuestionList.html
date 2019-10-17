@@ -17,7 +17,7 @@
     <div class="layui-form-item" style="margin-left: 550px">
 
         <div class="layui-input-inline">
-            <input type="text" class="layui-input" id="cTitle" name="cTitle" placeholder="题干名称">
+            <input type="text" class="layui-input" id="jTitle" name="jTitle" placeholder="题干名称">
         </div>
         <div class="layui-input-inline">
             <select name="sid" id="sid">
@@ -42,8 +42,8 @@
 
     function exportExcel() {
         var sid = $("#sid").val();//根据自己命名的标签获取值
-        var cTitle = $("#cTitle").val();
-        window.location.href = encodeURI("../choosequestion/exportExcel?sid="+sid+"&cTitle="+cTitle);
+        var jTitle = $("#jTitle").val();
+        window.location.href = encodeURI("../judgequestion/exportExcel?sid="+sid+"&jTitle="+jTitle);
     }
 
 </script>
@@ -79,7 +79,7 @@
                     alert(delList[i])
                 }*/
         $.ajax({
-            url: '../question/deleteAll',
+            url: '../judgequestion/deleteAll',
             type: 'post',
             dataType: 'json',
             data: "ids=" + delList,
@@ -147,7 +147,7 @@
                         type: 2 //此处以iframe举例
                         , title: '添加题目'
                         , area: ['720px', '620px']
-                        , content: 'ChooseQuestionModify.html'
+                        , content: 'JudgeQuestionModify.html'
                     });
                     break;
                 case 'delete':
@@ -158,7 +158,7 @@
                     /*把data中的数据打包进delList数组内*/
                     var delList = [];
                     for (var i = 0; i < checkStatus.data.length; i++) {
-                        delList.push(checkStatus.data[i].cid)
+                        delList.push(checkStatus.data[i].jid)
                     }
 
                     /*       checkStatus.data.forEach(function (n) {
@@ -184,8 +184,8 @@
                     //发送请求到后台
                     $.ajax({
                         type: "get",
-                        url: "../question/deleteOne",
-                        data: {cid: data.cid},
+                        url: "../judgequestion/deleteOne",
+                        data: {jid: data.jid},
                         dataType: "json",
                         success: function (data) {
                             //mysql删除数据的返回值，删除的行数
@@ -209,7 +209,7 @@
                     type: 2 //此处以iframe举例
                     , title: '修改试题信息'
                     , area: ['720px', '620px']
-                    , content: 'ChooseQuestionModify.html?cid=' + data.cid
+                    , content: 'JudgeQuestionModify.html?jid=' + data.jid
                 });
             }
         });
@@ -222,7 +222,7 @@
                         curr: 1 //重新从第 1 页开始
                     }
                     , where: { // 额外需要提交的参数\
-                        cTitle: $("#cTitle").val(),
+                        jTitle: $("#jTitle").val(),
                         sid: $("#sid").val()
                     }
                 });
@@ -242,7 +242,7 @@
         //执行上传
         var uploadInst = upload.render({
             elem: '#test3' //绑定元素
-            , url: '../choosequestion/importEmp' //上传接口
+            , url: '../judgequestion/importbrief' //上传接口
             , method: 'POST'
             , accept: 'file'
         /*    , before: function (obj) {
@@ -253,8 +253,8 @@
                 if (data.code==1){
 
                     layer.alert(data.msg);
-                    table.reload('questionTable');// 重新加载页面,demo 表示父窗体table标签的id值
-
+                    var t = layui.table;
+                    t.reload('questionTable');// 重新加载页面
                 }else if (data.code==0) {
                     layer.alert(data.msg);
                 }else {
@@ -270,17 +270,6 @@
 <!--ajax请求加载页面下拉框内容-->
 <script type="text/javascript">
     $(function () {
-        /*       $.ajax({
-                   url: "../questionType/list?page=1&limit=65536",
-                   dataType: "json",
-                   type: "post",
-                   success: function(returnData) {
-                       $(returnData.data).each(function (index, item) {
-                           var html = "<option value=" + item.typeId + ">" + item.typeName + "</option>";
-                           $("#typeId").append(html);
-                       })
-                   }
-               });*/
         $.ajax({
             url: "../subject/list",
             dataType: "json",
