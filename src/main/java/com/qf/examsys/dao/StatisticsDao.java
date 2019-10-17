@@ -3,11 +3,12 @@ package com.qf.examsys.dao;
 import com.qf.examsys.entity.Record;
 import com.qf.examsys.entity.Score;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
-//@Repository
+@Repository
 public interface StatisticsDao {
 
     // 学生单人成绩统计
