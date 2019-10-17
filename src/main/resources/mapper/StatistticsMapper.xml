@@ -2,11 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper>
+<mapper namespace="com.qf.examsys.dao.StatisticsDao">
     <!--用户-->
     <resultMap id="user" type="com.qf.examsys.entity.User">
         <id column="u_id" property="uid"></id>
         <result column="u_name" property="uName"></result>
+        <result column="u_phone" property="uPhone"></result>
+        <result column="u_password" property="uPassword"></result>
+        <result column="status" property="uStatus"></result>
     </resultMap>
 
     <!--科目-->
@@ -15,12 +18,25 @@
         <result column="s_name" property="sName"></result>
     </resultMap>
 
+    <!--试卷-->
+    <resultMap id="page" type="com.qf.examsys.entity.Page">
+        <id column="p_id" property="pid"></id>
+        <result column="p_title" property="pTitle"></result>
+        <result column="s_id" property="sid"></result>
+        <result column="choose" property="choose"></result>
+        <result column="judge" property="judge"></result>
+        <result column="brief" property="brief"></result>
+        <result column="status" property="pStatus"></result>
+    </resultMap>
+
+
     <!--考试-->
     <resultMap id="exam" type="com.qf.examsys.entity.Exam">
-        <id column="e_id" property="uid"></id>
-        <result column="e_name" property="uName"></result>
-        <result column="begin_time" property="uName"></result>
-        <result column="end_time" property="uName"></result>
+        <id column="e_id" property="eId"></id>
+        <result column="e_name" property="name"></result>
+        <result column="begin_time" property="beginTime"></result>
+        <result column="end_time" property="endTime"></result>
+        <result column="p_id" property="pid"></result>
     </resultMap>
 
     <!--成绩-->
@@ -48,7 +64,10 @@
         t_score.e_id,
         t_user.u_name,
         t_subject.s_name,
-        t_exam.e_name
+        t_exam.e_name,
+        t_exam.begin_time,
+        t_exam.end_time,
+        t_exam.p_id
         FROM
         t_score ,
         t_user ,
@@ -72,4 +91,5 @@
         </where>
     </select>
 </mapper>
+
 

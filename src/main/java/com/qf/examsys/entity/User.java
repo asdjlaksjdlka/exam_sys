@@ -9,7 +9,7 @@ public class User  implements Serializable {
     private String uName;
     private String uStatus;
     private Integer roId;
-    private Score score;
+
 
     public Integer getRoId() {
         return roId;

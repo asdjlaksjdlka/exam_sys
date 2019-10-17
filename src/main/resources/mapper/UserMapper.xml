@@ -12,7 +12,7 @@
         <result column="u_status" property="uStatus"/>
         <result column="ro_id" property="roId"/>
     </resultMap>
-    <insert id="insert">
+    <insert id="insert" parameterType="list">
         insert into t_user(u_phone,u_password,u_name,ro_id) values(#{uPhone},#{uPassword},#{uName},#{roId})
     </insert>
     <!--<insert id="insertSelective" parameterType="com.qf.examsys.entity.User" >-->
@@ -64,9 +64,25 @@
         update t_user set u_password=#{uPassword} where u_id = #{uid}
     </update>
 
+    <!--    通过手机号码预注册   by: imlee   -->
+    <insert id="signUpFirst" parameterType="string">
+        insert into t_user (u_phone) values (#{uPhone})
+    </insert>
 
-    <select id="selectScoreById" parameterType="com.qf.examsys.entity.Score" resultMap="userMap">
-      select s_total_core from t_score where u_id = #{uid}
-    </select>
+    <!--    补充 用户名，密码   by: imlee   -->
+    <update id="signUp" parameterType="list">
+        update t_user set u_name = #{u_Name}, u_password = #{uPassword} where u_phone = #{uPhone}
+    </update>
+
+    <!--  通过手机号码登录  by: imlee   -->
+    <select id="signInByTelephoneNumber" parameterType="String" resultMap="userMap">
+    select * from t_user where  u_phone = #{uPhone}
+  </select>
+
+    <!--  通过手机号码重置密码  by: imlee -->
+    <update id="resetPassword" parameterType="list">
+    update t_user set u_password = #{uPassword} where u_phone = #{uPhone}
+  </update>
+
 
 </mapper>
