@@ -16,8 +16,8 @@ public class Exam {
     // 结束时间
     private Date endTime;
 
-    // 试卷id
-    private Integer pid;
+    // 试卷
+    private Page page;
 
     @Override
     public String toString() {
@@ -26,7 +26,7 @@ public class Exam {
                 ", 考试名name='" + name + '\'' +
                 ", 开始时间beginTime=" + beginTime +
                 ", 结束时间endTime=" + endTime +
-                ", 试卷pid=" + pid +
+                ", 试卷Page=" + page +
                 '}';
     }
 
@@ -62,11 +62,11 @@ public class Exam {
         this.endTime = endTime;
     }
 
-    public Integer getPid() {
-        return pid;
+    public Page getPage() {
+        return page;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setPage(Page page) {
+        this.page = page;
     }
 }

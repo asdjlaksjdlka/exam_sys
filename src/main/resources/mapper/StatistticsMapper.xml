@@ -36,7 +36,8 @@
         <result column="e_name" property="name"></result>
         <result column="begin_time" property="beginTime"></result>
         <result column="end_time" property="endTime"></result>
-        <result column="p_id" property="pid"></result>
+
+        <collection property="page" resultMap="page"></collection>
     </resultMap>
 
     <!--成绩-->
@@ -46,10 +47,20 @@
         <result column="s_judge_score" property="judgeScore"></result>
         <result column="s_brief_sore" property="briefScore"></result>
         <result column="s_total_core" property="totalScore"></result>
+
         <collection property="user" resultMap="user"></collection>
         <collection property="subject" resultMap="subject"></collection>
         <collection property="exam" resultMap="exam"></collection>
 
+    </resultMap>
+
+    <resultMap id="apply" type="com.qf.examsys.entity.Apply">
+        <id column="apply_id" property="applyId"></id>
+        <result column="time" property="time"></result>
+
+        <collection property="user" resultMap="user"></collection>
+        <collection property="exam" resultMap="exam"></collection>
+        <collection property="subject" resultMap="subject"></collection>
     </resultMap>
 
     <select id="listPersonalScore" resultMap="score">
@@ -87,7 +98,56 @@
             <if test="uid != null and uid != ''">
                 and t_user.u_id = #{uid}
             </if>
+
             ORDER BY t_user.u_id ASC
+        </where>
+    </select>
+
+    <select id="listApply" resultMap="apply">
+        SELECT
+        t_apply.apply_id,
+        t_apply.time,
+        t_exam.e_name,
+        t_exam.begin_time,
+        t_exam.end_time,
+        t_exam.p_id,
+        t_page.p_title,
+        t_page.s_id,
+        t_page.choose,
+        t_page.judge,
+        t_page.brief,
+        t_page.`status`,
+        t_exam.e_id,
+        t_page.p_id,
+        t_subject.s_id,
+        t_subject.s_name,
+        t_apply.u_id
+        FROM
+        t_apply ,
+        t_exam ,
+        t_page ,
+        t_subject
+        FROM
+        t_apply ,
+        t_exam ,
+        t_page ,
+        t_subject
+        <where>
+            t_apply.e_id = t_exam.e_id AND
+            t_apply.s_id = t_subject.s_id AND
+            t_exam.p_id = t_page.p_id
+            <if test="uid != null and uid != ''">
+                and t_apply.u_id = #{uid}
+            </if>
+            <if test="sid != null and sid != ''">
+                and t_apply.s_id = #{sid}
+            </if>
+            <if test="time != null">
+                and t_apply.time BETWEEN #{time} AND DATE_ADD(#{time},INTERVAL 1 DAY)
+            </if>
+
+            ORDER BY t_apply.apply_id desc
+
         </where>
     </select>
 </mapper>
