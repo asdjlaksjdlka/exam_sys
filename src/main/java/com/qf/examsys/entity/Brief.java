@@ -10,6 +10,16 @@ public class Brief implements Serializable {
     private Integer sid;
     private Integer bScore;
 
+    private Subject subject;
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
     public Integer getbScore() {
         return bScore;
     }

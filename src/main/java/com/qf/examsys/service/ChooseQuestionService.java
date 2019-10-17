@@ -2,11 +2,12 @@ package com.qf.examsys.service;
 
 import com.qf.examsys.entity.Choose;
 import com.qf.examsys.entity.Subject;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
 
-public interface QuestionService {
+public interface ChooseQuestionService {
 
     public List<Subject> findAllSubject();
 
@@ -25,4 +26,14 @@ public interface QuestionService {
      * 添加选择题
      */
     public Integer addQuestion(Choose choose);
+
+
+    /*
+    * 导入导出
+    * */
+    public List<Choose> findAllChooseByPoi(@Param("cTitle") String cTitle, @Param("sid") Integer sid);
+
+
+    public int addQuestionChoose(@Param("chooses") List<Choose> chooses);
+
 }

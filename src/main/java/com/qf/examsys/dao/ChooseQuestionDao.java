@@ -1,12 +1,13 @@
 package com.qf.examsys.dao;
 
+import com.qf.examsys.entity.Brief;
 import com.qf.examsys.entity.Choose;
 import com.qf.examsys.entity.Subject;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface QuestionDao {
+public interface ChooseQuestionDao {
 
     public List<Subject> findAllSubject();
 
@@ -19,10 +20,20 @@ public interface QuestionDao {
     public Integer deleteOneById(Choose choose);
 
     //批量删除
-    public Integer deletAlluQestion(Integer[] ids);
+    public Integer deletAllQuestion(Integer[] ids);
 
     /**
      * 添加选择题
      */
     public Integer addQuestion(Choose choose);
+
+    /*
+    * 导入导出
+    * */
+
+    public List<Choose> findAllChooseByPoi(@Param("cTitle") String cTitle, @Param("sid") Integer sid);
+
+    public int addChooses(@Param("chooses") List<Choose> chooses);
+
+    public Subject findSubjectByName(String sName);
 }

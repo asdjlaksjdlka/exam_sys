@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qf.examsys.dao.BriefQuestionDao">
+
+    <!--以下为简答题部分-->
+
+    <resultMap id="findAllBrief" type="com.qf.examsys.entity.Brief">
+        <id property="bid" column="b_id"></id>
+        <result property="bTitle" column="b_title"></result>
+        <result property="bAnswer" column="b_answer"></result>
+        <result property="sid" column="s_id"></result>
+        <result property="bScore" column="b_score"></result>
+
+        <association property="subject" javaType="com.qf.examsys.entity.Subject">
+            <id property="sid" column="s_id"></id>
+            <result property="sName" column="s_name"></result>
+        </association>
+    </resultMap>
+    <select id="findAllBrief" resultMap="findAllBrief">
+        SELECT
+        tb.b_id,
+        tb.b_title,
+        tb.b_answer,
+        tb.s_id,
+        tb.b_score,
+        ts.s_name
+        FROM
+        t_brief AS tb
+        INNER JOIN t_subject AS ts ON tb.s_id = ts.s_id
+        <where>
+            <if test="bTitle != null and bTitle != ''">
+                and tb.b_title like CONCAT('%','${bTitle}','%')
+            </if>
+
+            <if test="sid != null and sid != ''">
+                and ts.s_id=#{sid}
+            </if>
+        </where>
+    </select>
+    <!--修改回显-->
+    <select id="findBriefQuestionById" resultMap="findAllBrief">
+        select * from t_brief where b_id = #{bid};
+    </select>
+
+    <!--提交修改-->
+    <update id="updateBriefById" parameterType="com.qf.examsys.entity.Brief">
+        update t_brief set
+        b_title= #{bTitle},b_answer=#{bAnswer},b_score=#{bScore}
+        where b_id=#{bid}
+    </update>
+
+    <!--添加选择题-->
+    <insert id="addBrief" parameterType="com.qf.examsys.entity.Brief">
+       insert into t_brief (b_title,b_answer,s_id,b_score)
+        VALUES (#{bTitle},#{bAnswer},#{sid},#{bScore})
+    </insert>
+    <delete id="deleteOneById" parameterType="com.qf.examsys.entity.Brief">
+        delete from t_brief where b_id=#{bid}
+    </delete>
+
+<!--批量删除-->
+    <delete id="deletAllBrief">
+        delete from t_brief where b_id in
+        <foreach collection="array" item="ids" open="(" separator=","
+                 close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+
+    <insert id="addBriefs" parameterType="com.qf.examsys.entity.Brief">
+        insert into t_brief (b_title,b_answer,s_id,b_score)
+        VALUES
+        <foreach collection="briefs" item="brief" separator=",">
+            (#{brief.bTitle},#{brief.bAnswer},#{brief.sid},#{brief.bScore})
+        </foreach>
+    </insert>
+</mapper>

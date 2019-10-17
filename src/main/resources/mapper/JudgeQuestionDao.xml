@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qf.examsys.dao.JudgeQuestionDao">
+
+    <!--以下为简答题部分-->
+
+    <resultMap id="findAllJudge" type="com.qf.examsys.entity.Judge">
+        <id property="jid" column="j_id"></id>
+        <result property="jTitle" column="j_title"></result>
+        <result property="jAnswer" column="j_answer"></result>
+        <result property="sid" column="s_id"></result>
+        <result property="jScore" column="j_score"></result>
+
+        <association property="subject" javaType="com.qf.examsys.entity.Subject">
+            <id property="sid" column="s_id"></id>
+            <result property="sName" column="s_name"></result>
+        </association>
+    </resultMap>
+    <select id="findAllJudge" resultMap="findAllJudge">
+
+        SELECT
+        tj.j_id,
+        tj.j_title,
+        tj.j_answer,
+        tj.s_id,
+        tj.j_score,
+        ts.s_name
+        FROM
+        t_subject AS ts
+        INNER JOIN t_judge AS tj ON ts.s_id = tj.s_id
+
+        <where>
+            <if test="jTitle != null and jTitle != ''">
+                and tj.j_title like CONCAT('%','${jTitle}','%')
+            </if>
+
+            <if test="sid != null and sid != ''">
+                and ts.s_id=#{sid}
+            </if>
+        </where>
+    </select>
+
+</mapper>

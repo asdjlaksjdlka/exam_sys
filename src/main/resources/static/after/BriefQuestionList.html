@@ -2,27 +2,23 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" href="../js/layui/css/layui.css" />
-    <script type="text/javascript" src="../js/layui/layui.js" ></script>
-    <script type="text/javascript" src="../js/jquery-1.12.2.min.js" ></script>
+    <link rel="stylesheet" href="../js/layui/css/layui.css"/>
+    <script type="text/javascript" src="../js/layui/layui.js"></script>
+    <script type="text/javascript" src="../js/jquery-1.12.2.min.js"></script>
 
 </head>
-<body class="layui-layout-body">
+<!--body体中去掉，解决遮挡问题class="layui-layout-body"-->
+<body>
 <div style="height: 70px;text-align: center; background-color: #C8EBFA;">
-    <h1 style="text-align: center;padding-top: 20px">试题管理</h1>
+    <h1 style="text-align: center;padding-top: 20px">简答题管理</h1>
 </div>
 
 <div class="layui-form searchDiv">
     <div class="layui-form-item" style="margin-left: 550px">
 
         <div class="layui-input-inline">
-            <input type="text" class="layui-input" id="questionName" name="questionName" placeholder="题干名称">
+            <input type="text" class="layui-input" id="cTitle" name="cTitle" placeholder="题干名称">
         </div>
-<!--        <div class="layui-input-inline">
-            <select name="typeId" id="typeId">
-                <option value="">题目类型</option>
-            </select>
-        </div>-->
         <div class="layui-input-inline">
             <select name="sid" id="sid">
                 <option value="">科目</option>
@@ -37,8 +33,25 @@
     <button type="button" class="layui-btn" id="test3">
         <i class="layui-icon"></i>导入Excel文件
     </button>
+    <button type="button" class="layui-btn" id="test4" onclick="exportExcel()">
+        <i class="layui-icon"></i>导出Excel文件
+    </button>
 </div>
+
+<script type="text/javascript">
+
+    function exportExcel() {
+        var sid = $("#sid").val();//根据自己命名的标签获取值
+        var cTitle = $("#cTitle").val();
+        window.location.href = encodeURI("../briefquestion/exportExcel?sid="+sid+"&cTitle="+cTitle);
+    }
+
+</script>
 <table class="layui-hide" id="test" lay-filter="test"></table>
+<!--自增序号-->
+<script type="text/html" id="zizeng">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
 
@@ -61,15 +74,21 @@
 
 <script type="text/javascript">
     function submitdata(delList) {
+        /*验证数组参数是否传过来
+                for (var i = 0; i < delList.length; i++) {
+                    alert(delList[i])
+                }*/
         $.ajax({
-            url: '../video/delete.do',
+            url: '../briefquestion/deleteAll',
             type: 'post',
             dataType: 'json',
-            data: "id=" + delList,
+            data: "ids=" + delList,
             success: function (data) {
-                if (data === 0) {
+                //mysql删除数据的返回值，删除的行数
+                // alert(data.num)
+                //data.num为dao层delete修改的返回值
+                if (data.code == 1 && data.num == delList.length) {
                     layer.msg('删除成功');
-                    table.reload();
                 } else {
                     layer.msg('删除失败');
                 }
@@ -82,52 +101,54 @@
 </script>
 
 <script>
-    layui.use('table',function(){
+    layui.use('table', function () {
         var table = layui.table;
         table.render({
             id: "questionTable"
-            ,elem: '#test'
-            ,url:'../question/list'
-            ,toolbar: '#toolbarDemo'
-            ,title: '试题数据表'
-            ,cols: [[
+            , elem: '#test'
+            , url: '../briefquestion/list'
+            , page: true //开启分页
+            , toolbar: 'default'
+            , title: '试题数据表'
+            , totalRow: true //开启合计行
+            , cols: [[
                 {type: 'checkbox', fixed: 'left'}
-                ,{field:'questionId', title:'题目编号',  edit: 'text', width: 100}
-                ,{field:'questionName', title:'题干',  edit: 'text', width: 150}
-                ,{field:'typeName', title:'题目类型', width: 100, sort: true}
-                ,{field:'optionA', title:'选项A',  edit: 'text', width: 150}
-                ,{field:'optionB', title:'选项B',  edit: 'text', width: 150}
-                ,{field:'optionC', title:'选项C',width: 150}
-                ,{field:'optionD', title:'选项D', width: 150}
-                ,{field:'answer', title:'答案', width: 150}
-                ,{field:'answerDetail', title:'详解', width: 150}
-                ,{field:'courseName', title:'科目', width: 100}
-                ,{field:'difficulty', title:'难度', width: 100, sort: true}
-                ,{field:'remark', title:'说明', width: 150}
-                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width: 100}
+                , {field: 'zizing', title: '题目编号', width: 100, templet: '#zizeng'}
+                , {field: 'bTitle', title: '题干', width: 150}
+                , {field: 'bAnswer', title: '答案', width: 150}
+                , {field: 'bScore', title: '分值', width: 150}
+                , {
+                    field: 'sName', title: '科目', width: 100,
+                    templet: function (data) {
+                        return data.subject.sName;
+                    }
+                }
+                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 100}
             ]]
-            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+
+            , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
                 //,curr: 5 //设定初始在第 5 页
                 , groups: 3 //只显示 1 个连续页码
                 , first: "首页" //不显示首页
                 , last: "尾页" //不显示尾页
-                , limit: 8
-                , limits: [5, 8, 20]
-
+                , limit: 7
             }
         });
-
         //头工具栏事件
-        table.on('toolbar(test)', function(obj){
+        table.on('toolbar(test)', function (obj) {
             var checkStatus = table.checkStatus(obj.config.id);
-            switch(obj.event){
+            /*
+            验证
+            是否封装到数组
+            alert(checkStatus.data[0].cid)*/
+            switch (obj.event) {
                 case 'add':
                     layer.open({
                         type: 2 //此处以iframe举例
-                        , title: '添加视频'
+                        , title: '添加题目'
                         , area: ['720px', '620px']
-                        , content: 'questionModify.html'
+                        , content: 'BriefQuestionModify.html'
                     });
                     break;
                 case 'delete':
@@ -135,36 +156,43 @@
                         layer.alert("请选择需要删除的数据");
                         return;
                     }
+                    /*把data中的数据打包进delList数组内*/
                     var delList = [];
-                    checkStatus.data.forEach(function (n) {
-                        delList.push(n.id);
-                    });
-                    layer.confirm('确认要删除所选中的行吗？',function(index){
+                    for (var i = 0; i < checkStatus.data.length; i++) {
+                        delList.push(checkStatus.data[i].bid)
+                    }
+
+                    /*       checkStatus.data.forEach(function (n) {
+                               delList.push(n.id);
+                           });*/
+                    layer.confirm('确认要删除所选中的行吗？', function (index) {
                         submitdata(delList);
                         var t = layui.table;
-                        t.reload('videoTable');// 重新加载页面
+                        t.reload('questionTable');// 重新加载页面
                     });
-
-                // console.log(checkStatus.data); //获取选中行的数据
+                    // console.log(checkStatus.data); //获取选中行的数据
                 // console.log(checkStatus.data.length); //获取选中行数量，可作为是否有选中行的条件
             }
         });
 
         //监听行工具事件
-        table.on('tool(test)', function(obj){
+        table.on('tool(test)', function (obj) {
             var data = obj.data;
-            if(obj.event === 'del'){
-                layer.confirm('删除？：', function (index) {
+            if (obj.event === 'del') {
+                layer.confirm('确认删除吗？', function (index) {
                     obj.del();
                     layer.close(index);
                     //发送请求到后台
                     $.ajax({
                         type: "get",
-                        url: "../question/deleteOne",
-                        data: {questionId: data.questionId},
+                        url: "../briefquestion/deleteOne",
+                        data: {bid: data.bid},
                         dataType: "json",
                         success: function (data) {
-                            if (data.code == 1) {
+                            //mysql删除数据的返回值，删除的行数
+                            // alert(data.num)
+                            //data.num为dao层delete修改的返回值
+                            if (data.code == 1 && data.num == 1) {
                                 layer.msg("删除成功!", {
                                     icon: 6,
                                     time: 1500
@@ -177,78 +205,77 @@
                         }
                     })
                 });
-            } else if(obj.event === 'edit'){
+            } else if (obj.event === 'edit') {
                 layer.open({
                     type: 2 //此处以iframe举例
                     , title: '修改试题信息'
                     , area: ['720px', '620px']
-                    , content: 'questionModify.html?questionId=' + data.questionId
+                    , content: 'BriefQuestionModify.html?bid=' + data.bid
                 });
             }
         });
 
         var active = {
-            reload: function(){
+            reload: function () {
                 //执行重载
                 table.reload('questionTable', {
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
-                    ,where: { // 额外需要提交的参数\
-                        questionName: $("#questionName").val(),
-                        typeId:$("#typeId").val(),
+                    , where: { // 额外需要提交的参数\
+                        cTitle: $("#cTitle").val(),
                         sid: $("#sid").val()
                     }
                 });
             }
         };
 
-        $('.searchDiv .layui-btn').on('click', function(){
+        $('.searchDiv .layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
     });
 </script>
 <script>
-    layui.use('upload', function importExcel(){
+    layui.use('upload', function importExcel() {
         var upload = layui.upload;
 
         //执行上传
         var uploadInst = upload.render({
             elem: '#test3' //绑定元素
-            ,url: '../question/import' //上传接口
-            ,method: 'POST'
-            ,accept: 'file'
-            ,before: function(obj){
+            , url: '../briefquestion/importbrief' //上传接口
+            , method: 'POST'
+            , accept: 'file'
+        /*    , before: function (obj) {
                 layer.load();
-            }
-            ,done: function(data){
-            //上传完毕回调
-                layer.alert(data.info);
-        }
+            }*/
+            , done: function (data) {
 
+                if (data.code==1){
+
+                    layer.alert(data.msg);
+                    table.reload('questionTable');// 重新加载页面,demo 表示父窗体table标签的id值
+
+                }else if (data.code==0) {
+                    layer.alert(data.msg);
+                }else {
+                    //上传完毕回调
+                    layer.alert("失败");
+                }
+            }
         });
     });
+
+
 </script>
-<!--<%&#45;&#45;ajax请求加载页面下拉框内容&#45;&#45;%>-->
+<!--ajax请求加载页面下拉框内容-->
 <script type="text/javascript">
     $(function () {
- /*       $.ajax({
-            url: "../questionType/list?page=1&limit=65536",
-            dataType: "json",
-            type: "post",
-            success: function(returnData) {
-                $(returnData.data).each(function (index, item) {
-                    var html = "<option value=" + item.typeId + ">" + item.typeName + "</option>";
-                    $("#typeId").append(html);
-                })
-            }
-        });*/
         $.ajax({
             url: "../subject/list",
             dataType: "json",
             type: "get",
-            success: function(returnData) {
+            success: function (returnData) {
                 $(returnData.data).each(function (index, item) {
                     // alert(item.sid+item.sName)
                     var html = "<option value=" + item.sid + ">" + item.sName + "</option>";

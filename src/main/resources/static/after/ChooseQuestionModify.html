@@ -114,7 +114,7 @@
 		function findOne() {
             $.ajax({
                 type: "get",
-                url: "../question/query" + window.location.search,
+                url: "../choosequestion/query" + window.location.search,
                 dataType: "json",
                 success: function (data) {
                     if (data.code == 1) {
@@ -129,7 +129,7 @@
         form.on('submit(demo1)', function(data){
             $.ajax({
                 type: "post",
-                url: "../question/addOrUpdate",
+                url: "../choosequestion/addOrUpdate",
                 data: data.field,
                 dataType: "json",
                 success: function (data) {

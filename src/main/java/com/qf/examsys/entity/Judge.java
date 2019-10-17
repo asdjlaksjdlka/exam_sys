@@ -10,6 +10,16 @@ public class Judge implements Serializable {
     private Integer sid;
     private Integer jScore;
 
+    private Subject subject;
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
     public Integer getjScore() {
         return jScore;
     }

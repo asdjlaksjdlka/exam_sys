@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.qf.examsys.dao.QuestionDao">
+<mapper namespace="com.qf.examsys.dao.ChooseQuestionDao">
 
     <resultMap id="findAllSubject" type="com.qf.examsys.entity.Subject">
         <id property="sid" column="s_id"></id>
@@ -64,7 +64,7 @@
         delete from t_choose where c_id=#{cid}
     </delete>
 
-    <delete id="deletAlluQestion">
+    <delete id="deletAllQuestion">
         delete from t_choose where c_id in
         <foreach collection="array" item="ids" open="(" separator=","
                  close=")">
@@ -77,4 +77,39 @@
        insert into t_choose (c_title,c_option_a,c_option_b,c_option_c,c_option_d,c_answer,s_id,c_score)
         VALUES (#{cTitle},#{cOptionA},#{cOptionB},#{cOptionC},#{cOptionD},#{cAnswer},#{sid},#{cScore})
     </insert>
+
+
+
+
+    <select id="findAllChooseByPoi" resultMap="findAllChoose1">
+        SELECT
+        tc.c_id,tc.c_title,tc.c_option_a,tc.c_option_b,tc.c_option_c,tc.c_option_d,tc.c_answer,tc.c_score,ts.s_name
+        from t_choose tc
+        LEFT JOIN t_subject ts ON tc.s_id=ts.s_id
+        <where>
+            <if test="cTitle != null and cTitle != ''">
+                and tc.c_title like CONCAT('%','${cTitle}','%')
+            </if>
+
+            <if test="sid != null and sid != ''">
+                and ts.s_id=#{sid}
+            </if>
+        </where>
+    </select>
+
+
+
+    <select id="findSubjectByName" resultMap="findAllChoose1">
+        select * from t_subject where #{sName}
+    </select>
+
+    <insert id="addChooses" parameterType="com.qf.examsys.entity.Choose">
+        insert into t_choose (c_title,c_option_a,c_option_b,c_option_c,c_option_d,c_answer,s_id,c_score)
+        VALUES
+        <foreach collection="chooses" item="choose" separator=",">
+            (#{choose.cTitle},#{choose.cOptionA},#{choose.cOptionB},#{choose.cOptionC},#{choose.cOptionD},#{choose.cAnswer},#{choose.sid},#{choose.cScore})
+        </foreach>
+    </insert>
+
+
 </mapper>
