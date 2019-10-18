@@ -427,37 +427,36 @@
             shortLen: 0,
             judgeLen: 0,
             time: null
-
         },
         methods: {
             loadData1: function () { //试题绑定
                 var _this = this;
                 $.ajax({
                     type: "get",
-                    data: {"sid": 1, "uid": 1, "eid": 1},
+                    data: {"sid": 1, "uid": 2, "eid": 1},
                     //url: "http://localhost:8080/examsys/getTestMapper.do?testTypeId=" + 55,
                     url: "../examsys/getTestMapper" + window.location.search,
                     dataType: "json",
                     success: function (data) {
 
-                        if (data.code == 2) {
-                            alert(data.info)
-                        }
+                        // if (data.code == 2) {
+                        //     alert(data.info)
+                        // }
 
-                        if (data.code == 1) {
-                            _this.judgeList = data.data.judgeQuestion;
+                        // if (data.code == 1) {
+                            _this.judgeList = data.judgeQuestion;
 
-                            _this.judgeLen = data.data.judgeQuestion.length;
+                            _this.judgeLen = data.judgeQuestion.length;
 
-                            _this.radioList = data.data.chooseQuestion;
+                            _this.radioList = data.chooseQuestion;
 
-                            _this.radioLen = data.data.chooseQuestion.length;
+                            _this.radioLen = data.chooseQuestion.length;
 
-                            _this.shortList = data.data.briefQuestion;
+                            _this.shortList = data.briefQuestion;
 
-                            _this.shortLen = data.data.briefQuestion.length;
+                            _this.shortLen = data.briefQuestion.length;
 
-                        }
+                        // }
                     }
                 })
             },

@@ -1,7 +1,6 @@
 package com.qf.examsys.service;
 
 
-import com.qf.examsys.entity.Record;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,4 +12,6 @@ public interface GetExamPaperService {
      */
 
     public HashMap<String, List> makePaper(Integer uid, Integer eid, Integer sid);
+    public HashMap<String, List> getPaper(Integer uid, Integer eid, Integer sid);
+
 }
