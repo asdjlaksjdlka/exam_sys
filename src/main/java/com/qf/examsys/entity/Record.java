@@ -1,7 +1,11 @@
 package com.qf.examsys.entity;
 
+
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 
+@Component
 public class Record implements Serializable {
 
     private Integer reid;
