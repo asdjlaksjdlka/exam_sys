@@ -14,6 +14,24 @@ public class Record implements Serializable {
     private String uAnswer;
     private String rAnswer;
     private Integer eid;
+    private Integer sid;
+    private Integer rScore;
+
+    public Integer getrScore() {
+        return rScore;
+    }
+
+    public void setrScore(Integer rScore) {
+        this.rScore = rScore;
+    }
+
+    public Integer getSid() {
+        return sid;
+    }
+
+    public void setSid(Integer sid) {
+        this.sid = sid;
+    }
 
     public Integer getReid() {
         return reid;

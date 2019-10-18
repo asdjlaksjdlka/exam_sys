@@ -12,13 +12,17 @@ import java.util.Date;
 @SpringBootTest
 public class ExamsysApplicationTests {
 
+
+    String str = "R817-B";
+
+
     @Test
     public void contextLoads() {
 
-        Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String format1 = format.format(date);
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        String s1 = str.split("-")[0];
+        String s2 = str.split("-")[1];
+
+        System.out.println(s1+":"+s2);
     }
 
 }

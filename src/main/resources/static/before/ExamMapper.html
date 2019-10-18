@@ -72,13 +72,16 @@
                                         <li class="option">
 
                                             <!--单选默认提交的操作-->
-                                            <!--<input type="radio" class="radioOrCheck" :name="'R'+index" :value="'R'+radio.id+'-null'" style="display:none" checked="checked" :id="'R'+radio.id+'-null'" />-->
+                                            <input type="radio" class="radioOrCheck" :name="'R'+index"
+                                                   :value="'RR'+'-'+radio.cTitle+'-'+radio.sid+'-'+radio.cAnswer+'-'+radio.cScore+'-null'"
+                                                   style="display:none" checked="checked" :id="radio.cid+'-null'"/>
 
                                             <input type="radio" class="radioOrCheck" :name="'R'+index"
-                                                   :id="'R'+radio.id+'-A'" :value="'R'+radio.id+'-A'"
-                                                   @click="radioClick('R'+radio.id+'-A')">
+                                                   :id="radio.cid+'-A'"
+                                                   :value="'RR'+'-'+radio.cTitle+'-'+radio.sid+'-'+radio.cAnswer+'-'+radio.cScore+'-A'"
+                                            />
 
-                                            <label :for="'R'+index">
+                                            <label :for="index">
                                                 <p class="ue" style="display: inline;">{{radio.cOptionA}}</p>
                                             </label>
                                         </li>
@@ -87,10 +90,11 @@
                                         <li class="option">
 
                                             <input type="radio" class="radioOrCheck" :name="'R'+index"
-                                                   :id="'R'+radio.id+'-B'" :value="'R'+radio.id+'-B'"
-                                                   @click="radioClick('R'+radio.id+'-B')"/>
+                                                   :id="radio.cid+'-B'"
+                                                   :value="'RR'+'-'+radio.cTitle+'-'+radio.sid+'-'+radio.cAnswer+'-'+radio.cScore+'-B'"
+                                            />
 
-                                            <label :for="'R'+index">
+                                            <label :for="index">
                                                 <p class="ue" style="display: inline;">{{radio.cOptionB}}</p>
                                             </label>
                                         </li>
@@ -99,10 +103,11 @@
                                         <li class="option">
 
                                             <input type="radio" class="radioOrCheck" :name="'R'+index"
-                                                   :id="'R'+radio.id+'-C'" :value="'R'+radio.id+'-C'"
-                                                   @click="radioClick('R'+radio.id+'-C')"/>
+                                                   :id="radio.cid+'-C'"
+                                                   :value="'RR'+'-'+radio.cTitle+'-'+radio.sid+'-'+radio.cAnswer+'-'+radio.cScore+'-C'"
+                                            />
 
-                                            <label :for="'R'+index">
+                                            <label :for="index">
 
                                                 <p class="ue" style="display: inline;">{{radio.cOptionC}}</p>
                                             </label>
@@ -112,9 +117,11 @@
                                         <li class="option">
 
                                             <input type="radio" class="radioOrCheck" :name="'R'+index"
-                                                   :id="'R'+radio.id+'-D'" :value="'R'+radio.id+'-D'"
-                                                   @click="radioClick('R'+radio.id+'-D')"/>
-                                            <label :for="'R'+index">
+
+                                                   :id="radio.cid+'-D'"
+                                                   :value="'RR'+'-'+radio.cTitle+'-'+radio.sid+'-'+radio.cAnswer+'-'+radio.cScore+'-D'"
+                                            />
+                                            <label :for="index">
                                                 <p class="ue" style="display: inline;">{{radio.cOptionD}}</p>
                                             </label>
                                         </li>
@@ -146,20 +153,23 @@
                             <li class="option">
 
                                 <!--默认提交的value-->
-                                <input type="radio" class="radioOrCheck" :name="'j'+index" :value="'J'+judge.id+'-null'"
+                                <input type="radio" class="radioOrCheck" :name="'j'+index"
+                                       :value="'JJ'+'-'+judge.jTitle+'-'+judge.sid+'-'+judge.jAnswer+'-'+judge.jScore+'-null'"
                                        style="display:none" checked="checked"/>
 
-                                <input type="radio" class="radioOrCheck" :name="'j'+index" :value="'J'+judge.id+'-正确'"/>
+                                <input type="radio" class="radioOrCheck" :name="'j'+index"
+                                       :value="'JJ'+'-'+judge.jTitle+'-'+judge.sid+'-'+judge.jAnswer+'-'+judge.jScore+'-正确'"/>
 
                                 <label :for="'true'+index">
                                     正确.
                                     <p class="ue" style="display: inline;"></p>
                                 </label>
                             </li>
-                            <!--:value="'R'+radio.id+'D'"-->
+                            <!--:value="radio.cid+'D'"-->
                             <li class="option">
 
-                                <input type="radio" class="radioOrCheck" :name="'j'+index" :value="'J'+judge.id+'-错误'"/>
+                                <input type="radio" class="radioOrCheck" :name="'j'+index"
+                                       :value="'JJ'+'-'+judge.jTitle+'-'+judge.sid+'-'+judge.jAnswer+'-'+judge.jScore+'-错误'"/>
 
                                 <label :for="'false'+index">
                                     错误.
@@ -193,16 +203,15 @@
 
                             <li class="option">
 
-                                <!--	<input type="radio" class="radioOrCheck" :name="'j'+index" :value="'J'+short.id+'错误'"
-
-                    />-->
+                                <!--	<input type="radio" class="radioOrCheck" :name="'j'+index" :value="'J'+short.id+'错误'"/>-->
 
                                 <!--<label :for="'false'+index">
 
                         <p class="ue" style="display: inline;"></p>
                     </label>-->
                             </li>
-                            <textarea rows="3" cols="108" :name="'S'+short.id+'-'" :id="'S'+index"
+                            <textarea rows="3" cols="108"
+                                      :name="'S'+'--'+short.bTitle+'--'+short.sid+'--'+short.bAnswer+'--'+short.bScore+'--'" :id="'S'+index"
                                       placeholder="请填写答案"></textarea>
                         </ul>
                         </li>
@@ -298,17 +307,19 @@
 
 <!--用户每次点击单选按钮之后 触发该事件 保存用户所单选的操作-->
 
-<script type="text/javascript">
+<!--<script type="text/javascript">
     function radioClick(data) {
         $.ajax({
             type: "get",
             data: {
+                "uid":2,
+                "eid":1,
                 "oneAnswer": data
             },
-            url: "http://localhost:8080/examsys/savaExamOneAnswer.do" + window.location.search,
+            url: "../examsys/savaExamOneAnswer" + window.location.search,
         });
     }
-</script>
+</script>-->
 
 
 //提交试卷 时间结束强制交卷
@@ -378,7 +389,7 @@
             var txt = $('#S' + i).attr("name");
             if (Sstr == "" || Sstr == null) {
                 //alert("简答题中第"+(i+1)+"题,不能为空！！！")
-                shortAnswer += txt + '用户没有任何操作' + "&";
+                shortAnswer += txt +"未答题"+ "&";
                 continue;
             }
             shortAnswer += txt += Sstr += "&";
@@ -386,8 +397,8 @@
 
         $.ajax({
             //url:"http://localhost:8080/examsys/saveTestAnswer.do?testTypeId="+55,
-            url: "http://localhost:8080/examsys/saveExamAnswer.do" + window.location.search,
-            type: "get",
+            url: "../examsys/saveExamAnswer" + window.location.search,
+            type: "post",
             data: {
                 "TestAnswer": TestAnswer,
                 "shortAnswer": shortAnswer
@@ -395,7 +406,10 @@
             dataType: "json",
             success: function (data) {
                 if (data.code == 1) {
-                    alert(data.info)
+                    if (data==30){
+                        alert(data.msg)
+                        window.parent.location.reload()
+                    }
                     window.parent.location.reload()
                 }
                 if (data.code == -1) {
@@ -433,7 +447,7 @@
                 var _this = this;
                 $.ajax({
                     type: "get",
-                    data: {"sid": 1, "uid": 2, "eid": 1},
+                    data: {"sid": 1, "uid": 3, "eid": 1},
                     //url: "http://localhost:8080/examsys/getTestMapper.do?testTypeId=" + 55,
                     url: "../examsys/getTestMapper" + window.location.search,
                     dataType: "json",
@@ -444,17 +458,17 @@
                         // }
 
                         // if (data.code == 1) {
-                            _this.judgeList = data.judgeQuestion;
+                        _this.judgeList = data.judgeQuestion;
 
-                            _this.judgeLen = data.judgeQuestion.length;
+                        _this.judgeLen = data.judgeQuestion.length;
 
-                            _this.radioList = data.chooseQuestion;
+                        _this.radioList = data.chooseQuestion;
 
-                            _this.radioLen = data.chooseQuestion.length;
+                        _this.radioLen = data.chooseQuestion.length;
 
-                            _this.shortList = data.briefQuestion;
+                        _this.shortList = data.briefQuestion;
 
-                            _this.shortLen = data.briefQuestion.length;
+                        _this.shortLen = data.briefQuestion.length;
 
                         // }
                     }
@@ -462,7 +476,6 @@
             },
             loadData2: function () { //获取用户选择题型的信息
                 var _this = this;
-
                 $.ajax({
                     type: "get",
                     //url: "http://localhost:8080/examsys/getTestTypeInfo.do?id=" + 55,
@@ -516,7 +529,7 @@
 </script>
 <script src="../js/jquery.easy-pie-chart.js"></script>
 <!--时间js-->
-<script src="time/jquery.countdown.js"></script>
+<script src="../time/jquery.countdown.js"></script>
 <script>
     window.jQuery(function ($) {
         "use strict";

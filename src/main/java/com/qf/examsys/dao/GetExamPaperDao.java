@@ -3,6 +3,8 @@ package com.qf.examsys.dao;
 import com.qf.examsys.entity.Brief;
 import com.qf.examsys.entity.Choose;
 import com.qf.examsys.entity.Judge;
+import com.qf.examsys.entity.Record;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -31,4 +33,17 @@ public interface GetExamPaperDao {
 
     public Integer makePaper();
 
+    /**
+     * 单选题提交数据库
+     */
+
+    public Integer addChooseExam(Integer uid, Integer eid,String title,Integer sid,String rAnswer);
+
+
+    /**
+     * 交卷
+     * @param list
+     * @return
+     */
+    public Integer commitExam(@Param("recordList") List<Record> list);
 }

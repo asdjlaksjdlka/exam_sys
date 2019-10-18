@@ -12,6 +12,12 @@ public class JsonReasult<T> {
         this.num = num;
     }
 
+    public JsonReasult(Integer code,  Integer num,String msg) {
+        this.code = code;
+        this.msg = msg;
+        this.num = num;
+    }
+
     public JsonReasult() {
     }
 
