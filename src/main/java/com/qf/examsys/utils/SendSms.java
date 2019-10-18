@@ -31,7 +31,7 @@ public class SendSms {
     /**
      *         发送短信验证码
      *
-      * @param telephoneNumber  用户填写的手机号码
+     * @param telephoneNumber  用户填写的手机号码
      * @return validateCode     该用户此次操作的短信验证码
      */
     public static String sendMessage(String telephoneNumber) {
