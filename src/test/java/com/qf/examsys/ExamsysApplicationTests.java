@@ -12,17 +12,10 @@ import java.util.Date;
 @SpringBootTest
 public class ExamsysApplicationTests {
 
-
-    String str = "R817-B";
-
-
     @Test
     public void contextLoads() {
 
-        String s1 = str.split("-")[0];
-        String s2 = str.split("-")[1];
 
-        System.out.println(s1+":"+s2);
     }
 
 }

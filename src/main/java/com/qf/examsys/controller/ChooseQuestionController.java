@@ -33,7 +33,7 @@ public class ChooseQuestionController {
     public JsonReasult findAllSubject() {
 
         List<Subject> list = chooseQuestionService.findAllSubject();
-        System.out.println("选择题list" + list.size());
+//        System.out.println("选择题list" + list.size());
         return new JsonReasult(1, list);
     }
 
@@ -83,9 +83,9 @@ public class ChooseQuestionController {
 
     @PostMapping("/question/deleteAll")
     public JsonReasult deleteAllQuestion(Integer[] ids) {
-        for (int i = 0; i < ids.length; i++) {
+ /*       for (int i = 0; i < ids.length; i++) {
             System.out.println(ids[i]);
-        }
+        }*/
         Integer num = chooseQuestionService.deletAlluQestion(ids);
         return new JsonReasult(1,num);
     }
@@ -112,7 +112,7 @@ public class ChooseQuestionController {
     @ResponseBody
     public JsonReasult importEmp(MultipartFile file) {
         List<Subject> list = chooseQuestionService.findAllSubject();
-        System.out.println("list"+list);
+//        System.out.println("list"+list);
         List<Choose> chooses = PoiUtils.importEmp2List(file,list);
         if (chooseQuestionService.addQuestionChoose(chooses) == chooses.size()) {
             return new JsonReasult (1,"导入成功!");

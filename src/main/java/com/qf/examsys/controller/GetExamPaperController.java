@@ -41,7 +41,7 @@ public class GetExamPaperController {
         Integer eid = Integer.valueOf(exam.split("&sid=")[0]);
         Integer sid = Integer.valueOf(exam.split("&sid=")[1]);
 
-        System.out.println(eid+"哈哈"+sid);
+//        System.out.println(eid+"哈哈"+sid);
 
         HashMap<String, List> questionMap = getExamPaperService.makePaper(sid, 4, eid);
 

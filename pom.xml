@@ -12,6 +12,8 @@
     <artifactId>examsys</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>examsys</name>
+    <packaging>war</packaging>
+
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -116,6 +118,8 @@
     </dependencies>
 
     <build>
+        <finalName>examsys</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -50,7 +50,7 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
     @Override
     public HashMap<String, List> makePaper(Integer sid, Integer uid, Integer eid) {
 
-        System.out.println("sid"+sid+"uid"+uid+"eid");
+//        System.out.println("sid"+sid+"uid"+uid+"eid");
         ArrayList<Record> recordList = new ArrayList<>();
 
         HashMap<String, List> questionMap = new HashMap<>();
@@ -71,7 +71,7 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
          * 手动把生成的数据存入数redis*/
         //redisTemplate.opsForHash().put(sid + uid + eid,uid,questionMap);
 
-        System.out.println(questionMap.size()+"h啊哈哈啊");
+//        System.out.println(questionMap.size()+"h啊哈哈啊");
         return questionMap;
     }
 
@@ -116,16 +116,24 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
         rAnswerList.add(rAnswer);
 
 
-        System.out.println(titleList + ":" + sidList + ":" + rAnswerList);
+//        System.out.println(titleList + ":" + sidList + ":" + rAnswerList);
         return null;
     }
 
+    /**
+     * 交卷
+     * @param uid
+     * @param eid
+     * @param TestAnswer
+     * @param shortAnswer
+     * @return
+     */
     @Override
     public Integer saveExamAnswer(Integer uid, Integer eid, String TestAnswer, String shortAnswer) {
 
         String[] chooseAndJudge = TestAnswer.split("&");
 
-        String[] briefs = shortAnswer.split("&");
+        String[] briefs = shortAnswer.split("#&");
 
 
         List<Record> recordList = new ArrayList<>();
@@ -153,6 +161,8 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
                 record.setuAnswer(uAnswer);
                 record.setEid(eid);
                 record.setrScore(rScore);
+                record.setQuestionType(1);
+
                 recordList.add(record);
             }
             //判断
@@ -176,8 +186,9 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
                 record.setuAnswer(uAnswer);
                 record.setEid(eid);
                 record.setrScore(rScore);
-                recordList.add(record);
+                record.setQuestionType(2);
 
+                recordList.add(record);
             }
         }
 
@@ -185,7 +196,7 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
          * 简答题
          */
         for (int i = 0; i < briefs.length; i++) {
-            System.out.println("---分割线--------" + briefs[i]);
+//            System.out.println("---分割线--------" + briefs[i]);
             Record record = new Record();
 
             /**
@@ -195,7 +206,7 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
 
 
             String title = briefs[i].split("--")[1];
-            System.out.println("title"+title);
+//            System.out.println("title"+title);
             Integer sid = Integer.valueOf(briefs[i].split("--")[2]);
             String rAnswer = briefs[i].split("--")[3];
             Integer rScore = Integer.valueOf(briefs[i].split("--")[4]);
@@ -208,17 +219,19 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
             record.setuAnswer(uAnswer);
             record.setEid(eid);
             record.setrScore(rScore);
+            record.setQuestionType(3);
+
             recordList.add(record);
         }
 
         Integer integer = getExamPaperDao.commitExam(recordList);
 
-        for (String s : chooseAndJudge) {
+/*        for (String s : chooseAndJudge) {
             System.out.println("哈哈" + s);
-        }
+        }*/
 
 
-        System.out.println(recordList.size() + "============");
+//        System.out.println(recordList.size() + "============");
         return integer;
     }
 }

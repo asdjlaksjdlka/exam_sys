@@ -365,14 +365,14 @@ public class PoiUtils {
                                         brief.setbAnswer(cellValue);
                                         break;
                                     case 3:
-                                        System.out.println(cellValue+"===++");
+//                                        System.out.println(cellValue+"===++");
 
                                         int subjectIndex = subjects.indexOf(new Subject(cellValue));
                                        /* System.out.println(subjectIndex);
                                         System.out.println(new Subject(cellValue));*/
                                         /*indexOf是返回列表中首次出现指定元素的索引*/
-                                        System.out.println("哈哈"+subjects.get(subjectIndex).getSid());
-                                        System.out.println("呵呵"+subjects.get(subjectIndex));
+                                 /*       System.out.println("哈哈"+subjects.get(subjectIndex).getSid());
+                                        System.out.println("呵呵"+subjects.get(subjectIndex));*/
                                         brief.setSid(subjects.get(subjectIndex).getSid());
                                         break;
                                 }
@@ -536,14 +536,14 @@ public class PoiUtils {
                                         judge.setjAnswer(cellValue);
                                         break;
                                     case 3:
-                                        System.out.println(cellValue+"===++");
+//                                        System.out.println(cellValue+"===++");
 
                                         int subjectIndex = subjects.indexOf(new Subject(cellValue));
                                        /* System.out.println(subjectIndex);
                                         System.out.println(new Subject(cellValue));*/
                                         /*indexOf是返回列表中首次出现指定元素的索引*/
-                                        System.out.println("哈哈"+subjects.get(subjectIndex).getSid());
-                                        System.out.println("呵呵"+subjects.get(subjectIndex));
+                                     /*   System.out.println("哈哈"+subjects.get(subjectIndex).getSid());
+                                        System.out.println("呵呵"+subjects.get(subjectIndex));*/
                                         judge.setSid(subjects.get(subjectIndex).getSid());
                                         break;
                                 }

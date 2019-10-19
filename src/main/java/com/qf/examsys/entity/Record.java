@@ -16,6 +16,17 @@ public class Record implements Serializable {
     private Integer eid;
     private Integer sid;
     private Integer rScore;
+    private Integer questionType;
+
+
+
+    public Integer getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(Integer questionType) {
+        this.questionType = questionType;
+    }
 
     public Integer getrScore() {
         return rScore;
