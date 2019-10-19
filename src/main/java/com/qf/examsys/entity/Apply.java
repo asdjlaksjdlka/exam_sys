@@ -8,7 +8,7 @@ public class Apply {
     private User user;
     // 考试
     private Exam exam;
-    // 科目id
+    // 科目
     private Subject subject;
     // 报名时间
     private Date time;

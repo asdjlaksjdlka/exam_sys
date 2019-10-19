@@ -1,8 +1,7 @@
 package com.qf.examsys.service.impl;
 
 import com.qf.examsys.dao.StatisticsDao;
-import com.qf.examsys.entity.Apply;
-import com.qf.examsys.entity.Score;
+import com.qf.examsys.entity.*;
 import com.qf.examsys.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +22,31 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public List<Apply> listApply(Integer uid, Integer eId, Integer sid, Date time) {
-        System.out.println(time);
         List<Apply> applies = statisticsDao.listApply(uid, eId, sid, time);
         return applies;
+    }
+
+    @Override
+    public List<Subject> listSubject() {
+        List<Subject> subjects = statisticsDao.listSubject();
+        return subjects;
+    }
+
+    @Override
+    public List<ExamNumberStatistics> listExamNumber() {
+        List<ExamNumberStatistics> examNumber = statisticsDao.listExamNumber();
+        return examNumber;
+    }
+
+    @Override
+    public List<ExamNumberStatistics> listExamSubjectNumber() {
+        List<ExamNumberStatistics> examSubjectNumber = statisticsDao.listExamSubjectNumber();
+        return examSubjectNumber;
+    }
+
+    @Override
+    public List<ScoreStatistics> listScore(Integer eid, Integer sid, Integer uid) {
+        List<ScoreStatistics> scoreStatistics = statisticsDao.listScore(eid, sid, uid);
+        return scoreStatistics;
     }
 }

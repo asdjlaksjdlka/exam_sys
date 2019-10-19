@@ -5,8 +5,8 @@ import com.qf.examsys.entity.*;
 import com.qf.examsys.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,12 +21,27 @@ public class StatisticsController {
     @Autowired
     private StatisticsService statisticsService;
 
-    @GetMapping(path = "/score")
     @ResponseBody
-    public JsonReasult scoreStatistics(Exam exam, Subject subject, User user){
+    @PostMapping(path = "/score")
+    public JsonReasult listScore(Integer eId, Integer sid, Integer uid){
         try {
-            System.out.println(user);
-            List<Score> scores = statisticsService.listPersonalScore(exam.geteId(), subject.getSid(), user.getUid());
+            System.out.println(eId);
+            System.out.println(sid);
+            System.out.println(uid);
+            List<Score> scores = statisticsService.listPersonalScore(eId, sid, uid);
+            System.out.println(scores);
+            return new JsonReasult(0,scores);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JsonReasult(1,"查询失败");
+        }
+    }
+
+    @ResponseBody
+    @PostMapping(path = "/score/json",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JsonReasult scoreStatisticsJson(Integer eId,Integer sid, Integer uid){
+        try {
+            List<Score> scores = statisticsService.listPersonalScore(eId, sid, uid);
             System.out.println(scores);
             return new JsonReasult(0,scores);
         } catch (Exception e) {
@@ -42,4 +57,33 @@ public class StatisticsController {
         System.out.println(applies);
         return new JsonReasult(0,applies);
     }
+
+    @PostMapping(path = "/subject")
+    @ResponseBody
+    public JsonReasult listSubject(){
+        List<Subject> subjects = statisticsService.listSubject();
+        return new JsonReasult(0,subjects);
+    }
+
+    @PostMapping(path = "/examNumber")
+    @ResponseBody
+    public JsonReasult listExamNumber(){
+        List<ExamNumberStatistics> examNumber = statisticsService.listExamNumber();
+        return new JsonReasult(0,examNumber);
+    }
+
+    @PostMapping(path = "/examSubjectNumber")
+    @ResponseBody
+    public JsonReasult listExamSubjectNumber(){
+        List<ExamNumberStatistics> examSubjectNumber = statisticsService.listExamSubjectNumber();
+        return new JsonReasult(0,examSubjectNumber);
+    }
+
+    @PostMapping(path = "/scoreStatistics")
+    @ResponseBody
+    public JsonReasult scoreStatistics(Integer eid, Integer sid, Integer uid){
+        List<ScoreStatistics> scoreStatistics = statisticsService.listScore(eid, sid, uid);
+        return new JsonReasult(0,scoreStatistics);
+    }
 }
+

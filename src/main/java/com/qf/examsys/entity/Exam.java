@@ -8,7 +8,7 @@ public class Exam {
     private  Integer eId;
 
     // 考试名
-    private String name;
+    private String eName;
 
     // 开始时间
     private Date beginTime;
@@ -23,7 +23,7 @@ public class Exam {
     public String toString() {
         return "Exam{" +
                 "eId=" + eId +
-                ", 考试名name='" + name + '\'' +
+                ", 考试名eName='" + eName + '\'' +
                 ", 开始时间beginTime=" + beginTime +
                 ", 结束时间endTime=" + endTime +
                 ", 试卷Page=" + page +
@@ -38,12 +38,12 @@ public class Exam {
         this.eId = eId;
     }
 
-    public String getName() {
-        return name;
+    public String geteName() {
+        return eName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void seteName(String eName) {
+        this.eName = eName;
     }
 
     public Date getBeginTime() {
