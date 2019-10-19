@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.examsys.dao.StatisticsDao">
+    <!--用户-->
+    <resultMap id="user" type="com.qf.examsys.entity.User">
+        <id column="u_id" property="uid"></id>
+        <result column="u_name" property="uName"></result>
+        <result column="u_phone" property="uPhone"></result>
+        <result column="u_password" property="uPassword"></result>
+        <result column="status" property="uStatus"></result>
+    </resultMap>
+
+    <!--科目类-->
+    <resultMap id="subject" type="com.qf.examsys.entity.Subject">
+        <id column="s_id" property="sid"></id>
+        <result column="s_name" property="sName"></result>
+    </resultMap>
+
+    <!--试卷类-->
+    <resultMap id="pages" type="com.qf.examsys.entity.Page">
+        <id column="p_id" property="pid"></id>
+        <result column="p_title" property="pTitle"></result>
+        <result column="s_id" property="sid"></result>
+        <result column="choose" property="choose"></result>
+        <result column="judge" property="judge"></result>
+        <result column="brief" property="brief"></result>
+        <result column="status" property="pStatus"></result>
+    </resultMap>
+
+    <!--考试类-->
+    <resultMap id="exam" type="com.qf.examsys.entity.Exam">
+        <id column="e_id" property="eId"></id>
+        <result column="e_name" property="eName"></result>
+        <result column="begin_time" property="beginTime"></result>
+        <result column="end_time" property="endTime"></result>
+
+        <collection property="page" resultMap="pages"></collection>
+    </resultMap>
+
+    <!--成绩类-->
+    <resultMap id="score" type="com.qf.examsys.entity.Score">
+        <id column="sc_id" property="scId"></id>
+        <result column="s_choose_score" property="chooseScore"></result>
+        <result column="s_judge_score" property="judgeScore"></result>
+        <result column="s_brief_sore" property="briefScore"></result>
+        <result column="s_total_score" property="totalScore"></result>
+
+        <collection property="user" resultMap="user"></collection>
+        <collection property="subject" resultMap="subject"></collection>
+        <collection property="exam" resultMap="exam"></collection>
+
+    </resultMap>
+
+    <!--报名类-->
+    <resultMap id="apply" type="com.qf.examsys.entity.Apply">
+        <id column="apply_id" property="applyId"></id>
+        <result column="time" property="time"></result>
+
+        <collection property="user" resultMap="user"></collection>
+        <collection property="exam" resultMap="exam"></collection>
+        <collection property="subject" resultMap="subject"></collection>
+    </resultMap>
+
+    <!--考试人数统计类-->
+    <resultMap id="examNumber" type="com.qf.examsys.entity.ExamNumberStatistics">
+        <result column="sc_count" property="count"></result>
+        <result column="e_id" property="eid"></result>
+        <result column="e_name" property="eName"></result>
+        <result column="s_id" property="sid"></result>
+        <result column="s_name" property="sName"></result>
+
+        <!--<collection property="subject" resultMap="subject"></collection>-->
+    </resultMap>
+
+    <!--成绩统计类-->
+    <resultMap id="scoreStatistics" type="com.qf.examsys.entity.ScoreStatistics">
+        <result column="count_number" property="countNumber"></result>
+        <result column="pass_number" property="passNumber"></result>
+        <result column="pass_rate" property="passRate"></result>
+
+        <result column="max_total_score" property="maxTotalScore"></result>
+        <result column="min_total_score" property="minTotalScore"></result>
+        <result column="avg_total_score" property="avgTotalScore"></result>
+
+        <result column="max_choose_score" property="maxChooseScore"></result>
+        <result column="min_choose_score" property="minChooseScore"></result>
+        <result column="avg_choose_score" property="avgChooseScore"></result>
+
+        <result column="max_judge_score" property="maxJudgeScore"></result>
+        <result column="min_judge_score" property="minJudgeScore"></result>
+        <result column="avg_judge_score" property="avgJudgeScore"></result>
+
+        <result column="max_brief_score" property="maxBriefScore"></result>
+        <result column="min_brief_score" property="minBriefScore"></result>
+        <result column="avg_brief_score" property="avgBriefScore"></result>
+
+        <collection property="user" resultMap="user"></collection>
+        <collection property="exam" resultMap="exam"></collection>
+        <collection property="subject" resultMap="subject"></collection>
+    </resultMap>
+
+
+
+   <!-- 查询学生成绩-->
+    <select id="listPersonalScore" resultMap="score">
+        SELECT
+        t_score.sc_id,
+        t_score.u_id,
+        t_score.s_id,
+        t_score.s_choose_score,
+        t_score.s_judge_score,
+        t_score.s_brief_sore,
+        t_score.s_total_score,
+        t_score.e_id,
+        t_user.u_name,
+        t_subject.s_name,
+        t_exam.e_name,
+        t_exam.begin_time,
+        t_exam.end_time,
+        t_exam.p_id
+        FROM
+        t_score ,
+        t_user ,
+        t_subject ,
+        t_exam
+        <where>
+            t_score.u_id = t_user.u_id AND
+            t_score.s_id = t_subject.s_id AND
+            t_score.e_id = t_exam.e_id
+
+            <if test="eId != null and eId != ''">
+                and t_exam.e_id = #{eId}
+            </if>
+            <if test="sid != null and sid != ''">
+                and t_subject.s_id = #{sid}
+            </if>
+            <if test="uid != null and uid != ''">
+                and t_user.u_id = #{uid}
+            </if>
+
+            ORDER BY t_user.u_id ASC
+        </where>
+    </select>
+
+    <!--查询报名信息-->
+    <select id="listApply" resultMap="apply">
+        SELECT
+        t_apply.apply_id,
+        t_apply.time,
+        t_exam.e_name,
+        t_exam.begin_time,
+        t_exam.end_time,
+        t_exam.p_id,
+        t_page.p_title,
+        t_page.s_id,
+        t_page.choose,
+        t_page.judge,
+        t_page.brief,
+        t_page.`status`,
+        t_exam.e_id,
+        t_page.p_id,
+        t_subject.s_id,
+        t_subject.s_name,
+        t_apply.u_id
+        FROM
+        t_apply ,
+        t_exam ,
+        t_page ,
+        t_subject
+        FROM
+        t_apply ,
+        t_exam ,
+        t_page ,
+        t_subject
+        <where>
+            t_apply.e_id = t_exam.e_id AND
+            t_apply.s_id = t_subject.s_id AND
+            t_exam.p_id = t_page.p_id
+            <if test="uid != null and uid != ''">
+                and t_apply.u_id = #{uid}
+            </if>
+            <if test="sid != null and sid != ''">
+                and t_apply.s_id = #{sid}
+            </if>
+            <if test="time != null">
+                and t_apply.time BETWEEN #{time} AND DATE_ADD(#{time},INTERVAL 1 DAY)
+            </if>
+
+            ORDER BY t_apply.apply_id desc
+
+        </where>
+    </select>
+
+    <!--查询科目-->
+    <select id="listSubject" resultMap="subject">
+        select * from t_subject
+    </select>
+
+    <!--按考试进行考试人数统计-->
+    <select id="listExamNumber" resultMap="examNumber">
+    select t_score.e_id, t_exam.e_name,COUNT(t_score.sc_id) as sc_count, t_exam.s_id, t_subject.s_name
+    from  t_exam, t_subject, t_score
+    WHERE t_score.e_id = t_exam.e_id AND t_exam.s_id = t_subject.s_id
+    GROUP BY t_score.e_id
+    HAVING t_score.e_id in ( SELECT t_exam.e_id FROM t_exam )
+    </select>
+
+    <!--按科目进行考试人数统计-->
+    <select id="listExamSubjectNumber" resultMap="examNumber">
+    select t_score.s_id, t_subject.s_name, COUNT(t_score.sc_id) as sc_count
+    from  t_subject , t_score
+    WHERE t_score.s_id = t_subject.s_id GROUP BY t_score.s_id
+    HAVING t_score.s_id in ( SELECT t_subject.s_id FROM t_subject );
+    </select>
+
+    <!--成绩统计-->
+    <select id="listScore" resultMap="scoreStatistics">
+    SELECT
+    COUNT(sc_id) as count_number,
+    SUM(s_total_score >= 60) as pass_number,
+    ROUND(100 * (SUM(s_total_score >= 60)/COUNT(sc_id)),2) pass_rate,
+
+    MAX(s_total_score) as max_total_score,
+    MIN(s_total_score) as min_total_score,
+    ROUND(AVG(s_total_score),2)as avg_total_score,
+
+    MAX(s_choose_score) as max_choose_score,
+    MIN(s_choose_score) as min_choose_score,
+    ROUND(AVG(s_choose_score),2)as avg_choose_score,
+
+    MAX(s_judge_score) as max_judge_score,
+    MIN(s_judge_score) as min_judge_score,
+    ROUND(AVG(s_judge_score),2)as avg_judge_score,
+
+    MAX(s_brief_sore) as max_brief_score,
+    MIN(s_brief_sore) as min_brief_score,
+    ROUND(AVG(s_brief_sore),2)as avg_brief_score
+    FROM
+    t_score
+    <where>
+        <if test="eid != null and eid != ''">
+            and e_id = #{eid}
+        </if>
+        <if test="sid != null and sid != ''">
+            and s_id = #{sid}
+        </if>
+        <if test="uid != null and uid != ''">
+            and u_id = #{uid}
+        </if>
+    </where>
+    </select>
+</mapper>
+
+        <!-- Score
+               {scId=4,
+               user=User{uid=2, uPhone='null', uPassword='null', uName='li', uStatus='null'},
+               subject=Subject{sid=2, sName='Python'},
+               exam=Exam{eId=1, 考试名eName='java', 开始时间beginTime=Fri Oct 25 00:00:00 CST 2019, 结束时间endTime=Fri Oct 25 02:00:00 CST 2019,
+               试卷Page=Page{pid=1, pTitle='null', sid=2, choose='null', judge='null', brief='null', pStatus=null}},
+                chooseScore=30,
+                judgeScore=15,
+                briefScore=15,
+                totalScore=60}
+
+        -->
