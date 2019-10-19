@@ -10,6 +10,15 @@ public class Page implements Serializable {
     private String choose;
     private String judge;
     private String brief;
+    private Integer pStatus;
+
+    public Integer getpStatus() {
+        return pStatus;
+    }
+
+    public void setpStatus(Integer pStatus) {
+        this.pStatus = pStatus;
+    }
 
     public Integer getPid() {
         return pid;
@@ -68,6 +77,7 @@ public class Page implements Serializable {
                 ", choose='" + choose + '\'' +
                 ", judge='" + judge + '\'' +
                 ", brief='" + brief + '\'' +
+                ", pStatus=" + pStatus +
                 '}';
     }
 }

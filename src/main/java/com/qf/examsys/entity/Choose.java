@@ -106,8 +106,6 @@ public class Choose implements Serializable {
                 ", cOptionC='" + cOptionC + '\'' +
                 ", cOptionD='" + cOptionD + '\'' +
                 ", cAnswer='" + cAnswer + '\'' +
-                ", sid=" + sid +
-                ", subject=" + subject +
                 '}';
     }
 }
