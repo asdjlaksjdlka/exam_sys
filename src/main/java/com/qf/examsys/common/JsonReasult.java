@@ -38,7 +38,6 @@ public class JsonReasult<T> {
         this.count = count;
     }
 
-
     public Integer getNum() {
         return num;
     }

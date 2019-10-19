@@ -1,9 +1,6 @@
 package com.qf.examsys.dao;
 
-import com.qf.examsys.entity.Brief;
-import com.qf.examsys.entity.Choose;
-import com.qf.examsys.entity.Judge;
-import com.qf.examsys.entity.Record;
+import com.qf.examsys.entity.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,6 +8,12 @@ import java.util.List;
 public interface GetExamPaperDao {
 
 
+    /**
+     * 选择考试
+     */
+    public List<Exam> selectAllExam();
+
+    public Exam findSidByEid(Integer eid);
     /**
      * 随机生成选择题
      * @return

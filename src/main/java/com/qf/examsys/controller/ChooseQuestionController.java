@@ -62,6 +62,7 @@ public class ChooseQuestionController {
 
     @PostMapping("/choosequestion/addOrUpdate")
     public JsonReasult addOrUpdateQuestion(Choose choose) {
+//        System.out.println(choose+"===");
 
         if (choose.getCid() == null || choose.getCid().equals("")) {
             Integer num = chooseQuestionService.addQuestion(choose);

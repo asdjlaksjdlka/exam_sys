@@ -78,4 +78,21 @@
             )
         </foreach>
     </insert>
+
+    <resultMap id="exam" type="com.qf.examsys.entity.Exam">
+        <id column="e_id" property="eid"></id>
+        <result column="e_name" property="eName"></result>
+        <result column="begin_time" property="beginTime"></result>
+        <result column="end_time" property="endTime"></result>
+        <result column="p_id" property="pid"></result>
+        <result column="s_id" property="sid"></result>
+    </resultMap>
+
+    <select id="selectAllExam" resultMap="exam">
+        select * from t_exam;
+    </select>
+
+    <select id="findSidByEid" resultMap="exam">
+        select * from t_exam where e_id = #{eid};
+    </select>
 </mapper>

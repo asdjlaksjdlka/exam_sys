@@ -1,10 +1,7 @@
 package com.qf.examsys.service.impl;
 
 import com.qf.examsys.dao.GetExamPaperDao;
-import com.qf.examsys.entity.Brief;
-import com.qf.examsys.entity.Choose;
-import com.qf.examsys.entity.Judge;
-import com.qf.examsys.entity.Record;
+import com.qf.examsys.entity.*;
 import com.qf.examsys.service.GetExamPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -23,10 +20,22 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
     @Autowired(required = false)
     private GetExamPaperDao getExamPaperDao;
 
+    /**
+     * 用于手动存入redis
+     */
     @Autowired
     private RedisTemplate redisTemplate;
 
 
+    @Override
+    public List<Exam> selectAllExam() {
+        return getExamPaperDao.selectAllExam();
+    }
+
+    @Override
+    public Exam findSidByEid(Integer eid) {
+        return getExamPaperDao.findSidByEid(eid);
+    }
 
     /**
      * 生成试卷并存入redis
@@ -40,6 +49,8 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
     @Cacheable(key = "'exam'.concat(#uid).concat(#sid).concat(#eid)")
     @Override
     public HashMap<String, List> makePaper(Integer sid, Integer uid, Integer eid) {
+
+        System.out.println("sid"+sid+"uid"+uid+"eid");
         ArrayList<Record> recordList = new ArrayList<>();
 
         HashMap<String, List> questionMap = new HashMap<>();
@@ -60,6 +71,7 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
          * 手动把生成的数据存入数redis*/
         //redisTemplate.opsForHash().put(sid + uid + eid,uid,questionMap);
 
+        System.out.println(questionMap.size()+"h啊哈哈啊");
         return questionMap;
     }
 
