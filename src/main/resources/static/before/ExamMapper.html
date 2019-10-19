@@ -211,7 +211,7 @@
                     </label>-->
                             </li>
                             <textarea rows="3" cols="108"
-                                      :name="'S'+'--'+short.bTitle+'--'+short.sid+'--'+short.bAnswer+'--'+short.bScore+'--'" :id="'S'+index"
+                                      :name="'S'+'--'+short.bTitle+'--'+short.sid+'--'+short.bAnswer+'--'+short.bScore+'--null'" :id="'S'+index"
                                       placeholder="请填写答案"></textarea>
                         </ul>
                         </li>
@@ -389,7 +389,7 @@
             var txt = $('#S' + i).attr("name");
             if (Sstr == "" || Sstr == null) {
                 //alert("简答题中第"+(i+1)+"题,不能为空！！！")
-                shortAnswer += txt +"未答题"+ "&";
+                shortAnswer += txt + "&";
                 continue;
             }
             shortAnswer += txt += Sstr += "&";
@@ -401,7 +401,11 @@
             type: "post",
             data: {
                 "TestAnswer": TestAnswer,
-                "shortAnswer": shortAnswer
+                "shortAnswer": shortAnswer,
+                "sid": 1,
+                "uid": 3,
+                "eid": 1
+
             },
             dataType: "json",
             success: function (data) {

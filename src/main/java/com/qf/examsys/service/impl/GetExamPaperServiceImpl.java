@@ -26,8 +26,7 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Autowired
-    private Record record;
+
 
     /**
      * 生成试卷并存入redis
@@ -128,6 +127,7 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
                 /**
                  * 遍历取值赋值
                  */
+                Record record = new Record();
                 String title = chooseAndJudge[i].split("-")[1];
                 Integer sid = Integer.valueOf(chooseAndJudge[i].split("-")[2]);
                 String rAnswer = chooseAndJudge[i].split("-")[3];
@@ -146,6 +146,7 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
             //判断
             if (chooseAndJudge[i].contains("JJ")) {
 //                System.out.println("---分割线--------" + chooseAndJudge[i]);
+                Record record = new Record();
 
                 /**
                  * 遍历取值赋值
@@ -173,6 +174,7 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
          */
         for (int i = 0; i < briefs.length; i++) {
             System.out.println("---分割线--------" + briefs[i]);
+            Record record = new Record();
 
             /**
              * 遍历取值赋值
@@ -196,7 +198,6 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
             record.setrScore(rScore);
             recordList.add(record);
         }
-
 
         Integer integer = getExamPaperDao.commitExam(recordList);
 

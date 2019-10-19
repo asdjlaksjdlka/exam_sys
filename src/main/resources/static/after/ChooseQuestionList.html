@@ -274,17 +274,6 @@
 <!--ajax请求加载页面下拉框内容-->
 <script type="text/javascript">
     $(function () {
-        /*       $.ajax({
-                   url: "../questionType/list?page=1&limit=65536",
-                   dataType: "json",
-                   type: "post",
-                   success: function(returnData) {
-                       $(returnData.data).each(function (index, item) {
-                           var html = "<option value=" + item.typeId + ">" + item.typeName + "</option>";
-                           $("#typeId").append(html);
-                       })
-                   }
-               });*/
         $.ajax({
             url: "../subject/list",
             dataType: "json",
