@@ -23,24 +23,24 @@ public class ExamController {
     @RequestMapping("/addTime.do")
     public JsonReasult addTime(Exam exam){
         int i = examService.addTime(exam);
-        return new JsonReasult(0, null);
+        return new JsonReasult(0, i);
     }
 
     @RequestMapping("/delTime.do")
-    public JsonReasult delTimeById(Integer eId){
-        int i = examService.delTimeById(eId);
-        return new JsonReasult(0, null);
+    public JsonReasult delTimeById(Integer eid){
+        int i = examService.delTimeById(eid);
+        return new JsonReasult(0, i);
     }
 
     @RequestMapping("/findExam.do")
-    public JsonReasult findExam(Integer eId){
-        Exam exam = examService.findExamById(eId);
+    public JsonReasult findExam(Integer eid){
+        Exam exam = examService.findExamById(eid);
         return new JsonReasult(0, exam);
     }
 
     @RequestMapping("/updExam.do")
     public JsonReasult uptExam(Exam exam){
         int i = examService.updExam(exam);
-        return new JsonReasult(0, null);
+        return new JsonReasult(0, i);
     }
 }

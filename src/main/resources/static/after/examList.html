@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="layui/css/layui.css" />
-    <script type="text/javascript" src="layui/layui.js" ></script>
-    <script type="text/javascript" src="js/jquery-1.12.2.min.js" ></script>
+    <link rel="stylesheet" href="../layui/css/layui.css" />
+    <script type="text/javascript" src="../layui/layui.js" ></script>
+    <script type="text/javascript" src="../js/jquery-1.12.2.min.js" ></script>
     
 </head>
 <body class="layui-layout-body">
@@ -37,15 +37,15 @@
         elem: '#exam'
         ,height: 420
         ,id:"exam"
-        ,url: 'allExam.do'
+        ,url: '../allExam.do'
         ,page: true
-        ,toolbar: 'default'
+        // ,toolbar: 'default'
         ,totalRow: true
         ,cols: [[
             {type: 'checkbox'}
             ,{field:'id', title:'序号',width:90, sort: true, align:"center",
                 templet: '<div><a href="/detail/{{d.id}}" class="layui-table-link">{{d.LAY_TABLE_INDEX+1}}</a></div>'}
-            ,{field: 'eId', title: '序号', width:150,align:"center",hide:true}
+            ,{field: 'eid', title: '序号', width:150,align:"center",hide:true}
             ,{field: 'eName', title: '名称', width:150,align:"center"}
             ,{field: 'beginTime', title: '开始时间', width: 300, sort: true,align:"center"}
             ,{field: 'endTime', title: '结束时间', width:300, sort: true,align:"center"}
@@ -62,8 +62,8 @@
                  layer.close(index);
                  $.ajax({
                      type:"get",
-                     url: "delTime.do",
-                     data: {eId: data.eId},
+                     url: "../delTime.do",
+                     data: {eid: data.eid},
                      dataType: "json",
                      success:function (data) {
                          if (data.code == 0){
@@ -84,7 +84,7 @@
                  type: 2
                  , title: '编辑信息'
                  , area: ['700px', '400px']
-                 , content:'updateExam.html?eId=' + data.eId
+                 , content:'updateExam.html?eid=' + data.eid
              })
          }
      });

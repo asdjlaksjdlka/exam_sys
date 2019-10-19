@@ -4,11 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qf.examsys.dao.ExamDao">
     <resultMap id="examMap" type="com.qf.examsys.entity.Exam">
-        <id column="e_id" property="eId"></id>
+        <id column="e_id" property="eid"></id>
         <result column="e_name" property="eName"></result>
         <result column="begin_time" property="beginTime"></result>
         <result column="end_time" property="endTime"></result>
-        <result column="p_id" property="pId"></result>
+        <result column="p_id" property="pid"></result>
     </resultMap>
     <select id="allExam" resultMap="examMap">
         select e_id, e_name, begin_time, end_time from t_exam
@@ -17,12 +17,12 @@
         insert into exam_system.t_exam (e_name, begin_time, end_time) values (#{eName},#{beginTime},#{endTime})
     </insert>
     <delete id="delTimeById">
-        delete from exam_system.t_exam where e_id = #{eId}
+        delete from exam_system.t_exam where e_id = #{eid}
     </delete>
     <select id="findExamById" resultMap="examMap">
-        select * from exam_system.t_exam where  e_id = #{eId}
+        select * from exam_system.t_exam where  e_id = #{eid}
     </select>
     <update id="updExam">
-        update exam_system.t_exam set e_name = #{eName}, begin_time =#{beginTime}, end_time = #{endTime} where e_id = #{eId}
+        update exam_system.t_exam set e_name = #{eName}, begin_time =#{beginTime}, end_time = #{endTime} where e_id = #{eid}
     </update>
 </mapper>

@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="layui/css/layui.css" />
-    <script type="text/javascript" src="layui/layui.js" ></script>
-    <script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css" />
+    <script type="text/javascript" src="../layui/layui.js" ></script>
+    <script type="text/javascript" src="../js/jquery-1.12.2.min.js"></script>
 </head>
 <body>
 <form class="layui-form" action="" lay-filter="example">
@@ -60,7 +60,7 @@
         form.on('submit(updateOne)',function (data) {
             $.ajax({
                 type: "post",
-                url: "updExam.do" + window.location.search,
+                url: "../updExam.do" + window.location.search,
                 data: data.field,
                 dataType: "json",
                 success: function (data) {
@@ -85,7 +85,7 @@
         function findThisExam() {
             $.ajax({
                 type:"get",
-                url:"findExam.do"+window.location.search,
+                url:"../findExam.do"+window.location.search,
                 dataType:"json",
                 success:function (data) {
                     if (data.code == 0) {
