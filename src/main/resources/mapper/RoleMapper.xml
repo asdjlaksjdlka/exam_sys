@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qf.examsys.dao.RoleDao">
+    <resultMap id="role" type="com.qf.examsys.entity.Role">
+        <id column="ro_id" property="rid" />
+        <result column="ro_name" property="name"/>
+    </resultMap>
+
+    <select id="findAllRoles" resultMap="role">
+        select * from t_role where ro_id != 1;
+    </select>
+
+    <insert id="insertRole">
+        insert  t_role (ro_name)  values (#{name});
+        <selectKey keyColumn="ro_id" keyProperty="rid" order="AFTER" resultType="integer">
+            select last_insert_id();
+        </selectKey>
+    </insert>
+
+    <update id="updateUserRole">
+        update t_user_role set ro_id = #{rid} where u_id = #{uid}
+    </update>
+
+    <insert id="insertIntoRolePerm">
+       {call insert_role_perm(
+            #{rid,mode=IN,jdbcType=INTEGER},#{pid,mode=IN,jdbcType=INTEGER}
+       )}
+    </insert>
+
+    <select id="findRoleById" resultMap="role">
+        select  * from t_role where ro_id = #{rid}
+    </select>
+
+    <update id="updateRoleName">
+        update t_role set ro_name = #{name} where ro_id = #{rid}
+    </update>
+
+    <delete id="deleteRolePerm">
+        delete from t_role_perm where ro_id = #{rid}
+    </delete>
+</mapper>

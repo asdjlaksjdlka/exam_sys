@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qf.examsys.dao.PermissionDao">
+
+    <resultMap id="permission" type="com.qf.examsys.entity.Permission">
+        <id column="pe_id" property="id"/>
+        <result column="p_name" property="name"/>
+        <result column="p_desc" property="desc"/>
+        <result column="p_type" property="type"/>
+        <result column="p_url" property="url"/>
+        <result column="p_parent_id" property="pid"/>
+        <result column="parent_name" property="parent"/>
+    </resultMap>
+
+    <select id="findAllFirMenusByUid" resultMap="permission">
+         select DISTINCT p.pe_id, p_name,p_url from t_perm p
+                inner join t_role_perm rp on p.pe_id = rp.pe_id
+                inner join t_user_role ur on rp.ro_id = ur.ro_id
+                inner join t_user u on ur.u_id = u.u_id
+				where u.u_id = #{uid} and p.p_parent_id is null
+    </select>
+
+
+    <select id="findAllSecMenus" resultMap="permission">
+        select DISTINCT c.p_name,c.p_url
+            from t_perm p LEFT JOIN t_perm c on p.pe_id = c.p_parent_id
+            inner join t_role_perm rp on p.pe_id = rp.pe_id
+            inner join t_user_role ur on rp.ro_id = ur.ro_id
+            inner join t_user u on ur.u_id = u.u_id
+            where p.p_parent_id is null and u.u_id = #{uid} and  p.p_name = #{pareName}
+    </select>
+
+
+    <select id="findAllPermission" resultMap="permission">
+        select p_name,pe_id from t_perm where p_parent_id is null
+    </select>
+
+    <select id="findAllChildPermission" resultMap="permission">
+        select p.p_name parent_name,c.pe_id,c.p_name
+                from t_perm p inner join t_perm c on p.pe_id = c.p_parent_id and c.p_parent_id = #{pid}
+     </select>
+
+    <select id="fidnAllPermissionByUid" resultMap="permission">
+        select p.pe_id from  t_perm p
+                inner join t_role_perm rp on p.pe_id = rp.pe_id
+                inner join t_user_role ur on rp.ro_id = ur.ro_id
+                inner join t_user u on ur.u_id = u.u_id
+				where u.u_id = #{uid}
+    </select>
+
+    <select id="findRolePermsByRid" resultMap="permission">
+        select pe_id from t_role_perm where ro_id = #{rid}
+    </select>
+
+</mapper>
