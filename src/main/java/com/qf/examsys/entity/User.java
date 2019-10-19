@@ -9,6 +9,16 @@ public class User  implements Serializable {
     private String uName;
     private String uStatus;
 
+    private String roName;
+
+    public String getRoName() {
+        return roName;
+    }
+
+    public void setRoName(String roName) {
+        this.roName = roName;
+    }
+
     public Integer getUid() {
         return uid;
     }

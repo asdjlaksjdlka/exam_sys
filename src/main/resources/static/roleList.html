@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="layui/css/layui.css"/>
+    <script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery-1.12.2.min.js"></script>
+</head>
+<body>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<!-- 生成模块 -->
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail" >修改</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">权限</a>
+</script>
+
+<script>
+
+    layui.use('table', function(){
+        var table = layui.table;
+
+        table.render({
+            elem: '#test'
+            ,url:'role/findAllRoles.do'
+            ,toolbar: 'default' //开启头部工具栏，并为其绑定左侧模板
+            ,title: '用户数据表'
+            ,cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'name', title:'角色名', edit: 'text'}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+            ]]
+            ,page: true
+        });
+
+    table.on('toolbar(test)', function(obj){
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch(obj.event){
+            case 'getCheckData':
+                var data = checkStatus.data;
+                layer.alert(JSON.stringify(data));
+                break;
+            case 'getCheckLength':
+                var data = checkStatus.data;
+                layer.msg('选中了：'+ data.length + ' 个');
+                break;
+            case 'isAll':
+                layer.msg(checkStatus.isAll ? '全选': '未全选');
+                break;
+            case 'add':
+                layer.open({
+                    type: 2 //此处以iframe举例
+                    , title: '添加题目'
+                    , area: ['720px', '620px']
+                    , content: 'ChooseQuestionModify.html'
+                });
+                break;
+            //自定义头工具栏右侧图标 - 提示
+            case 'LAYTABLE_TIPS':
+                layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                break;
+        };
+    });
+
+    //监听行工具事件
+    table.on('tool(test)', function(obj){
+        var data = obj.data;
+        //console.log(obj)
+        if(obj.event === 'edit'){
+
+            layer.open({
+                type:2,
+                area: ['400px', '500px'],
+                content:['showRoleTree.html?rid='+data.rid,'no'],
+                success:function (layero,index) {
+                    var iframe = window['layui-layer-iframe'+index];
+                }
+            });
+        }else {
+            layer.open({
+                type:2,
+                area: ['400px', '500px'],
+                content:['updateRole.html?rid='+data.rid,'no'],
+                success:function (layero,index) {
+                    var iframe = window['layui-layer-iframe'+index];
+            }
+        });
+    }
+    });
+ });
+
+</script>
+</body>
+</html>

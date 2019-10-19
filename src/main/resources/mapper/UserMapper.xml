@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qf.examsys.dao.UserDao">
+    <resultMap id="user" type="com.qf.examsys.entity.User">
+        <id column="u_id" property="uid"/>
+        <result column="u_phone" property="uPhone"/>
+        <result column="u_password" property="uPassword"/>
+        <result column="u_name" property="uName"/>
+        <result column="status" property="uStatus"/>
+               <result column="ro_name" property="roName"/>
+
+    </resultMap>
+
+    <select id="findAllPerms" resultType="string">
+        select p_desc from t_perm p inner join t_role_perm rp on p.pe_id = rp.pe_id
+            inner join t_user_role ur on rp.ro_id = ur.ro_id
+            inner join t_user u on ur.u_id = u.u_id
+            where u.u_phone = #{phone} and p.p_desc != ''
+    </select>
+    
+    <select id="findAllUserList" resultMap="user">
+        select u.u_id,u.u_phone,u.u_name,u.status,r.ro_name
+                from t_user u inner join t_user_role ur on ur.u_id = u.u_id
+				INNER JOIN t_role r on r.ro_id = ur.ro_id
+                where r.ro_id != 1;
+    </select>
+
+    <update id="updateUserStatus" >
+        update t_user set status = #{status} where u_id = #{uid}
+    </update>
+
+    <select id="findUserById1" resultMap="user">
+        select * from t_user where u_id = #{uid};
+    </select>
+
+
+</mapper>

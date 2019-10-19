@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qf.examsys.dao.MenuDao">
+
+    <resultMap id="menu" type="com.qf.examsys.entity.Menu">
+        <id column="pe_id" property="peid"></id>
+        <result column="p_name" property="pName"></result>
+        <result column="p_desc" property="pDesc"></result>
+        <result column="p_type" property="pType"></result>
+        <result column="p_url" property="url"></result>
+        <result column="p_parent_id" property="pParentid"></result>
+    </resultMap>
+
+    <select id="findAllFirstMenus" resultMap="menu">
+         select DISTINCT p.pe_id, p_name,p_url from t_perm p
+                inner join t_role_perm rp on p.pe_id = rp.pe_id
+                inner join t_user_role ur on rp.ro_id = ur.ro_id
+                inner join t_user u on ur.u_id = u.u_id
+				where p.p_parent_id is null and u.u_id = #{uid}
+    </select>
+
+    <select id="findAllSecMenus" resultMap="menu">
+        select DISTINCT c.p_name,c.p_url
+				from t_perm p  LEFT JOIN t_perm c on p.pe_id = c.p_parent_id
+                inner join t_role_perm rp on p.pe_id = rp.pe_id
+                inner join t_user_role ur on rp.ro_id = ur.ro_id
+                inner join t_user u on ur.u_id = u.u_id
+				where p.p_parent_id is null and u.u_id = #{uid} and c.p_parent_id = #{parentId}
+    </select>
+
+    <select id="findAllFirstPerms" resultType="string">
+        select DISTINCT  p_name from t_perm p
+                inner join t_role_perm rp on p.pe_id = rp.pe_id
+                inner join t_user_role ur on rp.ro_id = ur.ro_id
+                inner join t_user u on ur.u_id = u.u_id
+				where p.p_parent_id is null and u.u_id = #{uid}
+    </select>
+
+    <select id="findAllSecondPerms" resultType="string">
+       select DISTINCT c.p_name
+				from t_perm p  LEFT JOIN t_perm c on p.pe_id = c.p_parent_id
+                inner join t_role_perm rp on p.pe_id = rp.pe_id
+                inner join t_user_role ur on rp.ro_id = ur.ro_id
+                inner join t_user u on ur.u_id = u.u_id
+				where p.p_parent_id is null and u.u_id = #{uid} and c.p_parent_id = #{parentId}
+    </select>
+
+    <select id="findAllPerm" resultType="string">
+        select p_name from t_perm where p_parent_id is null
+    </select>
+
+    <select id="findPermsByName" resultType="string">
+        select c.p_name from t_perm p inner join t_perm c on p.pe_id = c.p_parent_id
+                where p.p_name = #{name}
+    </select>
+
+</mapper>
