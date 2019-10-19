@@ -15,14 +15,14 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Autowired
     private StatisticsDao statisticsDao;
     @Override
-    public List<Score> listPersonalScore(Integer eId,Integer sid, Integer uid) {
-        List<Score> scores = statisticsDao.listPersonalScore(eId,sid,uid);
+    public List<Score> listPersonalScore(Integer eid,Integer sid, Integer uid) {
+        List<Score> scores = statisticsDao.listPersonalScore(eid,sid,uid);
         return scores;
     }
 
     @Override
-    public List<Apply> listApply(Integer uid, Integer eId, Integer sid, Date time) {
-        List<Apply> applies = statisticsDao.listApply(uid, eId, sid, time);
+    public List<Apply> listApply(Integer uid, Integer eid, Integer sid, Date time) {
+        List<Apply> applies = statisticsDao.listApply(uid, eid, sid, time);
         return applies;
     }
 

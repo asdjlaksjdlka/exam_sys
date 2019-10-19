@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface StatisticsService {
 
-    List<Score> listPersonalScore(Integer eId,Integer sid, Integer uid);
+    List<Score> listPersonalScore(Integer eid,Integer sid, Integer uid);
 
-    List<Apply> listApply(Integer uid, Integer eId, Integer sid, Date time);
+    List<Apply> listApply(Integer uid, Integer eid, Integer sid, Date time);
 
     List<Subject> listSubject();
 

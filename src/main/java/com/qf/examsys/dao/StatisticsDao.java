@@ -11,10 +11,10 @@ import java.util.List;
 public interface StatisticsDao {
 
     // 学生成绩
-    List<Score> listPersonalScore(@Param(value = "eId") Integer eId, @Param(value = "sid")Integer sid, @Param(value = "uid")Integer uid);
+    List<Score> listPersonalScore(@Param(value = "eid") Integer eid, @Param(value = "sid")Integer sid, @Param(value = "uid")Integer uid);
 
     // 报名信息
-    List<Apply> listApply(@Param(value = "uid")Integer uid, @Param(value = "eId") Integer eId, @Param(value = "sid")Integer sid, @Param(value = "time")Date time);
+    List<Apply> listApply(@Param(value = "uid")Integer uid, @Param(value = "eid") Integer eid, @Param(value = "sid")Integer sid, @Param(value = "time")Date time);
 
     // 按考试进行考试人数统计
     List<ExamNumberStatistics> listExamNumber();

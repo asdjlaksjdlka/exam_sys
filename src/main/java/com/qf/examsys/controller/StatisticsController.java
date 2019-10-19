@@ -23,9 +23,9 @@ public class StatisticsController {
 
     @ResponseBody
     @PostMapping(path = "/score")
-    public JsonReasult listScore(Integer eId, Integer sid, Integer uid){
+    public JsonReasult listScore(Integer eid, Integer sid, Integer uid){
         try {
-            List<Score> scores = statisticsService.listPersonalScore(eId, sid, uid);
+            List<Score> scores = statisticsService.listPersonalScore(eid, sid, uid);
             System.out.println(scores);
             return new JsonReasult(0,scores);
         } catch (Exception e) {
@@ -36,9 +36,9 @@ public class StatisticsController {
 
     @ResponseBody
     @PostMapping(path = "/score/json",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public JsonReasult scoreStatisticsJson(Integer eId,Integer sid, Integer uid){
+    public JsonReasult scoreStatisticsJson(Integer eid,Integer sid, Integer uid){
         try {
-            List<Score> scores = statisticsService.listPersonalScore(eId, sid, uid);
+            List<Score> scores = statisticsService.listPersonalScore(eid, sid, uid);
             System.out.println(scores);
             return new JsonReasult(0,scores);
         } catch (Exception e) {
@@ -47,10 +47,11 @@ public class StatisticsController {
         }
     }
 
+
     @PostMapping(path = "/apply")
     @ResponseBody
-    public JsonReasult applyStatistics(Integer uId, Integer eId, Integer sid, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")Date time){
-        List<Apply> applies = statisticsService.listApply(uId, eId, sid, time);
+    public JsonReasult applyStatistics(Integer uId, Integer eid, Integer sid, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")Date time){
+        List<Apply> applies = statisticsService.listApply(uId, eid, sid, time);
         System.out.println(applies);
         return new JsonReasult(0,applies);
     }

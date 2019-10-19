@@ -2,10 +2,10 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" href="layui/css/layui.css"/>
-    <script type="text/javascript" src="layui/layui.js"></script>
-    <script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
-    <script src="js/echarts.min.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css"/>
+    <script type="text/javascript" src="../layui/layui.js"></script>
+    <script type="text/javascript" src="../js/jquery-1.12.2.min.js"></script>
+    <script src="../js/echarts.min.js"></script>
 </head>
 <body class="layui-layout-body">
 
@@ -281,7 +281,7 @@
 
 
         <!--<script src="//res.layui.com/layui/dist/layui.js" charset="utf-8"></script>-->
-        <script src="layui/layui.js" charset="utf-8"></script>
+        <script src="../layui/layui.js" charset="utf-8"></script>
         <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
         <script>
             layui.use(['carousel', 'form'], function(){
@@ -375,7 +375,7 @@
     function examSubjectNumber(obj){
        $.ajax({
            type:'post',
-           url:'statistics/examSubjectNumber',
+           url:'../statistics/examSubjectNumber',
            data:obj,
            success: function (data) {
                if (data.code == 0){
@@ -389,7 +389,7 @@
     function examNumber(obj){
         $.ajax({
             type:'post',
-            url:'statistics/examNumber',
+            url:'../statistics/examNumber',
             data:obj,
             success: function (data) {
                 if (data.code == 0){
@@ -403,7 +403,7 @@
     function listScore(obj){
         $.ajax({
             type:'post',
-            url:'statistics/listScore',
+            url:'../statistics/score',
             data:obj,
             success: function (data) {
                 if (data.code == 0){
@@ -420,7 +420,7 @@
         table.render({
             id: "userTable"
             , elem: '#test'
-            , url: 'statistics/score'
+            , url: '../statistics/score'
             , toolbar: '#toolbarDemo'
             , method:'post'
             , title: '学生成绩统计'
@@ -502,7 +502,7 @@
             var data = obj.data;
             alert(JSON.stringify(data))
             if (obj.event === 'detail') {
-                var o = 'uid='+ data.user.uid+'&sid='+data.subject.sid+'&eId='+data.exam.eId;
+                var o = 'uid='+ data.user.uid+'&sid='+data.subject.sid+'&eid='+data.exam.eid;
                 alert(o);
              socre(o)
             } ;
@@ -538,7 +538,7 @@
 <!--<%&#45;&#45;ajax请求加载页面下拉框内容&#45;&#45;%>-->
 <script type="text/javascript">
     $.ajax({
-        url: 'statistics/subject',
+        url: '../statistics/subject',
         dataType: 'json', data: {'state': 0},
         type: 'post',
         success: function (data) {

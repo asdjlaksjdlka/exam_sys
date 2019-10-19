@@ -31,12 +31,11 @@
 
     <!--考试类-->
     <resultMap id="exam" type="com.qf.examsys.entity.Exam">
-        <id column="e_id" property="eId"></id>
+        <id column="e_id" property="eid"></id>
         <result column="e_name" property="eName"></result>
         <result column="begin_time" property="beginTime"></result>
         <result column="end_time" property="endTime"></result>
 
-        <collection property="page" resultMap="pages"></collection>
     </resultMap>
 
     <!--成绩类-->
@@ -130,8 +129,8 @@
             t_score.s_id = t_subject.s_id AND
             t_score.e_id = t_exam.e_id
 
-            <if test="eId != null and eId != ''">
-                and t_exam.e_id = #{eId}
+            <if test="eid != null and eid != ''">
+                and t_exam.e_id = #{eid}
             </if>
             <if test="sid != null and sid != ''">
                 and t_subject.s_id = #{sid}
@@ -253,15 +252,3 @@
     </select>
 </mapper>
 
-        <!-- Score
-               {scId=4,
-               user=User{uid=2, uPhone='null', uPassword='null', uName='li', uStatus='null'},
-               subject=Subject{sid=2, sName='Python'},
-               exam=Exam{eId=1, 考试名eName='java', 开始时间beginTime=Fri Oct 25 00:00:00 CST 2019, 结束时间endTime=Fri Oct 25 02:00:00 CST 2019,
-               试卷Page=Page{pid=1, pTitle='null', sid=2, choose='null', judge='null', brief='null', pStatus=null}},
-                chooseScore=30,
-                judgeScore=15,
-                briefScore=15,
-                totalScore=60}
-
-        -->
