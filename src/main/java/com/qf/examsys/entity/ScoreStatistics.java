@@ -2,6 +2,13 @@ package com.qf.examsys.entity;
 
 // 成绩统计
 public class ScoreStatistics {
+    // 考试
+    private Exam exam;
+    // 学科
+    private Subject subject;
+    // 学生
+    private User user;
+
     // 考试总人数
     private Integer countNumber;
     // 及格人数
@@ -32,7 +39,10 @@ public class ScoreStatistics {
     @Override
     public String toString() {
         return "ScoreStatistics{" +
-                "countNumber=" + countNumber +
+                "exam=" + exam +
+                ", subject=" + subject +
+                ", user=" + user +
+                ", countNumber=" + countNumber +
                 ", passNumber=" + passNumber +
                 ", passRate=" + passRate +
                 ", maxTotalScore=" + maxTotalScore +
@@ -48,6 +58,30 @@ public class ScoreStatistics {
                 ", minBriefScore=" + minBriefScore +
                 ", avgBriefScore=" + avgBriefScore +
                 '}';
+    }
+
+    public Exam getExam() {
+        return exam;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Integer getCountNumber() {

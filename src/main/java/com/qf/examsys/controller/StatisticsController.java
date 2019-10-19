@@ -25,9 +25,6 @@ public class StatisticsController {
     @PostMapping(path = "/score")
     public JsonReasult listScore(Integer eId, Integer sid, Integer uid){
         try {
-            System.out.println(eId);
-            System.out.println(sid);
-            System.out.println(uid);
             List<Score> scores = statisticsService.listPersonalScore(eId, sid, uid);
             System.out.println(scores);
             return new JsonReasult(0,scores);
@@ -65,24 +62,37 @@ public class StatisticsController {
         return new JsonReasult(0,subjects);
     }
 
+    // 按考试进行考试人数统计
     @PostMapping(path = "/examNumber")
     @ResponseBody
     public JsonReasult listExamNumber(){
         List<ExamNumberStatistics> examNumber = statisticsService.listExamNumber();
-        return new JsonReasult(0,examNumber);
+        return new JsonReasult(0, examNumber, "考试报名人数统计", null);
     }
 
+    // 按科目进行考试人数统计
     @PostMapping(path = "/examSubjectNumber")
     @ResponseBody
     public JsonReasult listExamSubjectNumber(){
         List<ExamNumberStatistics> examSubjectNumber = statisticsService.listExamSubjectNumber();
-        return new JsonReasult(0,examSubjectNumber);
+        return new JsonReasult(0,examSubjectNumber, "各学科考试人数统计", null);
     }
 
+    // 成绩统计
     @PostMapping(path = "/scoreStatistics")
     @ResponseBody
     public JsonReasult scoreStatistics(Integer eid, Integer sid, Integer uid){
         List<ScoreStatistics> scoreStatistics = statisticsService.listScore(eid, sid, uid);
+        JsonReasult jsonReasult = new JsonReasult(0, scoreStatistics);
+        if (eid != null){
+            
+        }
+        if (sid != null){
+
+        }
+        if (uid != null){
+
+        }
         return new JsonReasult(0,scoreStatistics);
     }
 }

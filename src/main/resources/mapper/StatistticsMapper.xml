@@ -95,6 +95,10 @@
         <result column="max_brief_score" property="maxBriefScore"></result>
         <result column="min_brief_score" property="minBriefScore"></result>
         <result column="avg_brief_score" property="avgBriefScore"></result>
+
+        <collection property="user" resultMap="user"></collection>
+        <collection property="exam" resultMap="exam"></collection>
+        <collection property="subject" resultMap="subject"></collection>
     </resultMap>
 
 

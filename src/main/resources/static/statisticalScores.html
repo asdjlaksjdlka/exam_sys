@@ -60,8 +60,8 @@
                         // 指定图表的配置项和数据
                         option = {
                             title : {
-                                text: '某站点用户访问来源',
-                                subtext: '纯属虚构',
+                                text: '考试历史人数统计',
+                                subtext: '全学科',
                                 x:'center'
                             },
                             tooltip : {
@@ -363,25 +363,56 @@
 <script>
 
     var data1 = '';
+    var data2 = '';
+    var data3 = '';
 
     $(function () {
-     socre()
+        examSubjectNumber();
+        examNumber();
+        listScore();
     });
 
-    function socre(obj){
+    function examSubjectNumber(obj){
        $.ajax({
            type:'post',
-           url:'statistics/score',
+           url:'statistics/examSubjectNumber',
            data:obj,
            success: function (data) {
                if (data.code == 0){
-                   data1 = data.data;
+                   data1 = data;
                }
            }
 
        })
     } ;
 
+    function examNumber(obj){
+        $.ajax({
+            type:'post',
+            url:'statistics/examNumber',
+            data:obj,
+            success: function (data) {
+                if (data.code == 0){
+                    data2 = data;
+                }
+            }
+
+        })
+    } ;
+
+    function listScore(obj){
+        $.ajax({
+            type:'post',
+            url:'statistics/listScore',
+            data:obj,
+            success: function (data) {
+                if (data.code == 0){
+                    data3 = data;
+                }
+            }
+
+        })
+    } ;
 
 
     layui.use('table', function () {
