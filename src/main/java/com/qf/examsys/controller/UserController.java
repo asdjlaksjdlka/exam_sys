@@ -23,15 +23,16 @@ public class UserController {
     @RequestMapping("userList.do")
     @ResponseBody
     public JsonReasult userList(Integer page,Integer limit){
-        PageInfo<User> info = userService.findAllUserList(page,limit);
-        return new JsonReasult(0,info.getList(),"",(int)info.getTotal());
+       List<User> list = userService.findAllUserList(page,limit);
+        long total = ((Page) list).getTotal();
+        return new JsonReasult(0,list,"",total);
     }
 
     @RequestMapping("/updateUserStatus.do")
     @ResponseBody
     public JsonReasult updateUserStatus(Integer uid,Integer status){
         userService.updateUserStatus(uid,status);
-        return new JsonReasult(0,null);
+        return new JsonReasult(0,"");
 
     }
 }

@@ -9,7 +9,7 @@ public interface UserService {
 
     List<String> findAllPerms(String phone);
 
-    PageInfo<User> findAllUserList(Integer page,Integer limit);
+    List<User> findAllUserList(Integer page,Integer limit);
 
     void updateUserStatus(Integer uid, Integer status);
 

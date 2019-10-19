@@ -60,7 +60,7 @@ public class PermissionController {
     public JsonReasult updateRolePerm(String str,Integer rid){
 
         permissionService.updateRolePerms(rid,str);
-        return new JsonReasult(0,null);
+        return new JsonReasult(0,"null");
     }
 
 

@@ -29,13 +29,13 @@ public class RoleController {
     @RequestMapping("/updateUserRole.do")
     public JsonReasult updateUserRole(Integer rid, Integer uid) {
         roleService.updateUserRole(uid, rid);
-        return new JsonReasult(0, null);
+        return new JsonReasult(0, "");
     }
 
     @RequestMapping("/addRole.do")
     public JsonReasult addRole(String name) {
         roleService.addRole(name);
-        return new JsonReasult(0, null);
+        return new JsonReasult(0, "");
     }
 
     @RequestMapping("/addPermission.do")
@@ -55,7 +55,7 @@ public class RoleController {
 
         System.out.println(role.getName());
         roleService.updateRoleName(role);
-        return new JsonReasult(0, null);
+        return new JsonReasult(0, "");
     }
 
 

@@ -15,6 +15,16 @@
         </div>
     </div>
 
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">科目：</label>
+        <div class="layui-input-block">
+            <select class="sName" name="sid" lay-filter="aihao" id="sid">
+                <option value="">请选择科目...</option>
+            </select>
+        </div>
+    </div>
+
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">开始时间</label>
         <div class="layui-input-block">
@@ -54,6 +64,30 @@
             elem: '#test2'
             ,type: 'datetime'
         });
+
+        InitForm();
+        function InitForm() {
+            $.ajax({
+                type: 'post',
+                url: '../subject/list',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.data.length>0){
+                        $(data.data).each(function (index, item) {
+                            // alert(item.sid+item.sName)
+                            var html = "<option value=" + item.sid + ">" + item.sName + "</option>";
+                            // $(".sName").append('<option value="' + item.sid  + '" selected="">' + item.sName + '</option>');
+                            $("#sid").append(html);
+                        })
+                        //更新 lay-filter="test1" 所在容器内的全部表单状态
+                        form.render('select');
+                    } else {
+                        layer.msg("下拉数据加载失败。。。");
+                    }
+
+                }
+            })
+        }
 
         findThisExam();
 

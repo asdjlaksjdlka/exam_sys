@@ -22,11 +22,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo<User> findAllUserList(Integer page,Integer limit) {
+    public List<User> findAllUserList(Integer page,Integer limit) {
+        System.out.println(page+"sssss");
+        System.out.println(limit+"aaaaa");
         PageHelper.startPage(page,limit);
         List<User> list = userDao.findAllUserList();
-        PageInfo<User> info = new PageInfo<>(list);
-        return info;
+
+        return list;
     }
 
     @Override

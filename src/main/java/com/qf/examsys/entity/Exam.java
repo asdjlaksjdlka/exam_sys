@@ -13,17 +13,14 @@ public class Exam implements Serializable {
     private Date endTime;
     private Integer pid;
     private Integer sid;
+    private Subject subject;
 
-    @Override
-    public String toString() {
-        return "Exam{" +
-                "eid=" + eid +
-                ", eName='" + eName + '\'' +
-                ", beginTime=" + beginTime +
-                ", endTime=" + endTime +
-                ", pid=" + pid +
-                ", sid=" + sid +
-                '}';
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     public Integer getEid() {
