@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qf.examsys.dao.JudgeQuestionDao">
+
+    <!--以下为简答题部分-->
+
+    <resultMap id="findAllJudge" type="com.qf.examsys.entity.Judge">
+        <id property="jid" column="j_id"></id>
+        <result property="jTitle" column="j_title"></result>
+        <result property="jAnswer" column="j_answer"></result>
+        <result property="sid" column="s_id"></result>
+        <result property="jScore" column="j_score"></result>
+
+        <association property="subject" javaType="com.qf.examsys.entity.Subject">
+            <id property="sid" column="s_id"></id>
+            <result property="sName" column="s_name"></result>
+        </association>
+    </resultMap>
+    <select id="findAllJudge" resultMap="findAllJudge">
+
+        SELECT
+        tj.j_id,
+        tj.j_title,
+        tj.j_answer,
+        tj.s_id,
+        tj.j_score,
+        ts.s_name
+        FROM
+        t_subject AS ts
+        INNER JOIN t_judge AS tj ON ts.s_id = tj.s_id
+
+        <where>
+            <if test="jTitle != null and jTitle != ''">
+                and tj.j_title like CONCAT('%','${jTitle}','%')
+            </if>
+
+            <if test="sid != null and sid != ''">
+                and ts.s_id=#{sid}
+            </if>
+        </where>
+    </select>
+
+    <!--修改回显-->
+    <select id="findJudgeQuestionById" resultMap="findAllJudge">
+        select * from t_judge where j_id = #{jid};
+    </select>
+
+
+    <!--提交修改-->
+    <update id="updateJudgeById" parameterType="com.qf.examsys.entity.Judge">
+        update t_judge set
+        j_title= #{jTitle},j_answer=#{jAnswer},j_score=#{jScore},s_id=#{sid}
+        where j_id=#{jid}
+    </update>
+
+    <!--添加判断题-->
+    <insert id="addJudge" parameterType="com.qf.examsys.entity.Judge">
+       insert into t_judge (j_title,j_answer,s_id,j_score)
+        VALUES (#{jTitle},#{jAnswer},#{sid},#{jScore})
+    </insert>
+
+
+    <delete id="deleteOneById" parameterType="com.qf.examsys.entity.Judge">
+        delete from t_judge where j_id=#{jid}
+    </delete>
+
+    <!--批量删除-->
+    <delete id="deletAlljudge">
+        delete from t_judge where j_id in
+        <foreach collection="array" item="ids" open="(" separator=","
+                 close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <insert id="addJudges" parameterType="com.qf.examsys.entity.Judge">
+        insert into t_judge (j_title,j_answer,s_id,j_score)
+        VALUES
+        <foreach collection="judges" item="judge" separator=",">
+            (#{judge.jTitle},#{judge.jAnswer},#{judge.sid},#{judge.jScore})
+        </foreach>
+    </insert>
+</mapper>

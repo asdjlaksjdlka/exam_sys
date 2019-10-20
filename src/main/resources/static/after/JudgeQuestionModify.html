@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>试题修改</title>
+	<link rel="stylesheet" href="../js/layui/css/layui.css" />
+	<script type="text/javascript" src="../js/layui/layui.js" ></script>
+	<script type="text/javascript" src="../js/jquery-1.12.2.min.js" ></script>
+
+</head>
+<body>
+
+
+<form class="layui-form" id="add-form" lay-filter="example">
+	<input hidden type="text" name="jid">
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">科目：</label>
+		<div class="layui-input-block">
+			<select class="sName" name="sid" lay-filter="aihao" id="sid">
+				<option value="">请选择科目...</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">题干：</label>
+		<div class="layui-input-block">
+			<input type="text" name="jTitle" lay-verify="title" class="layui-input"  style="width: 300px">
+		</div>
+	</div>
+
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">答案：</label>
+		<div class="layui-input-block">
+			<input type="text" name="jAnswer" lay-verify="title" class="layui-input"  style="width: 300px">
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">分数：</label>
+		<div class="layui-input-block">
+			<input type="text" name="jScore" lay-verify="title" class="layui-input"  style="width: 300px">
+		</div>
+	</div>
+
+
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+			<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		</div>
+	</div>
+</form>
+
+<script>
+    layui.use(['form','layer', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate
+            ,$ = layui.jquery;
+
+		InitForm();
+        function InitForm() {
+            $.ajax({
+                type: 'post',
+                url: '../subject/list',
+                dataType: 'json',
+                success: function (data) {
+                	if (data.data.length>0){
+						$(data.data).each(function (index, item) {
+							// alert(item.sid+item.sName)
+							var html = "<option value=" + item.sid + ">" + item.sName + "</option>";
+							// $(".sName").append('<option value="' + item.sid  + '" selected="">' + item.sName + '</option>');
+							$("#sid").append(html);
+						})
+						//更新 lay-filter="test1" 所在容器内的全部表单状态
+						form.render('select');
+					} else {
+                        layer.msg("下拉数据加载失败。。。");
+                    }
+
+                }
+            })
+        }
+
+		findOne();
+		function findOne() {
+            $.ajax({
+                type: "get",
+                url: "../judgequestion/query" + window.location.search,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 1) {
+                        //表单初始赋值
+                        form.val('example', data.data);
+                    }
+                }
+            })
+        }
+
+        //监听提交
+        form.on('submit(demo1)', function(data){
+            $.ajax({
+                type: "post",
+                url: "../judgequestion/addOrUpdate",
+                data: data.field,
+                dataType: "json",
+                success: function (data) {
+                	// alert(data.num)
+					//data.num为dao层update修改的返回值
+                    if (data.code == 1 && data.num==1) {
+                        layer.msg("操作成功", {icon: 6, time: 1500},
+                            function () {
+								parent.location.reload();//刷新父页面
+								var t = parent.layui.table;
+                                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.layer.close(index); //再执行关闭
+                            });
+                    } else {
+                        layer.alert("修改失败", {icon: 2, time: 2000});
+                    }
+                }
+
+            });
+            return false;
+        });
+
+    });
+
+
+</script>
+
+</body>
+</html>

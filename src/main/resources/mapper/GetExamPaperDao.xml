@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qf.examsys.dao.GetExamPaperDao">
+
+    <resultMap id="getchoose" type="com.qf.examsys.entity.Choose">
+        <id property="cid" column="c_id"></id>
+        <result property="cTitle" column="c_title"></result>
+        <result property="cOptionA" column="c_option_a"></result>
+        <result property="cOptionB" column="c_option_b"></result>
+        <result property="cOptionC" column="c_option_c"></result>
+        <result property="cOptionD" column="c_option_d"></result>
+        <result property="cAnswer" column="c_answer"></result>
+        <result property="sid" column="s_id"></result>
+        <result property="cScore" column="c_score"></result>
+
+        <association property="subject" javaType="com.qf.examsys.entity.Subject">
+            <id property="sid" column="s_id"></id>
+            <result property="sName" column="s_name"></result>
+        </association>
+    </resultMap>
+
+    <select id="getChooseByRand" resultMap="getchoose">
+        select * from t_choose  where s_id=#{sid}  order by rand() limit 10;
+    </select>
+
+
+    <resultMap id="getJudge" type="com.qf.examsys.entity.Judge">
+        <id property="jid" column="j_id"></id>
+        <result property="jTitle" column="j_title"></result>
+        <result property="jAnswer" column="j_answer"></result>
+        <result property="sid" column="s_id"></result>
+        <result property="jScore" column="j_score"></result>
+
+        <association property="subject" javaType="com.qf.examsys.entity.Subject">
+            <id property="sid" column="s_id"></id>
+            <result property="sName" column="s_name"></result>
+        </association>
+    </resultMap>
+    <select id="getJudgeByRand" resultMap="getJudge">
+        select * from t_judge  where s_id=#{sid}  order by rand() limit 10;
+    </select>
+
+    <resultMap id="getBrief" type="com.qf.examsys.entity.Brief">
+        <id property="bid" column="b_id"></id>
+        <result property="bTitle" column="b_title"></result>
+        <result property="bAnswer" column="b_answer"></result>
+        <result property="sid" column="s_id"></result>
+        <result property="bScore" column="b_score"></result>
+
+        <association property="subject" javaType="com.qf.examsys.entity.Subject">
+            <id property="sid" column="s_id"></id>
+            <result property="sName" column="s_name"></result>
+        </association>
+    </resultMap>
+    <select id="getBriefByRand" resultMap="getBrief">
+        select * from t_brief where s_id=#{sid}  order by rand() limit 10;
+    </select>
+
+
+    <!--插入每次点击的选择题-->
+
+    <!--交卷-->
+    <insert id="commitExam" parameterType="string">
+        INSERT INTO t_record (u_id,title,u_answer,r_answer,e_id,s_id,r_score) VALUES
+
+        <foreach collection="recordList" item="record" separator="," index="index">
+            (
+            #{record.uid},
+            #{record.title},
+            #{record.uAnswer},
+            #{record.rAnswer},
+            #{record.eid},
+            #{record.sid},
+            #{record.rScore}
+            )
+        </foreach>
+    </insert>
+</mapper>
