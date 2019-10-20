@@ -5,6 +5,7 @@
 
     <link rel="stylesheet" href="../js/layui/css/layui.css"/>
     <script type="text/javascript" src="../js/layui/layui.js"></script>
+    <script type="text/javascript" src="../js/layer.js"></script>
     <script type="text/javascript" src="../js/jquery-1.12.2.min.js"></script>
 
 
@@ -28,10 +29,11 @@
 </div>
 <script>
     layui.use(['laydate', 'laypage', 'layer', 'table', 'upload', 'element'], function () {
-        var laydate = layui.laydate
+        var laydate = layui.laydate;
+        var table = layui.table
+
             , laypage = layui.laypage
             , layer = layui.layer
-            , table = layui.table
             , upload = layui.upload
             , element = layui.element
         //执行一个 table 实例
@@ -51,14 +53,9 @@
                 }
                 , {field: 'eid', title: '序号', width: 150, align: "center", hide: true}
                 , {field: 'eName', title: '名称', width: 150, align: "center"}
-        /*        , {
-                    field: 'sName', title: '科目', width: 150,
-                    templet: function (data) {
-                        return data.subject;
-                    }
-                }*/
-
-
+                , {field: 'd.subject.sName', title: '科目', width: 150,
+                    templet:'<div>{{d.subject? d.subject.sName: ""}}</div>'
+                }
                 , {field: 'beginTime', title: '开始时间', width: 300, sort: true, align: "center"}
                 , {field: 'endTime', title: '结束时间', width: 300, sort: true, align: "center"}
                 , {fixed: 'right', width: 165, align: 'center', toolbar: '#barDemo'}

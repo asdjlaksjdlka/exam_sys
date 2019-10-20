@@ -43,7 +43,7 @@ public class GetExamPaperController {
 
 //        System.out.println(eid+"哈哈"+sid);
 
-        HashMap<String, List> questionMap = getExamPaperService.makePaper(sid, 4, eid);
+        HashMap<String, List> questionMap = getExamPaperService.makePaper(4, eid, sid);
 
         return new JsonReasult(1, "获取试卷成功");
     }
@@ -70,7 +70,7 @@ public class GetExamPaperController {
 
         //利用springboot的缓存
 
-        HashMap<String, List> paper = getExamPaperService.getPaper(4, sid, eid);
+        HashMap<String, List> paper = getExamPaperService.getPaper(4, eid, sid);
 
         // System.out.println(questionMap1.size());
 

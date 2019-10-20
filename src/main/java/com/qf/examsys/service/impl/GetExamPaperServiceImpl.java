@@ -46,9 +46,9 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
      * @return
      */
     //进行缓存，把方法的返回值进行缓存
-    @Cacheable(key = "'exam'.concat(#uid).concat(#sid).concat(#eid)")
+    @Cacheable(key = "'exam'.concat(#uid).concat(#eid).concat(#sid)")
     @Override
-    public HashMap<String, List> makePaper(Integer sid, Integer uid, Integer eid) {
+    public HashMap<String, List> makePaper(Integer uid, Integer eid, Integer sid) {
 
 //        System.out.println("sid"+sid+"uid"+uid+"eid");
         ArrayList<Record> recordList = new ArrayList<>();
@@ -83,10 +83,12 @@ public class GetExamPaperServiceImpl implements GetExamPaperService {
      * @param sid
      * @return
      */
-    @Cacheable(key = "'exam'.concat(#uid).concat(#sid).concat(#eid)")
+    @Cacheable(key = "'exam'.concat(#uid).concat(#eid).concat(#sid)")
     @Override
     public HashMap<String, List> getPaper(Integer uid, Integer eid, Integer sid) {
-        return null;
+        HashMap<String, List> questionMap = new HashMap<>();
+
+        return questionMap;
     }
 
     /**

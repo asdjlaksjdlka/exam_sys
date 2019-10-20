@@ -15,6 +15,19 @@ public class Exam implements Serializable {
     private Integer sid;
     private Subject subject;
 
+    @Override
+    public String toString() {
+        return "Exam{" +
+                "eid=" + eid +
+                ", eName='" + eName + '\'' +
+                ", beginTime=" + beginTime +
+                ", endTime=" + endTime +
+                ", pid=" + pid +
+                ", sid=" + sid +
+                ", subject=" + subject +
+                '}';
+    }
+
     public Subject getSubject() {
         return subject;
     }

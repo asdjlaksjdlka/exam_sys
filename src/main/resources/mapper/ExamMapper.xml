@@ -15,7 +15,7 @@
         </association>
     </resultMap>
     <select id="allExam" resultMap="examMap">
-        select te.e_name,te.begin_time,te.end_time,ts.s_name from t_exam te
+        select te.e_id, te.e_name,te.begin_time,te.end_time,ts.s_name from t_exam te
         LEFT JOIN t_subject ts ON ts.s_id=te.s_id
     </select>
     <insert id="addTime">

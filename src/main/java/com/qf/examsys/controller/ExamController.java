@@ -5,6 +5,7 @@ import com.qf.examsys.entity.Exam;
 import com.qf.examsys.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class ExamController {
     private ExamService examService;
 
     @RequestMapping("/allExam.do")
+    @ResponseBody
     public JsonReasult allExam(){
         List<Exam> exams = examService.allExam();
         return new JsonReasult(0, exams);
