@@ -4,9 +4,26 @@ public class JsonReasult<T> {
     private Integer code;
     private T data;
     private String msg;
-    private Integer count;
+    private Long count;
+    private Integer num;
+
+    public JsonReasult(Integer code, Integer num) {
+        this.code = code;
+        this.num = num;
+    }
+
+    public JsonReasult(Integer code,  Integer num,String msg) {
+        this.code = code;
+        this.msg = msg;
+        this.num = num;
+    }
 
     public JsonReasult() {
+    }
+
+    public JsonReasult(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
     }
 
     public JsonReasult(Integer code, T data) {
@@ -14,11 +31,19 @@ public class JsonReasult<T> {
         this.data = data;
     }
 
-    public JsonReasult(Integer code, T data, String msg, Integer count) {
+    public JsonReasult(Integer code, T data, String msg, Long count) {
         this.code = code;
         this.data = data;
         this.msg = msg;
         this.count = count;
+    }
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
     }
 
     public Integer getCode() {
@@ -45,21 +70,11 @@ public class JsonReasult<T> {
         this.msg = msg;
     }
 
-    public Integer getCount() {
+    public Long getCount() {
         return count;
     }
 
-    public void setCount(Integer count) {
+    public void setCount(Long count) {
         this.count = count;
-    }
-
-    @Override
-    public String toString() {
-        return "JsonReasult{" +
-                "code=" + code +
-                ", data=" + data +
-                ", msg='" + msg + '\'' +
-                ", count=" + count +
-                '}';
     }
 }

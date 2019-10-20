@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="layui/css/layui.css"/>
+    <script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery-1.12.2.min.js"></script>
+</head>
+<body>
+
+<form class="layui-form" id="add-form" lay-filter="example">
+
+    <input type="hidden" value="" id="rid"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名</label>
+        <div class="layui-input-block">
+
+            <input type="text" name="name" lay-verify="title" class="layui-input"  id="name" style="width: 300px">
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </div>
+
+</form>
+<script>
+
+    layui.use(['form'], function() {
+        var form = layui.form;
+
+        form.on('submit(demo1)', function(data){
+           var rid= $("#rid").val();
+           var name = $("#name").val();
+            $.ajax({
+                type: "post",
+                url: "role/updateRoleName.do",
+                data: {'rid':rid,'name':name},
+                dataType: "json",
+                success: function (res) {
+                  if (res.code == 0){
+                      layer.msg("success");
+                  }else {
+                      layer.msg("fail");
+                  }
+                  window.parent.location.reload();
+                }
+            });
+            return false;
+        });
+    });
+
+    $(function () {
+        var s = window.location.search;
+        var rid = s.substring(s.indexOf("=")+1,s.length);
+        $("#rid").val(rid);
+        $.ajax({
+            url:"role/findRoleById.do",
+            data:"rid="+rid,
+            dataType:"json",
+            success:function (res) {
+                if (res.code == 0){
+                    $("#name").val(res.data.name);
+                }else {
+                    alert("fail");
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

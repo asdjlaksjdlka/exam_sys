@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../layui/css/layui.css" />
+    <script type="text/javascript" src="../layui/layui.js" ></script>
+    <script type="text/javascript" src="../js/jquery-1.12.2.min.js"></script>
+</head>
+<body>
+<form class="layui-form" action="" lay-filter="example">
+    <div class="layui-form-item">
+        <label class="layui-form-label">名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="eName" lay-verify="cTitle" placeholder="请输入名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">科目：</label>
+        <div class="layui-input-block">
+            <select class="sName" name="sid" lay-filter="aihao" id="sid">
+                <option value="">请选择科目...</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">开始时间</label>
+        <div class="layui-input-block">
+            <input type="text" id="test1" name="beginTime" placeholder="请选择开始时间" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">结束时间</label>
+        <div class="layui-input-block">
+            <input type="text" id="test2" name="endTime" placeholder="请选择结束时间" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="addOne">确定</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script>
+    layui.use(['form','layedit','laydate'],function () {
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#test1'
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#test2'
+            ,type: 'datetime'
+        });
+
+        InitForm();
+        function InitForm() {
+            $.ajax({
+                type: 'post',
+                url: '../subject/list',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.data.length>0){
+                        $(data.data).each(function (index, item) {
+                            // alert(item.sid+item.sName)
+                            var html = "<option value=" + item.sid + ">" + item.sName + "</option>";
+                            // $(".sName").append('<option value="' + item.sid  + '" selected="">' + item.sName + '</option>');
+                            $("#sid").append(html);
+                        })
+                        //更新 lay-filter="test1" 所在容器内的全部表单状态
+                        form.render('select');
+                    } else {
+                        layer.msg("下拉数据加载失败。。。");
+                    }
+
+                }
+            })
+        }
+
+
+
+        form.on('submit(addOne)',function (data) {
+            $.ajax({
+                type:"post",
+                url:"../addTime.do",
+                data:data.field,
+                dataType:"json",
+                success:function (data) {
+                    if (data.code == 0) {
+                        layer.msg("添加成功!", {
+                            icon: 6,
+                            time: 500
+                        }, function () {
+                            var t = parent.layui.table;
+                            t.reload('exam');
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                        });
+                    } else {
+                        layer.msg(data.data);
+                    }
+                }
+            });
+            return false;
+        });
+
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="../js/layui/css/layui.css"/>
+    <script type="text/javascript" src="../js/layui/layui.js"></script>
+    <script type="text/javascript" src="../js/jquery-1.12.2.min.js"></script>
+
+
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin" id="examList">
+    <blockquote class="layui-elem-quote quoteBox">
+        <form class="layui-form">
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-normal addSpeaker_btn">添加</a>
+            </div>
+        </form>
+    </blockquote>
+
+    <table class="layui-hide" id="exam" lay-filter="exam"></table>
+
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+</div>
+<script>
+    layui.use(['laydate', 'laypage', 'layer', 'table', 'upload', 'element'], function () {
+        var laydate = layui.laydate
+            , laypage = layui.laypage
+            , layer = layui.layer
+            , table = layui.table
+            , upload = layui.upload
+            , element = layui.element
+        //执行一个 table 实例
+        table.render({
+            elem: '#exam'
+            , height: 420
+            , id: "exam"
+            , url: '../allExam.do'
+            , page: true
+            // ,toolbar: 'default'
+            , totalRow: true
+            , cols: [[
+                {type: 'checkbox'}
+                , {
+                    field: 'id', title: '序号', width: 90, sort: true, align: "center",
+                    templet: '<div><a href="/detail/{{d.id}}" class="layui-table-link">{{d.LAY_TABLE_INDEX+1}}</a></div>'
+                }
+                , {field: 'eid', title: '序号', width: 150, align: "center", hide: true}
+                , {field: 'eName', title: '名称', width: 150, align: "center"}
+        /*        , {
+                    field: 'sName', title: '科目', width: 150,
+                    templet: function (data) {
+                        return data.subject;
+                    }
+                }*/
+
+
+                , {field: 'beginTime', title: '开始时间', width: 300, sort: true, align: "center"}
+                , {field: 'endTime', title: '结束时间', width: 300, sort: true, align: "center"}
+                , {fixed: 'right', width: 165, align: 'center', toolbar: '#barDemo'}
+            ]]
+        });
+
+        table.on('tool(exam)', function (obj) {
+            var data = obj.data
+                , layEvent = obj.event;
+            if (layEvent === 'del') {
+                layer.confirm('确定删除吗?', function (index) {
+                    obj.del();
+                    layer.close(index);
+                    $.ajax({
+                        type: "get",
+                        url: "../delTime.do",
+                        data: {eid: data.eid},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.code == 0) {
+                                layer.msg("删除成功", {
+                                    icon: 6,
+                                    time: 500
+                                }, function () {
+                                    table.reload('exam')
+                                })
+                            } else {
+                                alert(data.info)
+                            }
+                        }
+                    })
+                });
+            } else if (layEvent === 'edit') {
+                layer.open({
+                    type: 2
+                    , title: '编辑信息'
+                    , area: ['700px', '400px']
+                    , content: 'updateExam.html?eid=' + data.eid
+                })
+            }
+        });
+        $(".addSpeaker_btn").click(function () {
+            var layer = layui.layer;
+            layer.open({
+                type: 2,
+                title: '添加考试信息',
+                shade: 0.8,
+                area: ['700px', '500px'],
+                content: 'addExam.html'
+            });
+
+        })
+    });
+</script>
+</body>
+</html>

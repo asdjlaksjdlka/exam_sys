@@ -197,13 +197,13 @@ public class PoiUtils {
                                     case 7:
 //                                        System.out.println(cellValue+"===++");
 
-                                        int subjectIndex = subjects.indexOf(new Subject(cellValue));
+//                                        int subjectIndex = subjects.indexOf(new Subject(cellValue));
                                        /* System.out.println(subjectIndex);
                                         System.out.println(new Subject(cellValue));*/
                                         /*indexOf是返回列表中首次出现指定元素的索引*/
                                         /*System.out.println("哈哈"+subjects.get(subjectIndex).getSid());
                                         System.out.println("呵呵"+subjects.get(subjectIndex));*/
-                                        choose.setSid(subjects.get(subjectIndex).getSid());
+//                                        choose.setSid(subjects.get(subjectIndex).getSid());
                                         break;
                                 }
                             }
@@ -299,8 +299,8 @@ public class PoiUtils {
                 row.createCell(0).setCellValue(brief.getBid());
                 row.createCell(1).setCellValue(brief.getbTitle());
                 row.createCell(2).setCellValue(brief.getbAnswer());
-                row.createCell(3).setCellValue(brief.getSubject().getsName());
-                row.createCell(4).setCellValue(brief.getbScore());
+//                row.createCell(3).setCellValue(brief.getSubject().getsName());
+//                row.createCell(4).setCellValue(brief.getbScore());
 
             }
             headers = new HttpHeaders();
@@ -365,15 +365,15 @@ public class PoiUtils {
                                         brief.setbAnswer(cellValue);
                                         break;
                                     case 3:
-                                        System.out.println(cellValue+"===++");
+//                                        System.out.println(cellValue+"===++");
 
-                                        int subjectIndex = subjects.indexOf(new Subject(cellValue));
+//                                        int subjectIndex = subjects.indexOf(new Subject(cellValue));
                                        /* System.out.println(subjectIndex);
                                         System.out.println(new Subject(cellValue));*/
                                         /*indexOf是返回列表中首次出现指定元素的索引*/
-                                        System.out.println("哈哈"+subjects.get(subjectIndex).getSid());
-                                        System.out.println("呵呵"+subjects.get(subjectIndex));
-                                        brief.setSid(subjects.get(subjectIndex).getSid());
+                                 /*       System.out.println("哈哈"+subjects.get(subjectIndex).getSid());
+                                        System.out.println("呵呵"+subjects.get(subjectIndex));*/
+//                                        brief.setSid(subjects.get(subjectIndex).getSid());
                                         break;
                                 }
                             }
@@ -382,7 +382,7 @@ public class PoiUtils {
                                 switch (k) {
 
                                     case 4:
-                                        brief.setbScore((int) cell.getNumericCellValue());
+//                                        brief.setbScore((int) cell.getNumericCellValue());
                                         break;
                                 }
                             }
@@ -470,8 +470,8 @@ public class PoiUtils {
                 row.createCell(0).setCellValue(judge.getJid());
                 row.createCell(1).setCellValue(judge.getjTitle());
                 row.createCell(2).setCellValue(judge.getjAnswer());
-                row.createCell(3).setCellValue(judge.getSubject().getsName());
-                row.createCell(4).setCellValue(judge.getjScore());
+//                row.createCell(3).setCellValue(judge.getSubject().getsName());
+//                row.createCell(4).setCellValue(judge.getjScore());
 
             }
             headers = new HttpHeaders();
@@ -536,15 +536,15 @@ public class PoiUtils {
                                         judge.setjAnswer(cellValue);
                                         break;
                                     case 3:
-                                        System.out.println(cellValue+"===++");
+//                                        System.out.println(cellValue+"===++");
 
-                                        int subjectIndex = subjects.indexOf(new Subject(cellValue));
+//                                        int subjectIndex = subjects.indexOf(new Subject(cellValue));
                                        /* System.out.println(subjectIndex);
                                         System.out.println(new Subject(cellValue));*/
                                         /*indexOf是返回列表中首次出现指定元素的索引*/
-                                        System.out.println("哈哈"+subjects.get(subjectIndex).getSid());
-                                        System.out.println("呵呵"+subjects.get(subjectIndex));
-                                        judge.setSid(subjects.get(subjectIndex).getSid());
+                                     /*   System.out.println("哈哈"+subjects.get(subjectIndex).getSid());
+                                        System.out.println("呵呵"+subjects.get(subjectIndex));*/
+//                                        judge.setSid(subjects.get(subjectIndex).getSid());
                                         break;
                                 }
                             }
@@ -553,7 +553,7 @@ public class PoiUtils {
                                 switch (k) {
 
                                     case 4:
-                                        judge.setjScore((int) cell.getNumericCellValue());
+//                                        judge.setjScore((int) cell.getNumericCellValue());
                                         break;
                                 }
                             }

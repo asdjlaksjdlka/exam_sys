@@ -1,7 +1,11 @@
 package com.qf.examsys.entity;
 
+
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 
+@Component
 public class Record implements Serializable {
 
     private Integer reid;
@@ -10,6 +14,35 @@ public class Record implements Serializable {
     private String uAnswer;
     private String rAnswer;
     private Integer eid;
+    private Integer sid;
+    private Integer rScore;
+    private Integer questionType;
+
+
+
+    public Integer getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(Integer questionType) {
+        this.questionType = questionType;
+    }
+
+    public Integer getrScore() {
+        return rScore;
+    }
+
+    public void setrScore(Integer rScore) {
+        this.rScore = rScore;
+    }
+
+    public Integer getSid() {
+        return sid;
+    }
+
+    public void setSid(Integer sid) {
+        this.sid = sid;
+    }
 
     public Integer getReid() {
         return reid;

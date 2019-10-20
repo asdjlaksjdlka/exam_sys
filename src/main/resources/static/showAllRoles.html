@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="layui/css/layui.css"/>
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+</head>
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                url: "role/findAllRoles.do",
+                dataType: "json",
+                type: "get",
+                success: function (returnData) {
+                    $(returnData.data).each(function (index, item) {
+                        // alert(item.sid+item.sName)
+                        var html = "<option value=" + item.rid + ">" + item.name + "</option>";
+                        $("#sid").append(html);
+                    })
+                }
+            });
+        });
+    </script>
+
+
+<body>
+
+        <div class="layui-input-inline">
+            <select name="rid" id="sid" >
+                <option value="">角色</option>
+            </select>
+        </div>
+
+        <div>
+            <button  onclick="setPrivilege()">保存</button>
+            <button  onclick="window.parent.location.reload()">关闭</button>
+        </div>
+
+    <script>
+
+      function setPrivilege() {
+          $.ajax({
+              url:"role/updateUserRole.do",
+              data:window.location.search.substring(1,window.location.search.length)+"&rid="+$("#sid").val(),
+              dataType:"json",
+              success:function (resData) {
+                  window.parent.location.reload();
+              }
+          })
+      }
+    </script>
+</body>
+
+</html>

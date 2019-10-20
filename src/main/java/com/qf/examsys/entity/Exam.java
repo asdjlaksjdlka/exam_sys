@@ -1,41 +1,34 @@
 package com.qf.examsys.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
 import java.util.Date;
 
-// 考试
-public class Exam {
-
-    private  Integer eId;
-
-    // 考试名
+public class Exam implements Serializable {
+    private Integer eid;
     private String eName;
-
-    // 开始时间
     private Date beginTime;
-
-    // 结束时间
     private Date endTime;
+    private Integer pid;
+    private Integer sid;
+    private Subject subject;
 
-    // 试卷
-    private Page page;
-
-    @Override
-    public String toString() {
-        return "Exam{" +
-                "eId=" + eId +
-                ", 考试名eName='" + eName + '\'' +
-                ", 开始时间beginTime=" + beginTime +
-                ", 结束时间endTime=" + endTime +
-                ", 试卷Page=" + page +
-                '}';
+    public Subject getSubject() {
+        return subject;
     }
 
-    public Integer geteId() {
-        return eId;
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
-    public void seteId(Integer eId) {
-        this.eId = eId;
+    public Integer getEid() {
+        return eid;
+    }
+
+    public void setEid(Integer eid) {
+        this.eid = eid;
     }
 
     public String geteName() {
@@ -46,27 +39,40 @@ public class Exam {
         this.eName = eName;
     }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     public Date getBeginTime() {
         return beginTime;
     }
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     public void setBeginTime(Date beginTime) {
         this.beginTime = beginTime;
     }
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     public Date getEndTime() {
         return endTime;
     }
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
-    public Page getPage() {
-        return page;
+    public Integer getPid() {
+        return pid;
     }
 
-    public void setPage(Page page) {
-        this.page = page;
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
+
+    public Integer getSid() {
+        return sid;
+    }
+
+    public void setSid(Integer sid) {
+        this.sid = sid;
     }
 }

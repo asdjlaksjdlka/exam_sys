@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.examsys.dao.ExamDao">
+    <resultMap id="examMap" type="com.qf.examsys.entity.Exam">
+        <id column="e_id" property="eid"></id>
+        <result column="e_name" property="eName"></result>
+        <result column="begin_time" property="beginTime"></result>
+        <result column="end_time" property="endTime"></result>
+        <result column="p_id" property="pid"></result>
+        <association property="subject" javaType="com.qf.examsys.entity.Subject">
+            <id property="sid" column="s_id"></id>
+            <result property="sName" column="s_name"></result>
+        </association>
+    </resultMap>
+    <select id="allExam" resultMap="examMap">
+        select te.e_name,te.begin_time,te.end_time,ts.s_name from t_exam te
+        LEFT JOIN t_subject ts ON ts.s_id=te.s_id
+    </select>
+    <insert id="addTime">
+        insert into exam_system.t_exam (e_name, begin_time, end_time,s_id) values (#{eName},#{beginTime},#{endTime},#{sid})
+    </insert>
+    <delete id="delTimeById">
+        delete from exam_system.t_exam where e_id = #{eid}
+    </delete>
+    <select id="findExamById" resultMap="examMap">
+        select * from exam_system.t_exam where  e_id = #{eid}
+    </select>
+    <update id="updExam">
+        update exam_system.t_exam set e_name = #{eName}, begin_time =#{beginTime}, end_time = #{endTime},s_id=#{sid} where e_id = #{eid}
+    </update>
+</mapper>

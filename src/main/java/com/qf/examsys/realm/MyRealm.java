@@ -22,8 +22,11 @@ public class MyRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-
-       return null;
+        String phone =(String) principalCollection.getPrimaryPrincipal();
+        List<String> perms = userService.findAllPerms(phone);
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        info.setStringPermissions(new HashSet<>(perms));
+        return info;
     }
 
     @Override

@@ -52,7 +52,7 @@ public class JudgeQuestionController {
     @PostMapping("/judgequestion/addOrUpdate")
     public JsonReasult addOrUpdateQuestion(Judge judge) {
 
-        System.out.println("哈哈"+judge);
+//        System.out.println("哈哈"+judge);
         if (judge.getJid() == null ||judge.getJid().equals("")) {
             Integer num = judgeQuestionService.addJudge(judge);
             return new JsonReasult(1, num);
@@ -74,9 +74,9 @@ public class JudgeQuestionController {
 
     @PostMapping("/judgequestion/deleteAll")
     public JsonReasult deleteAllBrief(Integer[] ids) {
-        for (int i = 0; i < ids.length; i++) {
+  /*      for (int i = 0; i < ids.length; i++) {
             System.out.println(ids[i]);
-        }
+        }*/
         Integer num = judgeQuestionService.deletAlljudge(ids);
         return new JsonReasult(1,num);
     }
@@ -102,7 +102,7 @@ public class JudgeQuestionController {
     public JsonReasult importEmp(MultipartFile file) {
 
         List<Subject> list = chooseQuestionService.findAllSubject();
-        System.out.println("list"+list);
+//        System.out.println("list"+list);
 
         List<Judge> judges = PoiUtils.importJudgeList(file, list);
 

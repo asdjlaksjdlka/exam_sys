@@ -1,5 +1,6 @@
 package com.qf.examsys.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.qf.examsys.dao.StatisticsDao;
 import com.qf.examsys.entity.*;
 import com.qf.examsys.service.StatisticsService;
@@ -15,21 +16,32 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Autowired
     private StatisticsDao statisticsDao;
     @Override
-    public List<Score> listPersonalScore(Integer eId,Integer sid, Integer uid) {
-        List<Score> scores = statisticsDao.listPersonalScore(eId,sid,uid);
+    public List<Score> listPersonalScore(Integer eid,Integer sid, Integer uid, Integer page, Integer limit) {
+        PageHelper.startPage(page,limit);
+        List<Score> scores = statisticsDao.listPersonalScore(eid,sid,uid);
         return scores;
     }
 
     @Override
-    public List<Apply> listApply(Integer uid, Integer eId, Integer sid, Date time) {
-        List<Apply> applies = statisticsDao.listApply(uid, eId, sid, time);
+    public List<Apply> listApply(Integer uid, Integer eid, Integer sid, Date time) {
+        List<Apply> applies = statisticsDao.listApply(uid, eid, sid, time);
         return applies;
     }
 
     @Override
-    public List<Subject> listSubject() {
-        List<Subject> subjects = statisticsDao.listSubject();
+    public List<Subject> listSubject(Integer sid) {
+        List<Subject> subjects = statisticsDao.listSubject(sid);
         return subjects;
+    }
+
+    @Override
+    public List<Exam> listExam(Integer eid) {
+        return statisticsDao.listExam(eid);
+    }
+
+    @Override
+    public List<User> listUser(Integer uid) {
+        return statisticsDao.listUser(uid);
     }
 
     @Override

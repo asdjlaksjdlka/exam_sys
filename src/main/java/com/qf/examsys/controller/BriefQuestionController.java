@@ -76,9 +76,9 @@ public class BriefQuestionController {
 
     @PostMapping("/briefquestion/deleteAll")
     public JsonReasult deleteAllBrief(Integer[] ids) {
-        for (int i = 0; i < ids.length; i++) {
+     /*   for (int i = 0; i < ids.length; i++) {
             System.out.println(ids[i]);
-        }
+        }*/
         Integer num = briefQuestionService.deletAllBrief(ids);
         return new JsonReasult(1,num);
     }
@@ -105,7 +105,7 @@ public class BriefQuestionController {
     public JsonReasult importEmp(MultipartFile file) {
 
         List<Subject> list = chooseQuestionService.findAllSubject();
-        System.out.println("list"+list);
+//        System.out.println("list"+list);
         List<Brief> briefs = PoiUtils.importBriefList(file,list);
         if (briefQuestionService.addBrief(briefs) == briefs.size()) {
             return new JsonReasult (1,"导入成功!");

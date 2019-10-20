@@ -211,7 +211,7 @@
                     </label>-->
                             </li>
                             <textarea rows="3" cols="108"
-                                      :name="'S'+'--'+short.bTitle+'--'+short.sid+'--'+short.bAnswer+'--'+short.bScore+'--null'" :id="'S'+index"
+                                      :name="'S'+'--'+short.bTitle+'--'+short.sid+'--'+short.bAnswer+'--'+short.bScore+'--'" :id="'S'+index"
                                       placeholder="请填写答案"></textarea>
                         </ul>
                         </li>
@@ -389,10 +389,10 @@
             var txt = $('#S' + i).attr("name");
             if (Sstr == "" || Sstr == null) {
                 //alert("简答题中第"+(i+1)+"题,不能为空！！！")
-                shortAnswer += txt + "&";
+                shortAnswer += txt + null+ "#&";
                 continue;
             }
-            shortAnswer += txt += Sstr += "&";
+            shortAnswer += txt += Sstr += "#&";
         }
 
         $.ajax({
@@ -451,7 +451,7 @@
                 var _this = this;
                 $.ajax({
                     type: "get",
-                    data: {"sid": 1, "uid": 3, "eid": 1},
+                    // data: {"sid": 1, "uid": 4, "eid": 1},
                     //url: "http://localhost:8080/examsys/getTestMapper.do?testTypeId=" + 55,
                     url: "../examsys/getTestMapper" + window.location.search,
                     dataType: "json",

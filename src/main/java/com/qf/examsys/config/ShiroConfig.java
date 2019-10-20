@@ -1,12 +1,18 @@
 package com.qf.examsys.config;
 
 
+import com.qf.examsys.filter.MyShiroLogoutFilter;
 import com.qf.examsys.realm.MyRealm;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.spring.LifecycleBeanPostProcessor;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.DependsOn;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
@@ -28,7 +34,7 @@ public class ShiroConfig {
         // 存放自定义的filter
         LinkedHashMap<String, Filter> filtersMap = new LinkedHashMap<>();
         //配置自定义登出 覆盖 logout 之前默认的LogoutFilter
-        //filtersMap.put("logout", MyLogOutFilter());
+        filtersMap.put("logout", MyLogOutFilter());
         shiroFilterFactoryBean.setFilters(filtersMap);
 
         filterChainDefinitionMap.put("/logout", "logout");
@@ -40,14 +46,12 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/login", "anon");
 
-        //perms访问资源，需要的权限，注意顺序问题
-        //filterChainDefinitionMap.put("/user/list","perms[rolelist]");
 
         filterChainDefinitionMap.put("/admin/**", "authc");
         filterChainDefinitionMap.put("/user/**", "authc");
 
         //必须放在所有权限设置的最后，匹配的是不满足前面匹配条件的资源
-        filterChainDefinitionMap.put("/**", "authc");
+        filterChainDefinitionMap.put("/**", "anon");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
 
@@ -68,5 +72,31 @@ public class ShiroConfig {
         // 设置密码匹配器
         // customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return customRealm;
+    }
+
+    @Bean
+    public static LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
+
+    @Bean
+    @DependsOn({"lifecycleBeanPostProcessor"})
+    public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+        advisorAutoProxyCreator.setProxyTargetClass(true);
+        return advisorAutoProxyCreator;
+    }
+
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
+        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+        advisor.setSecurityManager(securityManager());
+        return advisor;
+    }
+
+    @Bean
+    public LogoutFilter MyLogOutFilter(){
+        MyShiroLogoutFilter filter = new MyShiroLogoutFilter();
+        return filter;
     }
 }
