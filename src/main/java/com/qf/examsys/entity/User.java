@@ -8,6 +8,16 @@ public class User  implements Serializable {
     private String uPassword;
     private String uName;
     private String uStatus;
+    private Integer roId;
+
+
+    public Integer getRoId() {
+        return roId;
+    }
+
+    public void setRoId(Integer roId) {
+        this.roId = roId;
+    }
 
     private String roName;
 

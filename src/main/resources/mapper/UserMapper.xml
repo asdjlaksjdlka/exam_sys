@@ -4,15 +4,85 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.qf.examsys.dao.UserDao">
-    <resultMap id="user" type="com.qf.examsys.entity.User">
+    <resultMap id="userMap" type="com.qf.examsys.entity.User">
         <id column="u_id" property="uid"/>
         <result column="u_phone" property="uPhone"/>
         <result column="u_password" property="uPassword"/>
         <result column="u_name" property="uName"/>
-        <result column="status" property="uStatus"/>
-               <result column="ro_name" property="roName"/>
-
+        <result column="u_status" property="uStatus"/>
+        <result column="ro_id" property="roId"/>
     </resultMap>
+    <insert id="insert" parameterType="list">
+        insert into t_user(u_phone,u_password,u_name,ro_id) values(#{uPhone},#{uPassword},#{uName},#{roId})
+    </insert>
+    <!--<insert id="insertSelective" parameterType="com.qf.examsys.entity.User" >-->
+        <!--insert into t_user-->
+        <!--<trim prefix="(" suffix=")" suffixOverrides="," >-->
+
+            <!--<if test="u_phone != null" >-->
+                <!--uPhone,-->
+            <!--</if>-->
+            <!--<if test="u_password != null" >-->
+                <!--uPassword,-->
+            <!--</if>-->
+            <!--<if test="u_name != null" >-->
+                <!--uName,-->
+            <!--</if>-->
+            <!--<if test="ro_id != null" >-->
+                <!--roId,-->
+            <!--</if>-->
+
+
+
+        <!--</trim>-->
+        <!--<trim prefix="values (" suffix=")" suffixOverrides="," >-->
+
+            <!--<if test="u_phone != null" >-->
+                <!--#{uPhone},-->
+            <!--</if>-->
+            <!--<if test="u_password != null" >-->
+                <!--#{uPassword},-->
+            <!--</if>-->
+            <!--<if test="u_name != null" >-->
+                <!--#{uName},-->
+            <!--</if>-->
+            <!--<if test="ro_id != null" >-->
+                <!--#{roId},-->
+            <!--</if>-->
+
+        <!--</trim>-->
+    <!--</insert>-->
+    <select id="login" parameterType="String" resultMap="userMap">
+        select * from t_user where u_phone =#{uphone}
+    </select>
+
+    <select id="findByUserId" resultMap="userMap">
+        select * from t_user where u_id=#{uId}
+    </select>
+
+    <update id="updatePersonPassword" parameterType="com.qf.examsys.entity.User">
+        update t_user set u_password=#{uPassword} where u_id = #{uid}
+    </update>
+
+    <!--    通过手机号码预注册   by: imlee   -->
+    <insert id="signUpFirst" parameterType="string">
+        insert into t_user (u_phone) values (#{uPhone})
+    </insert>
+
+    <!--    补充 用户名，密码   by: imlee   -->
+    <update id="signUp" parameterType="list">
+        update t_user set u_name = #{u_Name}, u_password = #{uPassword} where u_phone = #{uPhone}
+    </update>
+
+    <!--  通过手机号码登录  by: imlee   -->
+    <select id="signInByTelephoneNumber" parameterType="String" resultMap="userMap">
+    select * from t_user where  u_phone = #{uPhone}
+  </select>
+
+    <!--  通过手机号码重置密码  by: imlee -->
+    <update id="resetPassword" parameterType="list">
+    update t_user set u_password = #{uPassword} where u_phone = #{uPhone}
+  </update>
 
     <select id="findAllPerms" resultType="string">
         select p_desc from t_perm p inner join t_role_perm rp on p.pe_id = rp.pe_id
@@ -20,7 +90,7 @@
             inner join t_user u on ur.u_id = u.u_id
             where u.u_phone = #{phone} and p.p_desc != ''
     </select>
-    
+
     <select id="findAllUserList" resultMap="user">
         select u.u_id,u.u_phone,u.u_name,u.status,r.ro_name
                 from t_user u inner join t_user_role ur on ur.u_id = u.u_id

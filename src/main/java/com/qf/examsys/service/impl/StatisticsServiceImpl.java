@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
 
-    @Autowired
+    @Autowired(required = false)
     private StatisticsDao statisticsDao;
     @Override
     public List<Score> listPersonalScore(Integer eid,Integer sid, Integer uid, Integer page, Integer limit) {
