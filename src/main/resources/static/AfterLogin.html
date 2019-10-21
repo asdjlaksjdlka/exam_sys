@@ -92,6 +92,11 @@
                         <input type="password" name="password" required lay-verify="required|password" placeholder="请输入密码" autocomplete="off" class="layui-input">
                     </div>
                 </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-bg-cyan" lay-submit lay-filter="formDemo">登陆</button>
+                    </div>
+                </div>
                 <div>
                 <a href="http://localhost:8080/examsys/updatepassword.html" class="font-set">忘记密码?</a>  <a href="http://localhost:8080/examsys/addSpeaker.html" class="font-set">立即注册</a>
             </div>
@@ -112,11 +117,7 @@
                                     </div>
                               </div> -->
 
-                <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <button class="layui-btn layui-bg-cyan" lay-submit lay-filter="formDemo">登陆</button>
-                    </div>
-                </div>
+
             </div>
         </form>
         <script type="text/javascript" src="layui/layui.js"></script>
@@ -159,7 +160,7 @@
                             if(data.code == 1){
                                 localStorage.setItem("user",JSON.stringify(data.info));
                                 var c = localStorage.getItem("user");
-                                window.location.href = "main.html";
+                                window.location.href = "";
                             } else {
                                 alert(data.info)
                             }
