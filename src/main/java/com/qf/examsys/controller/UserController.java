@@ -1,30 +1,20 @@
 package com.qf.examsys.controller;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
 import com.qf.examsys.common.JsonReasult;
 import com.qf.examsys.entity.User;
 import com.qf.examsys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.qf.examsys.common.JsonReasult;
 import com.qf.examsys.entity.Score;
-import com.qf.examsys.entity.User;
-import com.qf.examsys.service.UserService;
 import com.qf.examsys.utils.SendSms;
-import org.springframework.beans.NotReadablePropertyException;import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import springfox.documentation.spring.web.json.Json;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Controller
@@ -214,10 +204,11 @@ public class UserController {
                 return new JsonReasult(0, "验证码输入有误，请重新输入！");
             }
         }
-    @Autowired
-    UserService userService;
+        return new JsonReasult(1, telephoneNumber);
 
-    @RequestMapping("userList.do")
+    }
+
+    @RequestMapping("/userList.do")
     @ResponseBody
     public JsonReasult userList(Integer page,Integer limit){
        List<User> list = userService.findAllUserList(page,limit);
@@ -232,9 +223,8 @@ public class UserController {
         return new JsonReasult(0,"");
 
     }
-}
-        return new JsonReasult(1, telephoneNumber);
-    }
+
+
 
     /**
      *          注册账号第二步：设置用户名和密码

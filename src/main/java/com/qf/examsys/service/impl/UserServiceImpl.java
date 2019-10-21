@@ -76,10 +76,7 @@ public class UserServiceImpl implements UserService {
         return userDao.signUp(username,password,telephoneNumber);
     }
 
-public class UserServiceImpl implements UserService {
 
-    @Autowired(required = false)
-    UserDao userDao;
 
     @Override
     public List<String> findAllPerms(String phone ) {

@@ -91,7 +91,7 @@
             where u.u_phone = #{phone} and p.p_desc != ''
     </select>
 
-    <select id="findAllUserList" resultMap="user">
+    <select id="findAllUserList" resultMap="userMap">
         select u.u_id,u.u_phone,u.u_name,u.status,r.ro_name
                 from t_user u inner join t_user_role ur on ur.u_id = u.u_id
 				INNER JOIN t_role r on r.ro_id = ur.ro_id
@@ -102,7 +102,7 @@
         update t_user set status = #{status} where u_id = #{uid}
     </update>
 
-    <select id="findUserById1" resultMap="user">
+    <select id="findUserById1" resultMap="userMap">
         select * from t_user where u_id = #{uid};
     </select>
 

@@ -83,13 +83,13 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">手机号</label>
                     <div class="layui-input-block">
-                        <input type="text" name="username" required  lay-verify="required|username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                        <input type="text" name="uPhone" required  lay-verify="required|username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">密 &nbsp;&nbsp;码</label>
                     <div class="layui-input-inline">
-                        <input type="password" name="password" required lay-verify="required|password" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                        <input type="password" name="uPassword" required lay-verify="required|password" placeholder="请输入密码" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -153,14 +153,14 @@
 
                     $.ajax({
                         type:"post",
-                        url:"login",
+                        url:"user/login",
                         data:data.field,
                         dataType:"json",
                         success:function(data){
                             if(data.code == 1){
                                 localStorage.setItem("user",JSON.stringify(data.info));
                                 var c = localStorage.getItem("user");
-                                window.location.href = "";
+                                window.location.href = "after/showUserManage.html";
                             } else {
                                 alert(data.info)
                             }
