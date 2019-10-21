@@ -102,6 +102,32 @@
 
 
 
+    <!--查询科目-->
+    <select id="listSubject" resultMap="subject">
+        select * from t_subject
+        <if test="sid != null and sid != ''">
+           where s_id = #{sid}
+        </if>
+    </select>
+
+    <!--查询考试-->
+    <select id="listExam" resultMap="exam">
+        select * from t_exam
+        <if test="eid != null and eid != ''">
+          where   t_exam.e_id = #{eid}
+        </if>
+    </select>
+
+    <!--查询用户-->
+    <select id="listUser" resultMap="user">
+        select * from t_user
+        <if test="uid != null and uid != ''">
+           where  t_user.u_id = #{uid}
+        </if>
+    </select>
+
+
+
    <!-- 查询学生成绩-->
     <select id="listPersonalScore" resultMap="score">
         SELECT
@@ -190,11 +216,6 @@
             ORDER BY t_apply.apply_id desc
 
         </where>
-    </select>
-
-    <!--查询科目-->
-    <select id="listSubject" resultMap="subject">
-        select * from t_subject
     </select>
 
     <!--按考试进行考试人数统计-->
