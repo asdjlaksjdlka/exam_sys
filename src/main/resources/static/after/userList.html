@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="layui/css/layui.css"/>
-    <script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/jquery-1.12.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../layui/css/layui.css"/>
+    <script src="../layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/jquery-1.12.2.min.js"></script>
 </head>
 <body>
 <table class="layui-hide" id="demo" lay-filter="test"></table>
@@ -36,7 +36,7 @@
         table.render({
             elem: "#demo"
             ,height: 420
-            ,url: "user/userList.do" //数据接口
+            ,url: "../user/userList.do" //数据接口
             ,title: '用户表'
             ,page: true //开启分页
             //,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
@@ -93,7 +93,7 @@
 
             $.ajax({
                 type:"get",
-                url:"user/updateUserStatus.do",
+                url:"../user/updateUserStatus.do",
                 data:{"uid" :uid,"status":status },
                 dataType:"json",
                 beforeSend:function(){

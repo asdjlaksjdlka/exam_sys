@@ -8,37 +8,37 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Insert title here</title>
     <!-- 引入JQuery库 start -->
-    <script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-1.12.2.min.js"></script>
     <!-- 引入JQuery库 end -->
-    <link rel="stylesheet" href="css/zTreeStyle/zTreeStyle.css" type="text/css">
-    <script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
-    <script type="text/javascript" src="js/jquery.ztree.core.js"></script>
-    <script type="text/javascript" src="js/jquery.ztree.excheck.js"></script>
+    <link rel="stylesheet" href="../css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <script type="text/javascript" src="../js/jquery-1.12.2.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="../js/jquery.ztree.excheck.js"></script>
 </head>
 
 <script>
     var setting =
-    {
-    check: {
-        enable: true
-    },
-        data: {
-        simpleData: {
-            enable: true
-        }
-    }
-    };
+        {
+            check: {
+                enable: true
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
     //查找所有权限，然后建树
     var zNodes;
     $.ajax({
         type: "post",
-        url: "findAllPermissions.do",
+        url: "../findAllPermissions.do",
         dataType: "json",
         success: function (data) {
             zNodes = data.data;
             $.fn.zTree.init($("#treeDemo"), setting, zNodes);
             //获取已有权限，绑定到树上
-           getChecked();
+            getChecked();
         }
     });
 
@@ -71,7 +71,7 @@
     function getChecked() {
 
         $.ajax({
-            url: "showUserPermissions.do",
+            url: "../showRolePermissions.do",
             data: window.location.search.substring(1,window.location.search.length),
             dataType: "json",
             success: function (data) {
@@ -95,7 +95,7 @@
             });
             $.ajax({
                 type: "post",
-                url: "updatePermissions.do",
+                url: "updateRolePerm.do",
                 data: "str="+str+"&"+window.location.search.substring(1,window.location.search.length),
                 dataType: "json",
                 success: function (data) {
@@ -108,9 +108,9 @@
 </script>
 <body>
 <div class="content_wrap" style="margin-left: 150px">
-<!--    //角色id，用于修改对应角色的权限    -->
-<!--    <input  type="text" name="rid" id="rid" required  lay-verify="required"  th:value="${rid}" autocomplete="off" style="width: 240px" class="layui-input" th:type="hidden">    -->
-<!--    //用于权限展示    -->
+    <!--    //角色id，用于修改对应角色的权限    -->
+    <!--    <input  type="text" name="rid" id="rid" required  lay-verify="required"  th:value="${rid}" autocomplete="off" style="width: 240px" class="layui-input" th:type="hidden">    -->
+    <!--    //用于权限展示    -->
     <div class="zTreeDemoBackground left" >
         <ul id="treeDemo" class="ztree"></ul>
     </div>

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="layui/css/layui.css"/>
-    <script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/jquery-1.12.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../layui/css/layui.css"/>
+    <script src="../layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/jquery-1.12.2.min.js"></script>
 </head>
 <body>
 
@@ -37,7 +37,7 @@
            var name = $("#name").val();
             $.ajax({
                 type: "post",
-                url: "role/updateRoleName.do",
+                url: "../role/updateRoleName.do",
                 data: {'rid':rid,'name':name},
                 dataType: "json",
                 success: function (res) {
@@ -58,7 +58,7 @@
         var rid = s.substring(s.indexOf("=")+1,s.length);
         $("#rid").val(rid);
         $.ajax({
-            url:"role/findRoleById.do",
+            url:"../role/findRoleById.do",
             data:"rid="+rid,
             dataType:"json",
             success:function (res) {
