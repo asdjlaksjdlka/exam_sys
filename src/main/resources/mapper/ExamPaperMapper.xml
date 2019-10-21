@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.examsys.dao.ExamPaperDao">
+
+    <resultMap id="record" type="com.qf.examsys.entity.Record">
+        <id column="re_id" property="reid"></id>
+        <result column="u_id" property="uid"></result>
+        <result column="title" property="title"></result>
+        <result column="u_answer" property="uAnswer"></result>
+        <result column="r_answer" property="rAnswer"></result>
+    </resultMap>
+
+    <select id="findExamPaperByUid" parameterType="list" resultMap="record">
+
+        select
+        u_id
+        from t_record
+        WHERE state= 1 in(
+        <foreach item="item" index="index" collection="uid1" open="(" separator="," close=")">
+        #{item})
+        </foreach>
+
+    </select>
+
+</mapper>
