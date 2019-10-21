@@ -78,7 +78,6 @@ public class UserController {
     }
 
 
-
     //重置个人密码
     @CrossOrigin
     @RequestMapping("/updatePersonPassword")

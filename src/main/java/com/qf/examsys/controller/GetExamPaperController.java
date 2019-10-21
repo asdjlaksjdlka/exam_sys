@@ -60,10 +60,9 @@ public class GetExamPaperController {
 
         return new JsonReasult(1, questionMap);
     }*/
-
     @RequestMapping("/examsys/getTestMapper")
     @ResponseBody
-    public HashMap<String, List> GetExamPaper(Integer eid,Integer sid) {
+    public HashMap<String, List> GetExamPaper(Integer eid, Integer sid) {
 
         //HashMap<String, List> questionMap = getExamPaperService.makePaper(sid, uid, eid);
         //HashMap<String, List> questionMap1 = (HashMap) redisTemplate.opsForHash().get(sid + uid + eid, uid);

@@ -74,7 +74,7 @@ public class SendSms {
     }
 
     public static void main(String[] args) {
-        SendSms.sendMessage("13526584396");
+        SendSms.sendMessage("15538079781");
     }
 }
 

@@ -64,7 +64,7 @@
         form.on('submit(demo1)', function (data) {
 
            var selcectdata =$("#test3").val();
-           alert(selcectdata);
+           // alert(selcectdata);
             $.ajax({
                 type: "post",
                 url: "../examsys/makeTestMapper",
@@ -76,7 +76,7 @@
                         window.location.href="ExamMapper.html?eid="+selcectdata;
                         // alert(data.msg);
                     } else {
-                        alert(data.info);
+                        alert(data.msg);
                     }
                 }
             })
