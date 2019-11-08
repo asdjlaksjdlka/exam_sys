@@ -15,7 +15,6 @@ public class ExamsysApplicationTests {
     @Test
     public void contextLoads() {
 
-
     }
 
 }

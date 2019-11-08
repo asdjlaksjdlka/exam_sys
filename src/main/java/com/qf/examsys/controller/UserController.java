@@ -4,6 +4,10 @@ import com.github.pagehelper.Page;
 import com.qf.examsys.common.JsonReasult;
 import com.qf.examsys.entity.User;
 import com.qf.examsys.service.UserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.qf.examsys.entity.Score;
 import com.qf.examsys.utils.SendSms;
@@ -11,8 +15,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.concurrent.TimeUnit;
@@ -27,7 +31,7 @@ public class UserController {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    //登录
+  /*  //登录
     @CrossOrigin
     @RequestMapping("/login")
     @ResponseBody
@@ -40,41 +44,61 @@ public class UserController {
             return new JsonReasult(0,"账号或者密码错误，请重试");
         }
 
+    }*/
+
+    //使用shiro登录
+    @CrossOrigin
+    @RequestMapping("/login")
+    @ResponseBody
+    public JsonReasult login(String uPhone, String uPassword) {
+        //存储输入的用户名密码
+
+        UsernamePasswordToken token = new UsernamePasswordToken(uPhone, uPassword);
+        //主体对象
+        Subject subject = SecurityUtils.getSubject();
+        User user = userService.login(uPhone);
+
+        try {
+            // 登陆判断
+            subject.login(token);
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+            return new JsonReasult(0, "账号或者密码错误，请重试");
+        }
+        return new JsonReasult(1,user);
     }
 
     //注册学生
     @CrossOrigin
     @RequestMapping("/addUser")
     @ResponseBody
-    public JsonReasult insert(User user){
+    public JsonReasult insert(User user) {
         //添加用户
 
         user.setRoId(1);
         userService.insert(user);
-        return new JsonReasult(1,"注册成功");
+        return new JsonReasult(1, "注册成功");
     }
-
 
 
     //注册老师，管理员给老师注册
     @CrossOrigin
     @RequestMapping("/addTeacher")
     @ResponseBody
-    public JsonReasult insertTeacher(User user){
-                user.setRoId(2);
-                userService.insert(user);
-                return new JsonReasult(1, "注册成功");
+    public JsonReasult insertTeacher(User user) {
+        user.setRoId(2);
+        userService.insert(user);
+        return new JsonReasult(1, "注册成功");
     }
-
 
 
     //通过id查看用户个人信息
     @CrossOrigin
     @RequestMapping("/findUserById.do")
     @ResponseBody
-    public JsonReasult findUserById(Integer uid){
+    public JsonReasult findUserById(Integer uid) {
         User u = userService.findByUserId(uid);
-        return new JsonReasult(1,u);
+        return new JsonReasult(1, u);
     }
 
 
@@ -82,13 +106,13 @@ public class UserController {
     @CrossOrigin
     @RequestMapping("/updatePersonPassword")
     @ResponseBody
-    public JsonReasult updatePersonPassword(Integer uid,String uPassword){
+    public JsonReasult updatePersonPassword(Integer uid, String uPassword) {
 //        System.out.println(uid);
         User user = userService.findByUserId(uid);
 //        System.out.println(user);
         user.setuPassword(uPassword);
         userService.updatePersonPassword(user);
-        return new JsonReasult(1,"修改成功");
+        return new JsonReasult(1, "修改成功");
 
     }
 
@@ -97,27 +121,28 @@ public class UserController {
     @CrossOrigin    //解决跨域问题
     @RequestMapping("/selectScoreById")
     @ResponseBody
-    public JsonReasult selectScoreById(Integer uid){
+    public JsonReasult selectScoreById(Integer uid) {
         List<Score> scores = userService.selectScoreById(uid);
-        return new JsonReasult(1,scores);
+        return new JsonReasult(1, scores);
     }
 
     /**
      * 获取短信验证码
-     * @param    uPhone 用户填写手机号
-     * @return  验证码发送成功提示
+     *
+     * @param uPhone 用户填写手机号
+     * @return 验证码发送成功提示
      */
     @RequestMapping("/getCode.do")
-    public JsonReasult getCode(String uPhone){
+    public JsonReasult getCode(String uPhone) {
 
         //判断是否填写手机号
-        if (uPhone == null){
+        if (uPhone == null) {
             //手机号为空，返回失败提示
-            return new JsonReasult(0,"请输入手机号");
+            return new JsonReasult(0, "请输入手机号");
         }
         //手机号是否合法
-        if (!uPhone.matches("^[1-9a-zA-Z]{3,12}$")){
-            return new JsonReasult(0,"手机号不合法，请重新输入，，");
+        if (!uPhone.matches("^[1-9a-zA-Z]{3,12}$")) {
+            return new JsonReasult(0, "手机号不合法，请重新输入，，");
         }
         //将用的短信验证码保存到redis中
         String validateCode = SendSms.sendMessage(uPhone);
@@ -137,11 +162,11 @@ public class UserController {
     }
 
     /**
-     *          注册账号时，在用户输入用户名之后，输入框失去焦点后立即查询数据库中是否存在此用户名
+     * 注册账号时，在用户输入用户名之后，输入框失去焦点后立即查询数据库中是否存在此用户名
      *
-     * @Author imlee
      * @param username
-     * @return      返回查询结果、提示信息
+     * @return 返回查询结果、提示信息
+     * @Author imlee
      */
     @RequestMapping("/checkName.do")
     public JsonReasult checkName(String username) {
@@ -163,13 +188,12 @@ public class UserController {
     }
 
     /**
-     *          注册账号第一步：使用手机号码进行预注册
+     * 注册账号第一步：使用手机号码进行预注册
      *
-     * @Author  imlee
-     *
-     * @param telephoneNumber   用户填写的电话号码
-     * @param telephoneCode     短信验证码
+     * @param telephoneNumber 用户填写的电话号码
+     * @param telephoneCode   短信验证码
      * @return
+     * @Author imlee
      */
     @RequestMapping("/signUpFirst.do")
     public JsonReasult signUp(String telephoneNumber, String telephoneCode) {
@@ -209,31 +233,30 @@ public class UserController {
 
     @RequestMapping("/userList.do")
     @ResponseBody
-    public JsonReasult userList(Integer page,Integer limit){
-       List<User> list = userService.findAllUserList(page,limit);
+    public JsonReasult userList(Integer page, Integer limit) {
+        List<User> list = userService.findAllUserList(page, limit);
         long total = ((Page) list).getTotal();
-        return new JsonReasult(0,list,"",total);
+        return new JsonReasult(0, list, "", total);
     }
 
     @RequestMapping("/updateUserStatus.do")
     @ResponseBody
-    public JsonReasult updateUserStatus(Integer uid,Integer status){
-        userService.updateUserStatus(uid,status);
-        return new JsonReasult(0,"");
+    public JsonReasult updateUserStatus(Integer uid, Integer status) {
+        userService.updateUserStatus(uid, status);
+        return new JsonReasult(0, "");
 
     }
 
 
-
     /**
-     *          注册账号第二步：设置用户名和密码
+     * 注册账号第二步：设置用户名和密码
      *
-     * @Author  imlee
-     * @param username          用户填写的用户名
-     * @param password          用户填写的密码
-     * @param telephoneNumber   用户填写的电话号码
-     * @param validate          用户填写的验证码
+     * @param username        用户填写的用户名
+     * @param password        用户填写的密码
+     * @param telephoneNumber 用户填写的电话号码
+     * @param validate        用户填写的验证码
      * @return
+     * @Author imlee
      */
     @RequestMapping("/signUp.do")
     public JsonReasult signUp(String username, String password, String telephoneNumber, String validate) {
@@ -271,17 +294,16 @@ public class UserController {
     }
 
     /**
-     *      登录方法    1.使用账号 + 密码 + 文字验证码登录
-     *                 2.使用手机号码 + 短信验证码登录
+     * 登录方法    1.使用账号 + 密码 + 文字验证码登录
+     * 2.使用手机号码 + 短信验证码登录
      *
-     * @Author  imlee
-     *
-     * @param username          用户名
-     * @param password          密码
-     * @param validate          验证码
-     * @param telephoneNumber   手机号码
-     * @param telephoneCode     短信验证码
-     * @return                  供前台使用的 Json 数据
+     * @param username        用户名
+     * @param password        密码
+     * @param validate        验证码
+     * @param telephoneNumber 手机号码
+     * @param telephoneCode   短信验证码
+     * @return 供前台使用的 Json 数据
+     * @Author imlee
      */
     @RequestMapping("/signIn.do")
     public JsonReasult signIn(String username, String password, String validate, String telephoneNumber, String telephoneCode) {
@@ -350,12 +372,12 @@ public class UserController {
     }
 
     /**
-     *          重置密码：第一步，查询手机号码是否存在
+     * 重置密码：第一步，查询手机号码是否存在
      *
-     * @Author  imlee
-     * @param telephoneNumber   手机号码
-     * @param telephoneCode     短信验证码
+     * @param telephoneNumber 手机号码
+     * @param telephoneCode   短信验证码
      * @return
+     * @Author imlee
      */
     @RequestMapping("/resetPasswordFirst.do")
     public JsonReasult resetPasswordFirst(String telephoneNumber, String telephoneCode) {
@@ -386,13 +408,13 @@ public class UserController {
     }
 
     /**
-     *          重置密码：第二步，修改密码
+     * 重置密码：第二步，修改密码
      *
-     * @Author imlee
-     * @param password          新密码
-     * @param validate          验证码
-     * @param telephoneNumber   手机号码
+     * @param password        新密码
+     * @param validate        验证码
+     * @param telephoneNumber 手机号码
      * @return
+     * @Author imlee
      */
     @RequestMapping("/resetPassword.do")
     public JsonReasult resetPassword(String password, String validate, String telephoneNumber) {

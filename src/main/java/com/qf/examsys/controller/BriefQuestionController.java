@@ -7,6 +7,7 @@ import com.qf.examsys.entity.Subject;
 import com.qf.examsys.service.BriefQuestionService;
 import com.qf.examsys.service.ChooseQuestionService;
 import com.qf.examsys.utils.PoiUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,8 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.HashMap;
 import java.util.List;
 
-@Controller
-@ResponseBody
+@RestController
 public class BriefQuestionController {
 
     @Autowired
@@ -29,6 +29,7 @@ public class BriefQuestionController {
      * 简答题控制区
      * @return
      */
+    @RequiresPermissions("import:question")
     @RequestMapping("/briefquestion/list")
     public JsonReasult findAllBrief(Integer page, Integer limit, String bTitle, Integer sid) {
 

@@ -60,6 +60,10 @@
         select * from t_user where u_id=#{uId}
     </select>
 
+    <select id="findByPhone" resultMap="userMap">
+        select * from t_user where u_phone=#{uPhone}
+    </select>
+
     <update id="updatePersonPassword" parameterType="com.qf.examsys.entity.User">
         update t_user set u_password=#{uPassword} where u_id = #{uid}
     </update>

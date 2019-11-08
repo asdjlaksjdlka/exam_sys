@@ -5,12 +5,14 @@ import com.qf.examsys.dao.BriefQuestionDao;
 import com.qf.examsys.dao.ChooseQuestionDao;
 import com.qf.examsys.entity.Brief;
 import com.qf.examsys.service.BriefQuestionService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
+@RequiresPermissions("import:question")
 @Service
 public class BriefQuestionServiceImpl implements BriefQuestionService {
 

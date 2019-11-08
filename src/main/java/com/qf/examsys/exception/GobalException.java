@@ -1,16 +1,16 @@
 package com.qf.examsys.exception;
 
+import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.naming.AuthenticationException;
 
 @ControllerAdvice
 public class GobalException {
 
-    @ExceptionHandler(AuthenticationException.class)
-    public String notPermsException(AuthenticationException ae){
+    @ExceptionHandler(AuthorizationException.class)
+    public String notPermsException(AuthorizationException ae){
         //跳转资源
-        return "notPerms";
+        return "redirect:/noPerm.html";
     }
 }

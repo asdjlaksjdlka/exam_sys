@@ -11,6 +11,8 @@ import org.apache.ibatis.annotations.Param;
 
 public interface UserDao {
 
+    //授权用
+    public User findByPhone(String phone);
 
     List<String> findAllPerms(String phone);
 

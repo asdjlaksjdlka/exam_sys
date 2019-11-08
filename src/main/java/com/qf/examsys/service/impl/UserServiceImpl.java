@@ -25,6 +25,11 @@ public class UserServiceImpl implements UserService {
     @Autowired(required = false)
     StatisticsDao statisticsDao;
 
+    @Override
+    public User findUserByPhone(String phone) {
+        return userDao.findByPhone(phone);
+    }
+
 
     @Override
     public void insert(User user) {
@@ -85,8 +90,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAllUserList(Integer page,Integer limit) {
-        System.out.println(page+"sssss");
-        System.out.println(limit+"aaaaa");
+      /*  System.out.println(page+"sssss");
+        System.out.println(limit+"aaaaa");*/
         PageHelper.startPage(page,limit);
         List<User> list = userDao.findAllUserList();
 

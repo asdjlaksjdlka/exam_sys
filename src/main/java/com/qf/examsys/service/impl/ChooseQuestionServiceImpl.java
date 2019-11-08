@@ -5,12 +5,13 @@ import com.qf.examsys.dao.ChooseQuestionDao;
 import com.qf.examsys.entity.Choose;
 import com.qf.examsys.entity.Subject;
 import com.qf.examsys.service.ChooseQuestionService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-
+@RequiresPermissions("import:question")
 @Service
 public class ChooseQuestionServiceImpl implements ChooseQuestionService {
 

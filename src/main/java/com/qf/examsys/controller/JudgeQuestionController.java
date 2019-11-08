@@ -8,6 +8,7 @@ import com.qf.examsys.entity.Subject;
 import com.qf.examsys.service.ChooseQuestionService;
 import com.qf.examsys.service.JudgeQuestionService;
 import com.qf.examsys.utils.PoiUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ public class JudgeQuestionController {
     @Autowired
     private ChooseQuestionService chooseQuestionService;
 
+    @RequiresPermissions("import:question")
     @RequestMapping("/judgequestion/list")
     public JsonReasult findAllJudge(Integer page, Integer limit, String jTitle, Integer sid){
 

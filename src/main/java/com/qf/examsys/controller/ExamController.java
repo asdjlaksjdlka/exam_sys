@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 public class ExamController {
+
     @Autowired
     private ExamService examService;
 

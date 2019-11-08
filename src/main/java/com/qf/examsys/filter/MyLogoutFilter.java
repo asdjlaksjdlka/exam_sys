@@ -6,8 +6,7 @@ import org.apache.shiro.web.filter.authc.LogoutFilter;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-public class MyShiroLogoutFilter extends LogoutFilter {
-
+public class MyLogoutFilter extends LogoutFilter {
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
         // 获取主体对象
@@ -22,7 +21,4 @@ public class MyShiroLogoutFilter extends LogoutFilter {
         issueRedirect(request,response,redirectUrl);
         return false;
     }
-
-
-
 }

@@ -4,12 +4,14 @@ import com.github.pagehelper.PageHelper;
 import com.qf.examsys.dao.JudgeQuestionDao;
 import com.qf.examsys.entity.Judge;
 import com.qf.examsys.service.JudgeQuestionService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
+@RequiresPermissions("import:question")
 @Service
 public class JudgeQuestionServiceImpl implements JudgeQuestionService {
 

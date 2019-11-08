@@ -1,6 +1,5 @@
 package com.qf.examsys.controller;
 
-import com.qf.examsys.common.JsonReasult;
 import com.qf.examsys.service.ApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

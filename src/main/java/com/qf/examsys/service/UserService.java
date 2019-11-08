@@ -12,6 +12,10 @@ import com.qf.examsys.entity.User;
 import java.util.List;
 
 public interface UserService {
+
+    //授权
+    public User findUserByPhone(String name);
+
     void insert(User user);
     int insert(String uPhone);
     User login(String uPhone);

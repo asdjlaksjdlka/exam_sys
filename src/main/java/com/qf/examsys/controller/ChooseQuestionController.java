@@ -6,6 +6,7 @@ import com.qf.examsys.entity.Choose;
 import com.qf.examsys.entity.Subject;
 import com.qf.examsys.service.ChooseQuestionService;
 import com.qf.examsys.utils.PoiUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
-
 
 @Controller
 @ResponseBody
@@ -36,7 +36,7 @@ public class ChooseQuestionController {
 //        System.out.println("选择题list" + list.size());
         return new JsonReasult(1, list);
     }
-
+    @RequiresPermissions("import:question")
     @RequestMapping("/choosequestion/list")
     public JsonReasult findAllChoose(Integer page, Integer limit, String cTitle, Integer sid) {
 
@@ -119,5 +119,4 @@ public class ChooseQuestionController {
         }
         return new JsonReasult(0,"导入失败!");
     }
-
 }
