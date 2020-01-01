@@ -19,9 +19,9 @@ public class BriefQuestionServiceImpl implements BriefQuestionService {
     @Autowired(required = false)
     private BriefQuestionDao briefQuestionDao;
 
-
     @Override
     public List<Brief> findAllBrief(Map<String, Integer> pageMap, String bTitle, Integer sid) {
+
         PageHelper.startPage(pageMap.get("page"), pageMap.get("limit"));
         return briefQuestionDao.findAllBrief(bTitle,sid);
     }
@@ -58,6 +58,8 @@ public class BriefQuestionServiceImpl implements BriefQuestionService {
 
     @Override
     public int addBrief(List<Brief> briefs) {
+
+
         return briefQuestionDao.addBriefs(briefs);
     }
 

@@ -8,7 +8,7 @@
 
 </head>
 <!--body体中去掉，解决遮挡问题class="layui-layout-body"-->
-<body >
+<body>
 <div style="height: 70px;text-align: center; background-color: #C8EBFA;">
     <h1 style="text-align: center;padding-top: 20px">判断题管理</h1>
 </div>
@@ -43,7 +43,7 @@
     function exportExcel() {
         var sid = $("#sid").val();//根据自己命名的标签获取值
         var jTitle = $("#jTitle").val();
-        window.location.href = encodeURI("../judgequestion/exportExcel?sid="+sid+"&jTitle="+jTitle);
+        window.location.href = encodeURI("../judgequestion/exportExcel?sid=" + sid + "&jTitle=" + jTitle);
     }
 
 </script>
@@ -169,7 +169,7 @@
                         var t = layui.table;
                         t.reload('questionTable');// 重新加载页面
                     });
-                    // console.log(checkStatus.data); //获取选中行的数据
+                // console.log(checkStatus.data); //获取选中行的数据
                 // console.log(checkStatus.data.length); //获取选中行数量，可作为是否有选中行的条件
             }
         });
@@ -245,19 +245,19 @@
             , url: '../judgequestion/importbrief' //上传接口
             , method: 'POST'
             , accept: 'file'
-        /*    , before: function (obj) {
-                layer.load();
-            }*/
+            /*    , before: function (obj) {
+                    layer.load();
+                }*/
             , done: function (data) {
 
-                if (data.code==1){
+                if (data.code == 1) {
 
                     layer.alert(data.msg);
                     var t = layui.table;
                     t.reload('questionTable');// 重新加载页面
-                }else if (data.code==0) {
+                } else if (data.code == 0) {
                     layer.alert(data.msg);
-                }else {
+                } else {
                     //上传完毕回调
                     layer.alert("失败");
                 }

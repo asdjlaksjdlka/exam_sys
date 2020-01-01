@@ -7,13 +7,14 @@ import com.qf.examsys.entity.Subject;
 import com.qf.examsys.service.BriefQuestionService;
 import com.qf.examsys.service.ChooseQuestionService;
 import com.qf.examsys.utils.PoiUtils;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,18 +26,24 @@ public class BriefQuestionController {
 
     @Autowired
     private ChooseQuestionService chooseQuestionService;
+
+
     /**
      * 简答题控制区
+     *
      * @return
      */
     @RequiresPermissions("import:question")
     @RequestMapping("/briefquestion/list")
     public JsonReasult findAllBrief(Integer page, Integer limit, String bTitle, Integer sid) {
 
+        String id = (String) SecurityUtils.getSubject().getSession().getId();
+
+
         HashMap<String, Integer> pageMap = new HashMap<>();
         pageMap.put("page", page);
         pageMap.put("limit", limit);
-        List<Brief> list = briefQuestionService.findAllBrief(pageMap,bTitle, sid);
+        List<Brief> list = briefQuestionService.findAllBrief(pageMap, bTitle, sid);
 //        System.out.println("list"+list);
         long total = ((Page) list).getTotal();
         return new JsonReasult(0, list, "", total);
@@ -59,7 +66,7 @@ public class BriefQuestionController {
 //        System.out.println("哈哈"+brief);
         if (brief.getBid() == null || brief.getBid().equals("")) {
             Integer num = briefQuestionService.addBrief(brief);
-            return new JsonReasult(1,num);
+            return new JsonReasult(1, num);
         } else {
             /* System.out.println("===="+choose.getCid().getClass().getName());*/
             Integer num = briefQuestionService.updateBriefById(brief);
@@ -71,7 +78,7 @@ public class BriefQuestionController {
     public JsonReasult deleteOneQuestion(Brief brief) {
         Integer num = briefQuestionService.deleteOneById(brief);
 //        System.out.println("哈哈"+num);
-        return new JsonReasult(1,num);
+        return new JsonReasult(1, num);
     }
 
 
@@ -81,20 +88,21 @@ public class BriefQuestionController {
             System.out.println(ids[i]);
         }*/
         Integer num = briefQuestionService.deletAllBrief(ids);
-        return new JsonReasult(1,num);
+        return new JsonReasult(1, num);
     }
 
 
     /**
-     *
      * 导入导出
+     *
      * @param bTitle
      * @param sid
      * @return
      */
 
     @RequestMapping(value = "/briefquestion/exportExcel", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> exportExcel(String bTitle, Integer sid){
+    public ResponseEntity<byte[]> exportExcel(String bTitle, Integer sid) {
+
         List<Brief> list = briefQuestionService.findAllBriefByPoi(bTitle, sid);
         ResponseEntity<byte[]> info = PoiUtils.exportBriefExcel(list);
 
@@ -107,11 +115,12 @@ public class BriefQuestionController {
 
         List<Subject> list = chooseQuestionService.findAllSubject();
 //        System.out.println("list"+list);
-        List<Brief> briefs = PoiUtils.importBriefList(file,list);
+        List<Brief> briefs = PoiUtils.importBriefList(file, list);
+//        System.out.println("哈哈"+briefs.size());
         if (briefQuestionService.addBrief(briefs) == briefs.size()) {
-            return new JsonReasult (1,"导入成功!");
+            return new JsonReasult(1, "导入成功!");
         }
-        return new JsonReasult(0,"导入失败!");
+        return new JsonReasult(0, "导入失败!");
     }
 
 

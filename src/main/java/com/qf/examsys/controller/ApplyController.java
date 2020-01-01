@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * @author yqz
+ */
 public class ApplyController {
     @Autowired
     ApplyService applyService;

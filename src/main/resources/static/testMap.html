@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form method="post" onsubmit="return false;">
+    <input type="text" name="name1" /><br>
+    <input type="text" name="name2" /><br>
+    <input type="text" name="name3" /><br>
+    <input type="text" name="name4" /><br>
+    <input type="text" name="name5" />
+    <input type="submit" value="login" />
+
+</form>
+
+<script type="text/javascript" src="./js/jquery-1.12.2.min.js" ></script>
+<script type="text/javascript">
+    $("form").submit(function(){
+        $.ajax({
+            type:"post",
+            url:"./testmap",
+            data:$("form").serialize(),
+            dataType:"json",
+            success:function(data){
+                alert(data.code)
+                if(data.code == 0){
+                    var token = data.info;
+                    // 前端存储token值,本例中,存储到localStorage
+                    window.localStorage.setItem("token", token);
+                }
+            }
+
+        })
+    })
+
+
+</script>
+</body>
+</html>
